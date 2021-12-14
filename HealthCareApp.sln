@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthCareApp", "HealthCareApp\HealthCareApp.csproj", "{48A20B81-B4D5-44D4-B8E8-371664FA93F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{EE9FFB19-3E05-42B2-A2C9-20A05D01B42A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{EE9FFB19-3E05-42B2-A2C9-20A05D01B42A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Services\Service.csproj", "{12F41645-3E6C-421B-9A53-0E046799A87B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Services\Service.csproj", "{12F41645-3E6C-421B-9A53-0E046799A87B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{6EDE4B13-CA48-47CD-AC7B-918AC13CE005}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{6EDE4B13-CA48-47CD-AC7B-918AC13CE005}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{A7674F16-B5D3-44EF-9E47-C53630AE1B92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6EDE4B13-CA48-47CD-AC7B-918AC13CE005}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EDE4B13-CA48-47CD-AC7B-918AC13CE005}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EDE4B13-CA48-47CD-AC7B-918AC13CE005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7674F16-B5D3-44EF-9E47-C53630AE1B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7674F16-B5D3-44EF-9E47-C53630AE1B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7674F16-B5D3-44EF-9E47-C53630AE1B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7674F16-B5D3-44EF-9E47-C53630AE1B92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

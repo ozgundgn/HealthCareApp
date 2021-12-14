@@ -10,6 +10,6 @@ namespace Core.DataAccess.EntityFramework
         long Add(T entity);
         bool Delete(T entity);
         bool Update(T entity);
-        List<T> GetAll(Expression<Func<T, bool>> filter = null);
+        List<T> Get(Expression<Func<T, bool>> filter = null);
     }
 }
