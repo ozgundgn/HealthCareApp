@@ -6,15 +6,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Service.Abstract;
 
 namespace HealthCareApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private IUserService _userService;
+        public HomeController(ILogger<HomeController> logger, IUserService userService)
         {
+            _userService = userService;
             _logger = logger;
         }
 

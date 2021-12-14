@@ -7,5 +7,9 @@ namespace Core.DataAccess
 {
     public class HealthCareDbContext:DbContext
     {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }

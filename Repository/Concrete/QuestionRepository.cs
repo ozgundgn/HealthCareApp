@@ -8,7 +8,7 @@ using Repository.Abstract;
 
 namespace Repository.Concrete
 {
-    public class EfUserRepository : EntityRepositoryBase<HealthCareDbContext, User>, IUserRepository
+    public class QuestionRepository : EntityRepositoryBase<HealthCareDbContext, Question>, IQuestionRepository
     {
     }
 }

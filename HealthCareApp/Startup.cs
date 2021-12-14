@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Repository.Abstract;
+using Repository.Concrete;
 using Service.Concrete;
 
 namespace HealthCareApp
@@ -26,7 +28,19 @@ namespace HealthCareApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //services
             services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IApplicationService, ApplicationService>();
+            services.AddSingleton<IDonorService, DonorService>();
+            services.AddSingleton<IQuestionService, QuestionService>();
+            services.AddSingleton<ISickService, SickService>();
+            //repositories
+
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IApplicationService, ApplicationService>();
+            services.AddSingleton<IDonorService, DonorService>();
+            services.AddSingleton<IQuestionService, QuestionService>();
+            services.AddSingleton<ISickService, SickService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,7 +6,7 @@ using Entity;
 
 namespace Repository.Abstract
 {
-    public interface IUserRepository : IEntityRepository<User>
+    public interface IQuestionRepository : IEntityRepository<Question>
     {
     }
 }
