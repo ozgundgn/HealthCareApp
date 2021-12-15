@@ -27,7 +27,7 @@ namespace Entity.Models
         public DateTime? Birthday { get; set; }
         public string Phone { get; set; }
         public string IdentityNumber { get; set; }
-        public string MothernName { get; set; }
+        public string MotherName { get; set; }
         public string FatherName { get; set; }
         public decimal? Weight { get; set; }
         public decimal? Height { get; set; }
