@@ -7,7 +7,7 @@ namespace Core.DataAccess.EntityFramework
 {
     public interface IEntityRepository<T> where T: class, IEntity, new()
     {
-        long Add(T entity);
+        bool Add(T entity);
         bool Delete(T entity);
         bool Update(T entity);
         List<T> Get(Expression<Func<T, bool>> filter = null);

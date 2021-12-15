@@ -11,13 +11,13 @@ namespace Core.DataAccess.EntityFramework
     public class EntityRepositoryBase<TContext, TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
-        public long Add(TEntity entity)
+        public bool Add(TEntity entity)
         {
             using (TContext context = new TContext())
             {
                 var add = context.Add(entity);
                 add.State = EntityState.Added;
-                return context.SaveChanges();
+                return context.SaveChanges()>0;
             }
         }
 
