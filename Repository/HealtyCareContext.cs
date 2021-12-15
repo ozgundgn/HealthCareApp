@@ -46,24 +46,24 @@ namespace Repository
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Addressdesc)
+                entity.Property(e => e.AddressDesc)
                     .HasColumnName("addressdesc")
                     .HasMaxLength(150);
 
-                entity.Property(e => e.Cityid).HasColumnName("cityid");
+                entity.Property(e => e.CityId).HasColumnName("cityid");
 
-                entity.Property(e => e.Districtid).HasColumnName("districtid");
+                entity.Property(e => e.DistrictId).HasColumnName("districtid");
 
-                entity.Property(e => e.Userid).HasColumnName("userid");
+                entity.Property(e => e.UserId).HasColumnName("userid");
 
                 entity.HasOne(d => d.District)
                     .WithMany(p => p.Address)
-                    .HasForeignKey(d => d.Districtid)
+                    .HasForeignKey(d => d.DistrictId)
                     .HasConstraintName("FK_address_district");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Address)
-                    .HasForeignKey(d => d.Userid)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_address_user");
             });
@@ -74,11 +74,11 @@ namespace Repository
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Cancellationreason)
+                entity.Property(e => e.CancellationReason)
                     .HasColumnName("cancellationreason")
                     .HasMaxLength(250);
 
-                entity.Property(e => e.Createdate)
+                entity.Property(e => e.CreateDate)
                     .HasColumnName("createdate")
                     .HasColumnType("datetime");
 
@@ -86,31 +86,31 @@ namespace Repository
                     .HasColumnName("description")
                     .HasColumnType("text");
 
-                entity.Property(e => e.Relativesname)
+                entity.Property(e => e.RelativesName)
                     .HasColumnName("relativesname")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Relativesphone)
+                entity.Property(e => e.RelativesPhone)
                     .HasColumnName("relativesphone")
                     .HasMaxLength(15);
 
-                entity.Property(e => e.Relativesurname)
+                entity.Property(e => e.RelativeSurname)
                     .HasColumnName("relativesurname")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Statu).HasColumnName("statu");
 
-                entity.Property(e => e.Transfertype).HasColumnName("transfertype");
+                entity.Property(e => e.TransferType).HasColumnName("transfertype");
 
-                entity.Property(e => e.Updatedate)
+                entity.Property(e => e.UpdateDate)
                     .HasColumnName("updatedate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Userid).HasColumnName("userid");
+                entity.Property(e => e.UserId).HasColumnName("userid");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Application)
-                    .HasForeignKey(d => d.Userid)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_application_user1");
             });
@@ -121,7 +121,7 @@ namespace Repository
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Cityname)
+                entity.Property(e => e.CityName)
                     .HasColumnName("cityname")
                     .HasMaxLength(60);
             });
@@ -132,15 +132,15 @@ namespace Repository
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Cityid).HasColumnName("cityid");
+                entity.Property(e => e.CityId).HasColumnName("cityid");
 
-                entity.Property(e => e.Districtname)
+                entity.Property(e => e.DistrictName)
                     .HasColumnName("districtname")
                     .HasMaxLength(60);
 
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.District)
-                    .HasForeignKey(d => d.Cityid)
+                    .HasForeignKey(d => d.CityId)
                     .HasConstraintName("FK_district_city");
             });
 
@@ -150,33 +150,33 @@ namespace Repository
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Questiondesc)
+                entity.Property(e => e.QuestionDesc)
                     .HasColumnName("questiondesc")
                     .HasMaxLength(150);
 
-                entity.Property(e => e.Usertype).HasColumnName("usertype");
+                entity.Property(e => e.UserType).HasColumnName("usertype");
             });
 
-            modelBuilder.Entity<Questionresult>(entity =>
+            modelBuilder.Entity<QuestionResult>(entity =>
             {
                 entity.ToTable("questionresult");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Applicationid).HasColumnName("applicationid");
+                entity.Property(e => e.ApplicationId).HasColumnName("applicationid");
 
-                entity.Property(e => e.Questionid).HasColumnName("questionid");
+                entity.Property(e => e.QuestionId).HasColumnName("questionid");
 
                 entity.Property(e => e.Result).HasColumnName("result");
 
                 entity.HasOne(d => d.Application)
-                    .WithMany(p => p.Questionresult)
-                    .HasForeignKey(d => d.Applicationid)
+                    .WithMany(p => p.QuestionResult)
+                    .HasForeignKey(d => d.ApplicationId)
                     .HasConstraintName("FK_questionresult_application");
 
                 entity.HasOne(d => d.Question)
-                    .WithMany(p => p.Questionresult)
-                    .HasForeignKey(d => d.Questionid)
+                    .WithMany(p => p.QuestionResult)
+                    .HasForeignKey(d => d.QuestionId)
                     .HasConstraintName("FK_questionresult_question");
             });
 
@@ -186,37 +186,37 @@ namespace Repository
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Applicationid).HasColumnName("applicationid");
+                entity.Property(e => e.ApplicationId).HasColumnName("applicationid");
 
-                entity.Property(e => e.Reportname)
+                entity.Property(e => e.ReportName)
                     .HasColumnName("reportname")
                     .HasMaxLength(60);
 
                 entity.HasOne(d => d.Application)
                     .WithMany(p => p.Report)
-                    .HasForeignKey(d => d.Applicationid)
+                    .HasForeignKey(d => d.ApplicationId)
                     .HasConstraintName("FK_report_application");
             });
 
-            modelBuilder.Entity<Sickapplicationdetails>(entity =>
+            modelBuilder.Entity<SickApplicationDetails>(entity =>
             {
                 entity.ToTable("sickapplicationdetails");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Applicationid).HasColumnName("applicationid");
+                entity.Property(e => e.ApplicationId).HasColumnName("applicationid");
 
-                entity.Property(e => e.Sicknessdate)
+                entity.Property(e => e.SicknessDate)
                     .HasColumnName("sicknessdate")
                     .HasColumnType("smalldatetime");
 
-                entity.Property(e => e.Sicknessdetail)
+                entity.Property(e => e.SicknessDetail)
                     .HasColumnName("sicknessdetail")
                     .HasMaxLength(500);
 
                 entity.HasOne(d => d.Application)
-                    .WithMany(p => p.Sickapplicationdetails)
-                    .HasForeignKey(d => d.Applicationid)
+                    .WithMany(p => p.SickApplicationDetails)
+                    .HasForeignKey(d => d.ApplicationId)
                     .HasConstraintName("FK_sickapplicationdetails_application");
             });
 
@@ -230,21 +230,21 @@ namespace Repository
                     .HasColumnName("birthday")
                     .HasColumnType("smalldatetime");
 
-                entity.Property(e => e.Bloodgroup).HasColumnName("bloodgroup");
+                entity.Property(e => e.BloodGroup).HasColumnName("bloodgroup");
 
-                entity.Property(e => e.Civilstatus).HasColumnName("civilstatus");
+                entity.Property(e => e.CivilStatus).HasColumnName("civilstatus");
 
-                entity.Property(e => e.Createdate)
+                entity.Property(e => e.CreateDate)
                     .HasColumnName("createdate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Educationstatus).HasColumnName("educationstatus");
+                entity.Property(e => e.EducationStatus).HasColumnName("educationstatus");
 
-                entity.Property(e => e.Fathername)
+                entity.Property(e => e.FatherName)
                     .HasColumnName("fathername")
                     .HasMaxLength(40);
 
-                entity.Property(e => e.Firstname)
+                entity.Property(e => e.FirstName)
                     .HasColumnName("firstname")
                     .HasMaxLength(40);
 
@@ -254,15 +254,15 @@ namespace Repository
                     .HasColumnName("height")
                     .HasColumnType("decimal(18, 0)");
 
-                entity.Property(e => e.Identitynumber)
+                entity.Property(e => e.IdentityNumber)
                     .HasColumnName("identitynumber")
                     .HasMaxLength(11);
 
-                entity.Property(e => e.Lastlogindate)
+                entity.Property(e => e.LastLoginDate)
                     .HasColumnName("lastlogindate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Lastname)
+                entity.Property(e => e.LastName)
                     .HasColumnName("lastname")
                     .HasMaxLength(40);
 
@@ -270,7 +270,7 @@ namespace Repository
                     .HasColumnName("mail")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Mothername)
+                entity.Property(e => e.MotherName)
                     .HasColumnName("mothername")
                     .HasMaxLength(40);
 
@@ -284,56 +284,56 @@ namespace Repository
 
                 entity.Property(e => e.Rh).HasColumnName("rh");
 
-                entity.Property(e => e.Updatedate)
+                entity.Property(e => e.UpdateDate)
                     .HasColumnName("updatedate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Usertype).HasColumnName("usertype");
+                entity.Property(e => e.UserType).HasColumnName("usertype");
 
                 entity.Property(e => e.Weight)
                     .HasColumnName("weight")
                     .HasColumnType("decimal(18, 0)");
             });
 
-            modelBuilder.Entity<Userapplicationmatch>(entity =>
+            modelBuilder.Entity<UserApplicationMatch>(entity =>
             {
                 entity.ToTable("userapplicationmatch");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Applicationdonorid).HasColumnName("applicationdonorid");
+                entity.Property(e => e.ApplicationDonorId).HasColumnName("applicationdonorid");
 
-                entity.Property(e => e.Applicationsickid).HasColumnName("applicationsickid");
+                entity.Property(e => e.ApplicationSickId).HasColumnName("applicationsickid");
 
-                entity.Property(e => e.Donoruserid).HasColumnName("donoruserid");
+                entity.Property(e => e.DonorUserId).HasColumnName("donoruserid");
 
-                entity.Property(e => e.Matchdate)
+                entity.Property(e => e.MatchDate)
                     .HasColumnName("matchdate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Sickuserid).HasColumnName("sickuserid");
+                entity.Property(e => e.SickUserId).HasColumnName("sickuserid");
 
-                entity.HasOne(d => d.Applicationdonor)
-                    .WithMany(p => p.UserapplicationmatchApplicationdonor)
-                    .HasForeignKey(d => d.Applicationdonorid)
+                entity.HasOne(d => d.ApplicationDonor)
+                    .WithMany(p => p.UserApplicationMatchApplicationDonor)
+                    .HasForeignKey(d => d.ApplicationDonorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_userapplicationmatch_application1");
 
-                entity.HasOne(d => d.Applicationsick)
-                    .WithMany(p => p.UserapplicationmatchApplicationsick)
-                    .HasForeignKey(d => d.Applicationsickid)
+                entity.HasOne(d => d.ApplicationSick)
+                    .WithMany(p => p.UserApplicationMatchApplicationSick)
+                    .HasForeignKey(d => d.ApplicationSickId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_userapplicationmatch_application");
 
-                entity.HasOne(d => d.Donoruser)
-                    .WithMany(p => p.UserapplicationmatchDonoruser)
-                    .HasForeignKey(d => d.Donoruserid)
+                entity.HasOne(d => d.DonorUser)
+                    .WithMany(p => p.UserApplicationMatchDonorUser)
+                    .HasForeignKey(d => d.DonorUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_userapplicationmatch_user1");
 
-                entity.HasOne(d => d.Sickuser)
-                    .WithMany(p => p.UserapplicationmatchSickuser)
-                    .HasForeignKey(d => d.Sickuserid)
+                entity.HasOne(d => d.SickUser)
+                    .WithMany(p => p.UserApplicationMatchSickUser)
+                    .HasForeignKey(d => d.SickUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_userapplicationmatch_user");
             });

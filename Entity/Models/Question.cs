@@ -7,7 +7,7 @@ using Core.Entities;
 
 namespace Entity.Models
 {
-    public partial class Question:IEntity
+    public  class Question:IEntity
     {
         public Question()
         {
