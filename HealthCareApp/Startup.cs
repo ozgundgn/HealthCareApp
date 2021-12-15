@@ -37,10 +37,10 @@ namespace HealthCareApp
             //repositories
 
             services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<IApplicationService, ApplicationService>();
-            services.AddSingleton<IDonorService, DonorService>();
-            services.AddSingleton<IQuestionService, QuestionService>();
-            services.AddSingleton<ISickService, SickService>();
+            services.AddSingleton<IApplicationRepository, ApplicationRepository>();
+            services.AddSingleton<IDonorRepository, DonorRepository>();
+            services.AddSingleton<IQuestionRepository, QuestionRepository>();
+            services.AddSingleton<ISickRepository, SickRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

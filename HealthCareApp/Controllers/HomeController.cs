@@ -13,10 +13,9 @@ namespace HealthCareApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IUserService _userService;
-        public HomeController(ILogger<HomeController> logger, IUserService userService)
+      
+        public HomeController(ILogger<HomeController> logger)
         {
-            _userService = userService;
             _logger = logger;
         }
 
