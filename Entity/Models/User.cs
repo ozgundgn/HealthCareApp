@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Entities;
-using HealthCareApp.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -15,8 +14,8 @@ namespace Entity.Models
         {
             Address = new HashSet<Address>();
             Application = new HashSet<Application>();
-            UserApplicationmatchDonorUser = new HashSet<UserApplicationMatch>();
-            UserApplicationmatchSickUser = new HashSet<UserApplicationMatch>();
+            UserApplicationMatchDonorUser = new HashSet<UserApplicationMatch>();
+            UserApplicationMatchSickUser = new HashSet<UserApplicationMatch>();
         }
 
         public int Id { get; set; }
@@ -43,7 +42,7 @@ namespace Entity.Models
 
         public virtual ICollection<Address> Address { get; set; }
         public virtual ICollection<Application> Application { get; set; }
-        public virtual ICollection<UserApplicationMatch> UserApplicationmatchDonorUser { get; set; }
-        public virtual ICollection<UserApplicationMatch> UserApplicationmatchSickUser { get; set; }
+        public virtual ICollection<UserApplicationMatch> UserApplicationMatchDonorUser { get; set; }
+        public virtual ICollection<UserApplicationMatch> UserApplicationMatchSickUser { get; set; }
     }
 }

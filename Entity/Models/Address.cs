@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using HealthCareApp.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -16,6 +15,6 @@ namespace Entity.Models
         public int UserId { get; set; }
 
         public virtual District District { get; set; }
-        public virtual HealthCareApp.Models.User User { get; set; }
+        public virtual Entity.Models.User User { get; set; }
     }
 }

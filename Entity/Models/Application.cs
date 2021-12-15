@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Entities;
-using HealthCareApp.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -32,7 +31,7 @@ namespace Entity.Models
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
-        public virtual HealthCareApp.Models.User User { get; set; }
+        public virtual Entity.Models.User User { get; set; }
         public virtual ICollection<QuestionResult> QuestionResult { get; set; }
         public virtual ICollection<Report> Report { get; set; }
         public virtual ICollection<SickApplicationDetails> SickApplicationDetails { get; set; }
