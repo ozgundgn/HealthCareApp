@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entity.Models;
+using Microsoft.EntityFrameworkCore;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -17,16 +18,16 @@ namespace Repository
         {
         }
 
-        public virtual DbSet<Address> Address { get; set; }
-        public virtual DbSet<Application> Application { get; set; }
-        public virtual DbSet<City> City { get; set; }
-        public virtual DbSet<District> District { get; set; }
-        public virtual DbSet<Question> Question { get; set; }
-        public virtual DbSet<Questionresult> Questionresult { get; set; }
-        public virtual DbSet<Report> Report { get; set; }
-        public virtual DbSet<Sickapplicationdetails> Sickapplicationdetails { get; set; }
-        public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<Userapplicationmatch> Userapplicationmatch { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Application> Applications { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<District> Districts { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<QuestionResult> QuestionResults { get; set; }
+        public virtual DbSet<Report> Reports { get; set; }
+        public virtual DbSet<SickApplicationDetails> SickApplicationDetails { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserApplicationMatch> UserApplicationMatches { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

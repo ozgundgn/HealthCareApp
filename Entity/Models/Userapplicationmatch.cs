@@ -1,24 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
+using Core.Entities;
+using HealthCareApp.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace HealthCareApp.Models
+namespace Entity.Models
 {
-    public partial class Userapplicationmatch
+    public partial class UserApplicationMatch : IEntity
     {
-        public int Sickuserid { get; set; }
-        public int Donoruserid { get; set; }
+        public int SickUserId { get; set; }
+        public int DonorUserId { get; set; }
         public int Id { get; set; }
-        public int Applicationsickid { get; set; }
-        public int Applicationdonorid { get; set; }
-        public DateTime Matchdate { get; set; }
+        public int ApplicationSickId { get; set; }
+        public int ApplicationDonorId { get; set; }
+        public DateTime MatchDate { get; set; }
 
-        public virtual Application Applicationdonor { get; set; }
-        public virtual Application Applicationsick { get; set; }
-        public virtual User Donoruser { get; set; }
-        public virtual User Sickuser { get; set; }
+        public virtual Application ApplicationDonor { get; set; }
+        public virtual Application ApplicationSick { get; set; }
+        public virtual User DonorUser { get; set; }
+        public virtual User SickUser { get; set; }
     }
 }
