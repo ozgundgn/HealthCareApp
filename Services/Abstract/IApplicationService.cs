@@ -8,6 +8,6 @@ namespace Service.Abstract
 {
     public interface IApplicationService
     {
-        void GetSickApplicationList();
+        IDataResult<List<SickApplicationListModel>> GetSickApplicationList();
     }
 }

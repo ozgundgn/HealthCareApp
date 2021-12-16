@@ -13,18 +13,26 @@ namespace Repository.Concrete
 {
     public class ApplicationRepository : EntityRepositoryBase<HealtyCareContext, Application>, IApplicationRepository
     {
-        public IDataResult<SickApplicationListModel> GetSickApplicationList()
+        public List<SickApplicationListModel> GetSickApplicationList()
         {
+            
             using (HealtyCareContext context = new HealtyCareContext())
             {
-                var a = context.Applications;
-             var  aaaa=  context.Applications
-                    .Include(favoriteGenre => favoriteGenre.User)
-                    .Include(genre => genre.SickApplicationDetails)
-                    .ToList();
-            }
+             var  sickDetailList=  context.Applications
+                    .Include(favoriteGenre => favoriteGenre.User).ThenInclude(aa => aa.Address)
+                    .Include(genre => genre.SickApplicationDetails).Select(x=>new SickApplicationListModel()
+                    {
+                        Mail=x.User.Mail,
+                        Name = x.User.FirstName,
+                        Surname = x.User.LastName,
+                        Phone=x.User.Phone,
+                        TransferType = x.TransferType,
+                        Description=x.Description,
+                        SicknesskDate = x.SickApplicationDetails.ToList()[0].SicknessDate
 
-            return null;
+                    }).ToList();
+             return sickDetailList;
+            }
         }
     }
 }

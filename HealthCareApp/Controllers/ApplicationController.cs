@@ -17,16 +17,14 @@ namespace HealthCareApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IApplicationService _applicationService;
         public ApplicationController(ILogger<HomeController> logger, IApplicationService applicationService)
-        { 
+        {
             _applicationService = applicationService;
             _logger = logger;
         }
 
         public IActionResult SickApplicationList()
         {
-            var model = new List<SickApplicationListModel>();
-            _applicationService.GetSickApplicationList();
-            return View(model);
+            return View(_applicationService.GetSickApplicationList().Data);
         }
 
         public IActionResult DonorApplicationList()

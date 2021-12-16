@@ -16,10 +16,10 @@ namespace Service.Concrete
             _applicationRepository = applicationRepository;
         }
 
-        public void GetSickApplicationList()
+        public IDataResult<List<SickApplicationListModel>> GetSickApplicationList()
         {
-            var a = _applicationRepository.GetSickApplicationList();
-
+            var sickList = _applicationRepository.GetSickApplicationList();
+            return new SuccessDataResult<List<SickApplicationListModel>>(sickList);
         }
     }
 }

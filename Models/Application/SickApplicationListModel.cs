@@ -10,9 +10,9 @@ namespace Models.Application
         public string Surname { get; set; }
         public string Mail { get; set; }
         public string Phone { get; set; }
-        public string TransferType { get; set; }
+        public int? TransferType { get; set; }
         public string Description { get; set; }
-        public string SicknesskDate { get; set; }
+        public DateTime? SicknesskDate { get; set; }
 
     }
 }

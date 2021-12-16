@@ -10,6 +10,6 @@ namespace Repository.Abstract
 {
     public interface IApplicationRepository : IEntityRepository<Application>
     {
-        IDataResult<SickApplicationListModel> GetSickApplicationList();
+        List<SickApplicationListModel> GetSickApplicationList();
     }
 }
