@@ -9,9 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Repository.Abstract;
 using Repository.Concrete;
+using Repository.Helpers;
 using Service.Concrete;
+using ServiceStack.Redis;
 
 namespace HealthCareApp
 {
@@ -28,6 +31,7 @@ namespace HealthCareApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
             //services
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IApplicationService, ApplicationService>();
@@ -41,6 +45,11 @@ namespace HealthCareApp
             services.AddSingleton<IDonorRepository, DonorRepository>();
             services.AddSingleton<IQuestionRepository, QuestionRepository>();
             services.AddSingleton<ISickRepository, SickRepository>();
+            services.AddSingleton<IRedisClient, RedisClient>();
+
+            SessionHelper.Configure(services.BuildServiceProvider().GetService<IHttpContextAccessor>(), services.BuildServiceProvider().GetService<IRedisClient>());
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +66,8 @@ namespace HealthCareApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
