@@ -11,5 +11,6 @@ namespace Repository.Abstract
     public interface IApplicationRepository : IEntityRepository<Application>
     {
         List<SickApplicationListModel> GetSickApplicationList();
+        List<DonorApplicationListModel> GetDonorApplicationList();
     }
 }

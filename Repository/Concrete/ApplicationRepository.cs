@@ -19,7 +19,7 @@ namespace Repository.Concrete
             using (HealtyCareContext context = new HealtyCareContext())
             {
              var  sickDetailList=  context.Applications
-                    .Include(favoriteGenre => favoriteGenre.User).ThenInclude(aa => aa.Address)
+                    .Include(favoriteGenre => favoriteGenre.User)
                     .Include(genre => genre.SickApplicationDetails).Select(x=>new SickApplicationListModel()
                     {
                         Mail=x.User.Mail,
@@ -32,6 +32,24 @@ namespace Repository.Concrete
 
                     }).ToList();
              return sickDetailList;
+            }
+        }
+        public List<DonorApplicationListModel> GetDonorApplicationList()
+        {
+
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var sickDetailList = context.Applications
+                    .Include(favoriteGenre => favoriteGenre.User)
+                    .Select(x => new DonorApplicationListModel()
+                    {
+                        Mail = x.User.Mail,
+                        Name = x.User.FirstName,
+                        Surname = x.User.LastName,
+                        Phone = x.User.Phone,
+                        TransferType = x.TransferType,
+                    }).ToList();
+                return sickDetailList;
             }
         }
     }

@@ -29,6 +29,10 @@ namespace HealthCareApp.Controllers
 
         public IActionResult DonorApplicationList()
         {
+            return View(_applicationService.GetDonorApplicationList().Data);
+        }
+        public IActionResult AplicationCreate()
+        {
             return View();
         }
 

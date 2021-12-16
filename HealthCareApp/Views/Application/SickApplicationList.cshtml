@@ -2,16 +2,20 @@
 @model List<Models.Application.SickApplicationListModel>
 @{
 
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="main-card mb-3 card">
             <div class="card-body">
-                <h5 class="card-title">Table with hover</h5>
+                <h5 class="card-title">Hasta Listesi</h5>
                 <table class="mb-0 table table-hover">
                     <thead>
                         <tr>
                             <th>Adı</th>
                             <th>Soyadı</th>
+                            <th>Telefon</th>
+                            <th>Mail</th>
+                            <th>Hastalık Tarihi</th>
                             <th>Açıklama</th>
+                            <th>Nakil Tipi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -20,7 +24,11 @@
                         <tr>
                             <th scope="row">@item.Name</th>
                             <td>@item.Surname</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Mail</td>
+                            <td>@item.SicknesskDate</td>
                             <td>@item.Description</td>
+                            <td>@item.TransferType</td>
                         </tr>
                         }
                     </tbody>

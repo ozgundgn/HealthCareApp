@@ -21,5 +21,10 @@ namespace Service.Concrete
             var sickList = _applicationRepository.GetSickApplicationList();
             return new SuccessDataResult<List<SickApplicationListModel>>(sickList);
         }
+        public IDataResult<List<DonorApplicationListModel>> GetDonorApplicationList()
+        {
+            var donorList = _applicationRepository.GetDonorApplicationList();
+            return new SuccessDataResult<List<DonorApplicationListModel>>(donorList);
+        }
     }
 }

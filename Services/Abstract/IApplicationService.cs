@@ -9,5 +9,6 @@ namespace Service.Abstract
     public interface IApplicationService
     {
         IDataResult<List<SickApplicationListModel>> GetSickApplicationList();
+        IDataResult<List<DonorApplicationListModel>> GetDonorApplicationList();
     }
 }
