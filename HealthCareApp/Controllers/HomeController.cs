@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Entity.Models;
+using Repository.Helpers;
 using Service.Abstract;
 
 namespace HealthCareApp.Controllers
@@ -23,6 +24,10 @@ namespace HealthCareApp.Controllers
 
         public IActionResult Index()
         {
+            if (SessionHelper.DefaultSession == null || SessionHelper.DefaultSession.Id == 0)
+            {
+                return RedirectToAction("Error");
+            }
             return View();
         }
 
