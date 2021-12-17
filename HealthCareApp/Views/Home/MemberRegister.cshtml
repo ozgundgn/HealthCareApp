@@ -1,0 +1,78 @@
+﻿
+<div class="tab-content">
+	<div class="tab-pane tabs-animation fade show active " id="tab-content-0" role="tabpanel">
+		<div class="main-card mb-3 card">
+			<div class="card-body" style="width: 800px;">
+				<h5 class="card-title">KULLANICI KAYIT FORMU</h5>
+				<form class="">
+					<div class="position-relative form-group"><label for="lad" class="">Ad</label><input required name="name" id="ad" type="text" class="form-control"></div>
+					<div class="position-relative form-group"><label for="lsoyad" class="">Soyad</label><input required name="surname" id="soyad" type="text" class="form-control"></div>
+					<div class="position-relative form-group"><label for="ltc" class="">TC</label><input required name="tc" id="tc" type="text" class="form-control"></div>
+					<div class="position-relative form-group"><label for="ldogum" class="">Doğum Tarihi</label><input required name="dogumtarihi" id="dogumtarihi" type="date" class="form-control"></div>
+					<fieldset class="position-relative form-group">
+						Cinsiyet
+						<div class="position-relative form-check">
+							<label class="form-check-label"><input name="cinsiyet" type="radio" value="kadin" class="form-check-input">Kadın</label>
+						</div>
+						<div class="position-relative form-check"><label class="form-check-label"><input name="cinsiyet" type="radio" value="erkek" class="form-check-input">Erkek</label></div>
+						<div class="position-relative form-check"><label class="form-check-label"><input checked name="cinsiyet" type="radio" value="belirsiz" class="form-check-input">Belirtmek istemiyorum</label></div>
+					</fieldset>
+					<fieldset class="position-relative form-group">
+						<div class="position-relative form-check">
+							<label class="form-check-label"><input checked name="tip" type="radio" value="hasta" class="form-check-input">Hasta</label>
+						</div>
+						<div class="position-relative form-check"><label class="form-check-label"><input name="tip" type="radio" value="donor" class="form-check-input">Donör</label></div>
+					</fieldset>
+
+					<div class="position-relative form-group"><label for="lanne" class="">Anne Adı</label><input name="anneadi" id="anneadi" type="text" class="form-control"></div>
+					<div class="position-relative form-group"><label for="lbaba" class="">Baba Adı</label><input name="babaadi" id="babaadi" type="text" class="form-control"></div>
+					@*il ilçe cascading olacak*@
+					<select class="mb-2 form-control">
+						<option>İl</option>
+					</select>
+					<select class="mb-2 form-control">
+						<option>İlçe</option>
+					</select>
+					<div class="position-relative form-group"><label for="ladres" class="">Adres</label><input required name="adres" id="adres" type="text" class="form-control"></div>
+					<div class="position-relative form-group">
+						<label for="ltel" class="">Tel</label>
+						<input required name="tel" id="tel" type="text" class="form-control">
+					</div>
+
+					<div class="position-relative form-group"><label for="lmail" class="">Email</label><input required name="email" id="email" type="email" class="form-control"></div>
+					<div class="position-relative form-group">
+						<label for="lsifre" class="">Şifre</label><input required name="sifre" id="sifre" type="password" class="form-control">
+					</div>
+					<div class="position-relative form-group">
+						<label for="lsifretekrar" class="">Şifre Tekrar</label><input required name="sifretekrar" id="sifretekrar" type="password" class="form-control">
+					</div>
+
+					<div class="position-relative form-group"><label for="lkilo" class="">Kilo</label><input name="lkilo" id="lkilo" type="text" class="form-control"></div>
+					<div class="position-relative form-group"><label for="lboy" class="">Boy</label><input name="lboy" id="lboy" type="text" class="form-control"></div>
+
+					@*kan grubu  gelecek*@
+					@*medeni durum  gelecek*@
+					@*egıtım durum gelecek*@
+				
+					<button class="mt-1 btn btn-primary" onclick="Kaydet()">Kaydet</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+
+<script>
+
+
+	function Kaydet() {
+		sifre = document.getElementById('sifre').value;
+		tsifre = document.getElementById('sifretekrar').value;
+
+		if (sifre !== tsifre) {
+			@*$("#myToast").toast("show"); toast eklenecej*@
+	}
+	}
+
+</script>

@@ -22,6 +22,10 @@ namespace HealthCareApp.Controllers
         public IActionResult Index()
         {
             return View();
+        } 
+        public IActionResult Register()
+        {
+					return View("MemberRegister");
         }
 
         public IActionResult Privacy()
