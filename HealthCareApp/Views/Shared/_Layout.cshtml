@@ -152,10 +152,8 @@
                                 </div>
                                 <div class="widget-content-right header-user-info ml-3">
 
-                                    <button id="enterbutton" type="button" class="btn-shadow p-1 btn btn-primary  show-toastr-example" data-toggle="modal" data-target=".bd-example-modal-sm">Giriş Yap</button>
-                                    @*<button id="enterbutton2" onclick="Enter()" id="enter" type="button" class="btn-shadow p-1 btn btn-primary show-toastr-example">
-                                            Giriş Yap
-                                        </button>*@
+                                    <button id="enterbutton" type="button" class="btn-shadow p-1 btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Giriş Yap</button>
+
                                     <button onclick="@("location.href='"+ Url.Action("Register","Home")+ "'")" type="button" class="btn-shadow p-1 btn btn-primary  show-toastr-example">
                                         Kayıt Ol
                                     </button>
@@ -274,7 +272,7 @@
 
         <!-- Small modal -->
 
-        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal fade bd-example-modal-sm" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -282,7 +280,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="/action_page.php" class="form-container">
+                    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Login" class="form-container">
                         <div class="modal-body">
 
                             <label for="email"><b>Email</b></label>
@@ -290,11 +288,6 @@
 
                             <label for="psw"><b>Şifre</b></label>
                             <input type="password" placeholder="Şifre giriniz" name="psw" required>
-
-                            @*<button type="submit" class="btn">Giriş</button>
-                            <button type="button" class="btn cancel" onclick="closeForm()">Kapat</button>*@
-
-
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Giriş</button>
@@ -305,32 +298,10 @@
                 </div>
             </div>
         </div>
-        @*<div class="form-popup" id="myForm">
-            <form action="/action_page.php" class="form-container">
-                <h1>Giriş</h1>
-
-                <label for="email"><b>Email</b></label>
-                <input type="text" placeholder="Email giriniz" name="email" required>
-
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Şifre giriniz" name="psw" required>
-
-                <button type="submit" class="btn">Giriş</button>
-                <button type="button" class="btn cancel" onclick="closeForm()">Kapat</button>
-
-            </form>
-        </div>*@
     </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/assets/scripts/main.js"></script>
-    <script>
-        function Enter() {
-            document.getElementById("myForm").style.display = "block";
-        }
 
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        }
-    </script>
-
+    @await Component.InvokeAsync("Notyf")
 </body>
 </html>

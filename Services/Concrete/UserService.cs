@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using Core.Utilities.Results;
@@ -28,5 +29,16 @@ namespace Service.Concrete
 
             return new ErrorResult();
         }
+        public IResult Login(string email, string password)
+        {
+            var result = _userRepository.Get(x => x.Mail == email && x.Password == password).FirstOrDefault();
+            if (result == null)
+            {
+                return new ErrorResult("Kullanıcı girişi başarısız!");
+            }
+
+            return new SuccessResult();
+        }
+
     }
 }

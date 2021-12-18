@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Entity.Models;
 using Repository.Helpers;
 using Service.Abstract;
+using ServiceStack;
 
 namespace HealthCareApp.Controllers
 {
@@ -16,10 +18,12 @@ namespace HealthCareApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUserService _userService;
-        public HomeController(ILogger<HomeController> logger, IUserService userService)
+        private readonly INotyfService _notify;
+        public HomeController(ILogger<HomeController> logger, IUserService userService, INotyfService notifyService)
         {
             _userService = userService;
             _logger = logger;
+            _notify = notifyService;
         }
 
         public IActionResult Index()
@@ -29,10 +33,23 @@ namespace HealthCareApp.Controllers
                 return RedirectToAction("Error");
             }
             return View();
-        } 
+        }
+        [HttpPost]
+        public IActionResult Login(string email, string password)
+        {
+            var result = _userService.Login(email, password);
+
+            if (!result.Success)
+            {
+                _notify.Error(result.Message);
+                return RedirectToAction("Error");
+            }
+            return RedirectToAction("Index");
+
+        }
         public IActionResult Register()
         {
-					return View("MemberRegister");
+            return View("MemberRegister");
         }
 
         public IActionResult Privacy()

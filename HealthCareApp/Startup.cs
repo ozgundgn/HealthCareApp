@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Http;
 using Repository.Abstract;
 using Repository.Concrete;
@@ -30,6 +31,13 @@ namespace HealthCareApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddNotyf(cfg =>
+            {
+                cfg.DurationInSeconds = 5;
+                cfg.IsDismissable = true;
+                cfg.Position = NotyfPosition.BottomRight;
+            });
+
             services.AddControllersWithViews();
             services.AddSession();
             //services
@@ -46,6 +54,7 @@ namespace HealthCareApp
             services.AddSingleton<IQuestionRepository, QuestionRepository>();
             services.AddSingleton<ISickRepository, SickRepository>();
             services.AddSingleton<IRedisClient, RedisClient>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             SessionHelper.Configure(services.BuildServiceProvider().GetService<IHttpContextAccessor>(), services.BuildServiceProvider().GetService<IRedisClient>());
 

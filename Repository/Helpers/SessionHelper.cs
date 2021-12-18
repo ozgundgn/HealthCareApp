@@ -15,7 +15,7 @@ namespace Repository.Helpers
         public static void Configure(IHttpContextAccessor accessor,IRedisClient client)
         {
             current = accessor;
-            _redisClient = new RedisClient();
+            _redisClient = client;
         }
        
         public static User DefaultSession
