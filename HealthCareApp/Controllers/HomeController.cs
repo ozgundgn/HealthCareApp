@@ -29,6 +29,10 @@ namespace HealthCareApp.Controllers
                 return RedirectToAction("Error");
             }
             return View();
+        } 
+        public IActionResult Register()
+        {
+					return View("MemberRegister");
         }
 
         public IActionResult Privacy()

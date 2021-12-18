@@ -1,15 +1,87 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Language" content="en">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Regular Tables - Tables are the backbone of almost all web applications.</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <meta name="description" content="Tables are the backbone of almost all web applications.">
-    <meta name="msapplication-tap-highlight" content="no">
-    <link href="~/main.css" rel="stylesheet" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Language" content="en">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Regular Tables - Tables are the backbone of almost all web applications.</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+	<meta name="description" content="Tables are the backbone of almost all web applications.">
+	<meta name="msapplication-tap-highlight" content="no">
+	<link href="~/main.css" rel="stylesheet" />
+<style>
+	body {font-family: Arial, Helvetica, sans-serif;}
+	* {box-sizing: border-box;}
+
+	/* Button used to open the contact form - fixed at the bottom of the page */
+	.open-button {
+		background-color: #555;
+		color: white;
+		padding: 16px 20px;
+		border: none;
+		cursor: pointer;
+		opacity: 0.8;
+		position: fixed;
+		bottom: 23px;
+		right: 28px;
+		width: 280px;
+	}
+
+	/* The popup form - hidden by default */
+	.form-popup {
+		display: none;
+		position: fixed;
+		bottom: 0;
+		right: 15px;
+		border: 3px solid #f1f1f1;
+		z-index: 9;
+	}
+
+	/* Add styles to the form container */
+	.form-container {
+		max-width: 300px;
+		padding: 10px;
+		background-color: white;
+	}
+
+	/* Full-width input fields */
+	.form-container input[type=text], .form-container input[type=password] {
+		width: 100%;
+		padding: 15px;
+		margin: 5px 0 22px 0;
+		border: none;
+		background: #f1f1f1;
+	}
+
+	/* When the inputs get focus, do something */
+	.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+		background-color: #ddd;
+		outline: none;
+	}
+
+	/* Set a style for the submit/login button */
+	.form-container .btn {
+		background-color: #04AA6D;
+		color: white;
+		padding: 16px 20px;
+		border: none;
+		cursor: pointer;
+		width: 100%;
+		margin-bottom:10px;
+		opacity: 0.8;
+	}
+
+	/* Add a red background color to the cancel button */
+	.form-container .cancel {
+		background-color: red;
+	}
+
+	/* Add some hover effects to buttons */
+	.form-container .btn:hover, .open-button:hover {
+		opacity: 1;
+	}
+</style>
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -74,10 +146,11 @@
                                     </div>
                                 </div>
                                 <div class="widget-content-right header-user-info ml-3">
-                                    <button type="button" class="btn mr-2 mb-2 btn-primary" data-toggle="modal" data-target="#loginModal">
+
+                                    <button id="enterbutton" onclick="Enter()" id="enter" type="button" class="btn-shadow p-1 btn btn-primary show-toastr-example">
                                         Giriş Yap
                                     </button>
-                                    <button type="button" class="btn-shadow p-1 btn btn-primary  show-toastr-example">
+                                    <button onclick="@("location.href='"+ Url.Action("Register","Home")+ "'")" type="button" class="btn-shadow p-1 btn btn-primary  show-toastr-example">
                                        Kayıt Ol
                                     </button>
                                 </div>
@@ -88,6 +161,7 @@
             </div>
         </div>
     
+
         <div class="app-main">
             <div class="app-sidebar sidebar-shadow">
                 <div class="app-header__logo">
@@ -153,66 +227,70 @@
                                     </i>Forms Validation
                                 </a>
                             </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>    <div class="app-main__outer">
-                <div class="app-main__inner">
-                    <div class="row">
-                        @RenderBody()
-                    </div>
-                </div>
-                <div class="app-wrapper-footer">
-                    <div class="app-footer">
-                        <div class="app-footer__inner">
-                            <div class="app-footer-left">
-                                <ul class="nav">
-                                    <li class="nav-item">
-                                        <a href="https://github.com/ozgundgn/HealthCareApp" class="nav-link">
-                                            <i class="fa fa-download icon-gradient bg-malibu-beach"> </i>  Github Link
-                                        </a>
-                                    </li>
+					    </ul>
+				    </div>
+			    </div>
+		    </div>    <div class="app-main__outer">
+			    <div class="app-main__inner">
+				    <div class="row">
+					    @RenderBody()
+				    </div>
+			    </div>
+			    <div class="app-wrapper-footer">
+				    <div class="app-footer">
+					    <div class="app-footer__inner">
+						    <div class="app-footer-left">
+							    <ul class="nav">
+								    <li class="nav-item">
+									    <a href="https://github.com/ozgundgn/HealthCareApp" class="nav-link">
+										    <i class="fa fa-download icon-gradient bg-malibu-beach"> </i>  Github Link
+									    </a>
+								    </li>
                                
-                                </ul>
-                            </div>
-                            <div class="app-footer-right">
-                                <ul class="nav">
+							    </ul>
+						    </div>
+						    <div class="app-footer-right">
+							    <ul class="nav">
                                    
-                                    <li class="nav-item">
+								    <li class="nav-item">
                                       
                                            
-                                        © 2021 Donör Sistemi
+									    © 2021 Donör Sistemi
                                   
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+								    </li>
+							    </ul>
+						    </div>
+					    </div>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+	    <div class="form-popup" id="myForm">
+		    <form action="/action_page.php" class="form-container">
+			    <h1>Giriş</h1>
+
+			    <label for="email"><b>Email</b></label>
+			    <input type="text" placeholder="Email giriniz" name="email" required>
+
+			    <label for="psw"><b>Password</b></label>
+			    <input type="password" placeholder="Şifre giriniz" name="psw" required>
+
+			    <button type="submit" class="btn">Giriş</button>
+			    <button type="button" class="btn cancel" onclick="closeForm()">Kapat</button>
+			   
+		    </form>
+	    </div>
     </div>
-|<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   
-     <div class="modal-dialog" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                     </button>
-                 </div>
-             <div class="modal-body">
-                 <p class="mb-0">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                 </div>
-                 <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                 <button type="button" class="btn btn-primary">Save changes</button>
-                 </div>
-             </div>
-         </div>
-     </div>
-    <script src="~/assets/scripts/main.js"></script>
+<script src="~/assets/scripts/main.js"></script>
+<script>
+	function Enter() {
+		document.getElementById("myForm").style.display = "block";
+	}
+
+	function closeForm() {
+		document.getElementById("myForm").style.display = "none";
+	}
+</script>
+
 </body>
 </html>
