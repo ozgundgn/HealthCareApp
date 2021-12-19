@@ -44,7 +44,6 @@ namespace Service.Concrete
             return new SuccessDataResult<List<UserApplicationListModel>>(userAppList);
         }
 
-        } 
         public IDataResult<List<City>> GetCityList()
         {
             var cityList = _applicationRepository.GetCityList();
