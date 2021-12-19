@@ -1,7 +1,11 @@
 # HealthCareApp
 https://github.com/ozgundgn/HealthCareApp.git
 
+Not:Projenin backup dosyası projesinin içerisindedir.Mssql versiyonu 2019 dur.Başka bir versiyonda denendiğinde backup yüklenmesi başarısız olacaktır.Repository katmanında
+HealtyCareContext.cs sayfasından congigüre ayarını kendi Server adınıza göre değiştirerek projeyi çalıştırabilirsiniz.
+
 ---Yapılanlar---
+
 1-Projenin veritabanı oluşturuldu.İlgili tabloların ilişkileri tamamlandı. 
 
 2-Projenin Katmanları hazırlandı.
