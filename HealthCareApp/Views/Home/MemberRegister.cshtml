@@ -90,7 +90,7 @@
 							<option value="@Convert.ToInt32(EducationStatusEnum.University)">@EducationStatusEnum.University.GetDescription()</option>
 						</select>
 
-					<button class="mt-1 btn btn-primary" type="submit" id="save">Kaydet</button>
+					<button class="mt-1 btn btn-primary" type="submit" >Kaydet</button>
 					</form>
 				</div>
 			</div>
@@ -101,38 +101,6 @@
 
 		<script>
 
-
-			$("#save").click(function () {
-				var data = [];
-				$("table > tbody > tr").each(function (key) {
-					var radioval = "radio+" + $(this).find('td').eq(0).text();
-					data.push({ QuestionId: $(this).find('td').eq(0).text(), QuestionResult: $('input[name="' + radioval + '"]:checked').val() });
-				});
-				console.log(data);
-				var myfile = $('#reportfile').get(0).files[0];
-				var formData = new FormData();
-				formData.append('ReportResult', myfile);
-				formData.append('TransferType', $("#transfertype").val());
-				formData.append('RelativesName', $("#relativesname").val());
-				formData.append('RelativesSurname', $("#relativessurname").val());
-				formData.append('RelativesPhone', $("#relativesphone").val());
-				formData.append('SickDate', $("#sickdate").val());
-				formData.append('SickDesc', $("#sickdesc").val());
-				formData.append('QuestionResultListString', JSON.stringify(data));
-				console.log(formData);
-				$.ajax({
-					url: "/Application/ApplicationSave",
-					type: "POST",
-					data: formData,
-					processData: false,
-					contentType: false
-				})
-					.done(function (data) {
-
-					})
-					.fail(function () {
-					});
-			});
 			$('#CityId').change(function () {
 
 				var id = $(this).val();
