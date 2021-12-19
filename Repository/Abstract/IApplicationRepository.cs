@@ -15,6 +15,7 @@ namespace Repository.Abstract
         List<Question> GetQuestionList();
 
         Application SetApplication(ApplicationSaveRequestModel model);
+        bool SetApplicationState(StateSaveRequestModel model);
 
 
         List<UserApplicationListModel> GetUserApplicationInformList();

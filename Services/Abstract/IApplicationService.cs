@@ -15,6 +15,7 @@ namespace Service.Abstract
         IDataResult<List<District>> GetDistrictList(int id);
         IDataResult<List<Question>> GetQuestionList();
         IDataResult<Application> SetApplication(ApplicationSaveRequestModel model);
+        IResult SetApplicationState(StateSaveRequestModel model);
         IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList();
     }
 }
