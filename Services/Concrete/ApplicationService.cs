@@ -32,5 +32,10 @@ namespace Service.Concrete
             var questionList = _applicationRepository.GetQuestionList();
             return new SuccessDataResult<List<Question>>(questionList);
         }
+        public IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList()
+        {
+            var userAppList = _applicationRepository.GetUserApplicationInformList();
+            return new SuccessDataResult<List<UserApplicationListModel>>(userAppList);
+        }
     }
 }

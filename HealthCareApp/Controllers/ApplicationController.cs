@@ -57,6 +57,12 @@ namespace HealthCareApp.Controllers
             //model.QuestionsList = _applicationService.GetQuestionList().Data;
             //return View(model);
         }
+       
+        public IActionResult UserApplicationInformList()
+        {
+          var appList= _applicationService.GetUserApplicationInformList().Data;
+          return View(appList);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
