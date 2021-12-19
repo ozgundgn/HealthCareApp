@@ -1,4 +1,6 @@
-﻿
+﻿@using Core.Extentions
+@using Models.Enums
+@model Models.Home.RegisterModel
 <div class="tab-content">
 	<div class="tab-pane tabs-animation fade show active " id="tab-content-0" role="tabpanel">
 		<div class="main-card mb-3 card">
@@ -26,12 +28,17 @@
 
 					<div class="position-relative form-group"><label for="lanne" class="">Anne Adı</label><input name="anneadi" id="anneadi" type="text" class="form-control"></div>
 					<div class="position-relative form-group"><label for="lbaba" class="">Baba Adı</label><input name="babaadi" id="babaadi" type="text" class="form-control"></div>
-					@*il ilçe cascading olacak*@
-					<select class="mb-2 form-control">
-						<option>İl</option>
+					<label>İl</label>
+					<select required name="il" id="il" class="mb-2 form-control">
+						@{
+							foreach (var item in Model.CityList)
+							{
+								<option value="@item.Id">@item.CityName</option>
+							}
+						}
 					</select>
-					<select class="mb-2 form-control">
-						<option>İlçe</option>
+					<label>İlçe</label>
+					<select required name="ilce" id="ilce" class="mb-2 form-control">
 					</select>
 					<div class="position-relative form-group"><label for="ladres" class="">Adres</label><input required name="adres" id="adres" type="text" class="form-control"></div>
 					<div class="position-relative form-group">
@@ -49,11 +56,38 @@
 
 					<div class="position-relative form-group"><label for="lkilo" class="">Kilo</label><input name="lkilo" id="lkilo" type="text" class="form-control"></div>
 					<div class="position-relative form-group"><label for="lboy" class="">Boy</label><input name="lboy" id="lboy" type="text" class="form-control"></div>
+				<div class="row">
+					<div class="col-md-6">
+						<label>Kan Grubu</label>
+						<select name="bloodgroup" id="bloodgroup" class="mb-2 form-control">
+							<option value="@BloodGroupEnum.A">@BloodGroupEnum.A.GetDescription()</option>
+							<option value="@BloodGroupEnum.B">@BloodGroupEnum.B.GetDescription()</option>
+							<option value="@BloodGroupEnum.AB">@BloodGroupEnum.AB.GetDescription()</option>
+							<option value="@BloodGroupEnum.O">@BloodGroupEnum.O.GetDescription()</option>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<select name="bloodgroup" id="bloodgroup" class="mb-2 form-control" style="margin-top: 29px">
+							<option value="@RhEnum.Negative">@RhEnum.Negative.GetDescription()</option>
+							<option value="@RhEnum.Positive">@RhEnum.Positive.GetDescription()</option>
+						</select>
+					</div>
+					</div>
+					<label>Medeni Durumu</label>
+					<select name="civilstatus" id="civilstatus" class="mb-2 form-control">
+						<option value="@CivilStatusEnum.Single">@CivilStatusEnum.Single.GetDescription()</option>
+						<option value="@CivilStatusEnum.Married">@CivilStatusEnum.Married.GetDescription()</option>
+					</select>
+					<label>Eğitim Durumu</label>
+						<select name="educationstatus" id="educationstatus" class="mb-2 form-control">
+							<option value="@EducationStatusEnum.AssociateDegree">@EducationStatusEnum.AssociateDegree.GetDescription()</option>
+							<option value="@EducationStatusEnum.HighSchool">@EducationStatusEnum.HighSchool.GetDescription()</option>
+							<option value="@EducationStatusEnum.HighUniversity">@EducationStatusEnum.HighUniversity.GetDescription()</option>
+							<option value="@EducationStatusEnum.MiddleSchool">@EducationStatusEnum.MiddleSchool.GetDescription()</option>
+							<option value="@EducationStatusEnum.PrimarySchool">@EducationStatusEnum.PrimarySchool.GetDescription()</option>
+							<option value="@EducationStatusEnum.University">@EducationStatusEnum.University.GetDescription()</option>
+						</select>
 
-					@*kan grubu  gelecek*@
-					@*medeni durum  gelecek*@
-					@*egıtım durum gelecek*@
-				
 					<button class="mt-1 btn btn-primary" onclick="Kaydet()">Kaydet</button>
 				</form>
 			</div>
@@ -66,12 +100,25 @@
 
 
 	function Kaydet() {
-		sifre = document.getElementById('sifre').value;
-		tsifre = document.getElementById('sifretekrar').value;
-
-		if (sifre !== tsifre) {
-			@*$("#myToast").toast("show"); toast eklenecej*@
+	
 	}
-	}
+	$('#il').change(function () {
 
+		var id = $(this).val();
+		var ilceid = $("#ilce");
+		ilceid.empty();
+		$.ajax({
+			url: 'DistrictList',
+			type: 'POST',
+			dataType: 'json',
+			data: { 'id': id },
+			success: function (data) {
+				console.log(data);
+				$.each(data.object,
+					function (index, option) {
+						ilceid.append('<option value=' + option.id + '>' + option.districtName + '</option>');
+					});
+			}
+		});
+	});
 </script>

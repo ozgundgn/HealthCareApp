@@ -46,7 +46,8 @@ namespace Repository.Concrete
                     .Include(favoriteGenre => favoriteGenre.User)
                     .Where(x => x.User.UserType == 2).Select(x => new DonorApplicationListModel()
                     {
-                        Id = x.User.Id,
+                        Id=x.Id,
+                        UserId = x.User.Id,
                         Mail = x.User.Mail,
                         Name = x.User.FirstName,
                         Surname = x.User.LastName,
@@ -66,6 +67,7 @@ namespace Repository.Concrete
                 return questionList;
             }
         }
+
         public List<UserApplicationListModel> GetUserApplicationInformList()
         {
             using (HealtyCareContext context = new HealtyCareContext())
@@ -117,6 +119,31 @@ namespace Repository.Concrete
                 return application;
             }
         }
+
+        public List<City> GetCityList()
+        {
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var cityList = context.Cities.Select(x => new City()
+	                {
+		                Id = x.Id,
+		                CityName = x.CityName,
+                    District = x.District
+	                })
+                   .ToList();
+                return cityList;
+            }
+        }
+
+
+        public List<District> GetDistrictList(int id)
+        {
+		      using (HealtyCareContext context = new HealtyCareContext())
+		      {
+			      var districtList = context.Districts.Where(x => x.CityId == id).ToList();
+			      return districtList;
+		      }
+				}
         public bool SetApplicationState(StateSaveRequestModel model)
         {
             using (HealtyCareContext context = new HealtyCareContext())

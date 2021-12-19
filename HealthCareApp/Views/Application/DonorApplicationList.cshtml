@@ -1,4 +1,7 @@
-﻿@model List<Models.Application.DonorApplicationListModel>
+﻿@using Repository.Helpers
+@using Models.Enums
+@using Core.Extentions
+@model List<Models.Application.DonorApplicationListModel>
 @{
     <style>
         .modal-backdrop {
@@ -29,8 +32,13 @@
                                 <td>@item.Surname</td>
                                 <td>@item.Phone</td>
                                 <td>@item.Mail</td>
-                                <td>@item.TransferType</td>
-                                <td><button type="button" onclick="openMailModal(@item.Id,'@item.Name'+' '+'@item.Surname')"><i class="pe-7s-mail-open-file"></i></button></td>
+                                <td>@(((TransferType)item.TransferType).GetDescription())</td>
+                                @{
+                                    if (SessionHelper.DefaultSession.Id != 0)
+                                    {
+                                        <td><button type="button" onclick="openMailModal(@item.UserId,'@item.Name'+' '+'@item.Surname')"><i class="pe-7s-mail-open-file"></i></button></td>
+                                    }
+                                }
                             </tr>
                         }
                     </tbody>
@@ -47,9 +55,10 @@
             <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="SendMail">
                 <div class="modal-body">
                     <input type="hidden" name="id" id="id" />
-                    <h1 class="form-control"></h1>
+                    <input type="hidden" name="donorPage" value="true" id="donorPage" />
+                    <label class="col-form-label-lg mail-to"></label><br />
                     <label for="message"><b>Mesaj</b></label>
-                    <textarea id="w3review" class="form-control" name="message" rows="4">At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+                    <textarea id="w3review" class="form-control" name="message" rows="4" required>
                     </textarea>
                 </div>
                 <div class="modal-footer">
@@ -65,7 +74,7 @@
     function openMailModal(donorId, donorName) {
 
         $(".modal-body #id").val(donorId);
-        $(".modal-body h1").val(donorName);
+        $(".modal-body label.mail-to").append(donorName);
         $("#mailModal").modal("show");
     }
 
