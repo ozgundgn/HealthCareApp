@@ -33,6 +33,7 @@ https://github.com/ozgundgn/HealthCareApp.git
  4-Kullanıcıların platform üzerinden birbirlerine mesaj gönderebileceği bir yapı hazırlama.(Bildirimler)
  5-Kullanıcı kendi başvuru durumunu  güncellediğinde eşleştiği donörü listeden seçmesini sağlamak. Eşleşen hasta ve donörü ayrı bir tabloda tutup veri analizi çıkarma.(Ayda şu kadar hasta bu platformdan yararlanıp  kendilerine donör bulması,Yüzde olarak dashboardlarda gösterim(yüzde 60 olarak bulunun donörler bu platformdan bulundu gibi))
  6-Kullanıcıların raporlarının text içeriklerini bir companentle okuyup(pdfpig) rapor içeriğinden arama işleminin gerçekleşmesini sağlamak.Rapor içeriğine göre arama sayfası.
- 
+ 7-cshtml sayfalarının altında yazılan javascriptleri wwwroot kısmında sayfaismi.js şeklinde tutmayı sağlamak.(Browser  her yenilendiğinde sayfadaki javascriptleri tekrardan yüklemesini önlemek için)
+ 8-Testutil hazırlamak.
        
        
