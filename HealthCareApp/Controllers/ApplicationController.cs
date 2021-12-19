@@ -1,4 +1,5 @@
-﻿using HealthCareApp.Models;
+﻿using System.Collections.Generic;
+using HealthCareApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -6,6 +7,9 @@ using System.IO;
 using Models.Application;
 using Service.Abstract;
 using Nancy.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using ServiceStack.Text;
 
 namespace HealthCareApp.Controllers
 {
@@ -37,7 +41,7 @@ namespace HealthCareApp.Controllers
         [HttpPost]
         public IActionResult ApplicationSave([FromForm]ApplicationSaveRequestModel model)
         {
-            var ss= new JavaScriptSerializer().Serialize(model.QuestionResultListString);
+            model.QuestionResultList= new JavaScriptSerializer().Deserialize<List<QuestionResultList>>(model.QuestionResultListString);
             if (model.ReportResult != null && model.ReportResult.Length > 0)
             {
                 using (var ms = new MemoryStream())
