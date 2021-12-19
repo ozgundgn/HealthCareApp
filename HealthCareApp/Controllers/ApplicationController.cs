@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Models.Application;
 using Service.Abstract;
 using Nancy.Json;
@@ -18,10 +19,12 @@ namespace HealthCareApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IApplicationService _applicationService;
-        public ApplicationController(ILogger<HomeController> logger, IApplicationService applicationService)
+        private readonly INotyfService _notify;
+        public ApplicationController(ILogger<HomeController> logger, IApplicationService applicationService, INotyfService notifyService)
         {
             _applicationService = applicationService;
             _logger = logger;
+            _notify = notifyService;
         }
 
         public IActionResult SickApplicationList()
@@ -35,67 +38,66 @@ namespace HealthCareApp.Controllers
         }
         public IActionResult AplicationCreate()
         {
-            ApplicationCreateViewModel model =new ApplicationCreateViewModel();
-               model.QuestionsList = _applicationService.GetQuestionList().Data;
+            ApplicationCreateViewModel model = new ApplicationCreateViewModel();
+            model.QuestionsList = _applicationService.GetQuestionList().Data;
             return View(model);
         }
         [HttpPost]
-        public IActionResult ApplicationSave([FromForm]ApplicationSaveRequestModel model)
+        public IActionResult ApplicationSave([FromForm] ApplicationSaveRequestModel model)
         {
-            model.QuestionResultList= new JavaScriptSerializer().Deserialize<List<QuestionResultList>>(model.QuestionResultListString);
+            model.QuestionResultList = new JavaScriptSerializer().Deserialize<List<QuestionResultList>>(model.QuestionResultListString);
 
-            var uploads = Path.Combine(string.Concat( @"C:\HealtyCareApp\"));
-            var dosyaAdi = model.ReportResult.FileName.Split(".");
-            var path = dosyaAdi[1];
-            model.ReportName = dosyaAdi[0];
+            var uploads = Path.Combine(string.Concat(@"C:\HealtyCareApp\"));
+
+
             var dosyaKayitId = _applicationService.SetApplication(model);
-            var filePath =
-                Path.Combine(uploads, string.Concat(dosyaKayitId.Data.Id, ".", path)); //dosya kayiıt id döncek
-            using (var dosya = new FileStream(filePath, FileMode.Create))
+
+            if (model.ReportResult != null)
             {
-                model.ReportResult.CopyTo(dosya);
+                var dosyaAdi = model.ReportResult.FileName.Split(".");
+                var path = dosyaAdi[1];
+                model.ReportName = dosyaAdi[0];
+
+                var filePath =
+                    Path.Combine(uploads, string.Concat(dosyaKayitId.Data.Id, ".", path)); //dosya kayiıt id döncek
+                using (var dosya = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ReportResult.CopyTo(dosya);
+                }
             }
-            //if (model.ReportResult != null && model.ReportResult.Length > 0)
-            //{
-            //    using (var ms = new MemoryStream())
-            //    {
-            //        model.ReportResult.CopyTo(ms);
-            //        model.ReportResultByte = ms.ToArray();
-            //    }
-            //}
 
-
-            //var result = _applicationService.GenelTanimlamalarService.SirtlikTasarimKaydet(model);
-            return Json(new
+            if (dosyaKayitId.Success)
             {
-                result = true,//result.Success,
-                message = "İşlem Başarılı",
-                //Object =null,// result.Object.Id
-            });
-            //ApplicationCreateViewModel model = new ApplicationCreateViewModel();
-            //model.QuestionsList = _applicationService.GetQuestionList().Data;
-            //return View(model);
+                _notify.Success("Başvuru oluşturuldu.");
+            }
+            else
+            {
+                _notify.Error("Başvuru oluşturulurken hata oldu.");
+
+            }
+
+            return RedirectToAction("AplicationCreate");
         }
 
         public IActionResult ApppFileView(int id)
         {
             var uploads = Path.Combine(string.Concat(@"C:\HealtyCareApp\"));
-            var filePath = Path.Combine(uploads, string.Concat(id ,".", "pdf"));
+            var filePath = Path.Combine(uploads, string.Concat(id, ".", "pdf"));
 
-               byte[] bytes = System.IO.File.ReadAllBytes(filePath);
-               var _dosya = string.Concat("data:application/pdf;base64,", Convert.ToBase64String(bytes));
+            byte[] bytes = System.IO.File.ReadAllBytes(filePath);
+            var _dosya = string.Concat("data:application/pdf;base64,", Convert.ToBase64String(bytes));
             return Json(new
             {
                 result = true,
                 message = "İşlem Başarılı",
-                Object =_dosya
+                Object = _dosya
             });
         }
-       
+
         public IActionResult UserApplicationInformList()
         {
-          var appList= _applicationService.GetUserApplicationInformList().Data;
-          return View(appList);
+            var appList = _applicationService.GetUserApplicationInformList().Data;
+            return View(appList);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

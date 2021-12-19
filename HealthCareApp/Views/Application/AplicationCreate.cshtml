@@ -1,14 +1,15 @@
 ﻿@using Models.Enums
 @using Core.Extentions
+@using Repository.Helpers
 @model Models.Application.ApplicationCreateViewModel
-<div class="row">
-    <div class="col-lg-12">
-        <div class="main-card mb-3 card " style="width:1300px">
+<div class="row mx-2">
+    <div col="col-md-6">
+        <div class="main-card mb-3 card " style="width: 1300px">
             <div class="card-body">
                 <h5 class="card-title">Başvuru Oluştur</h5>
                 <div class="position-relative row form-group">
                     <label for="transfertype" class="col-sm-2 col-form-label">Nakil Tipi</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-6">
                         <select name="select" required id="transfertype" class="form-control">
                             <option value="@TransferType.BloodTransfer">@TransferType.BloodTransfer.GetDescription()</option>
                             <option value="@TransferType.MarrowTransfer">@TransferType.MarrowTransfer.GetDescription()</option>
@@ -19,34 +20,42 @@
                 </div>
                 <div class="position-relative row form-group">
                     <label for="relativesname" class="col-sm-2 col-form-label">Yakın Adı</label>
-                    <div class="col-sm-10"><input required id="relativesname" placeholder="Yakın Adı..." type="text" class="form-control"></div>
+                    <div class="col-sm-6"><input required id="relativesname" placeholder="Yakın Adı..." type="text" class="form-control"></div>
                 </div>
                 <div class="position-relative row form-group">
                     <label for="relativessurname" class="col-sm-2 col-form-label">Yakın Soyadı</label>
-                    <div class="col-sm-10"><input required id="relativessurname" placeholder="Yakın soyadı..." type="text" class="form-control"></div>
+                    <div class="col-sm-6"><input required id="relativessurname" placeholder="Yakın soyadı..." type="text" class="form-control"></div>
                 </div>
                 <div class="position-relative row form-group">
                     <label for="relativesphone" class="col-sm-2 col-form-label">Yakın Telefon</label>
-                    <div class="col-sm-10"><input required id="relativesphone" placeholder="Yakın Telefon..." type="tel" class="form-control"></div>
+                    <div class="col-sm-6"><input required id="relativesphone" placeholder="Yakın Telefon..." type="tel" class="form-control"></div>
                 </div>
+                @{
+                    if (SessionHelper.DefaultSession.UserType == (int)UserTypeEnum.Sick)
+                    {
+                        <div class="position-relative row form-group">
+                            <label for="sickdate" class="col-sm-2 col-form-label">Hastalık Tarihi</label>
+                            <div class="col-sm-10"> <input required name="dogumtarihi" id="sickdate" type="date" class="form-control"></div>
+                        </div>
+
+                        <div class="position-relative row form-group">
+                            <label for="sickdesc" class="col-sm-2 col-form-label"> Açıklama</label>
+                            <div class="col-sm-6"><textarea name="text" required id="sickdesc" class="form-control"></textarea></div>
+                        </div>
+                    }
+
+                }
                 <div class="position-relative row form-group">
-                    <label for="sickdate" class="col-sm-2 col-form-label">Hastalık Tarihi</label>
-                    <div class="col-sm-10"> <input required name="dogumtarihi" id="sickdate" type="date" class="form-control"></div>
-                </div>
+                    <label for="reportfile" class="col-sm-2 col-form-label">Raporlar</label>
+                    <div class="col-sm-6">
+                        <input type="file" class="jfilestyle form-control-file" data-text="Dosya Ekle" data-theme="asphalt" id="reportfile" placeholder="Logo">
 
-            </div>
-            <div class="position-relative row form-group">
-                <label for="sickdesc" class="col-sm-2 col-form-label" > Açıklama</label>
-                <div class="col-sm-10"><textarea name="text" required id="sickdesc" class="form-control"></textarea></div>
-            </div>
-            <div class="position-relative row form-group">
-                <label for="reportfile" class="col-sm-2 col-form-label"> Raporlar</label>
-                <div class="col-sm-10">
-                    <input type="file" class="jfilestyle form-control-file" data-text="Dosya Ekle" data-theme="asphalt" id="reportfile" placeholder="Logo">
-
-                    <small class="form-text text-muted">Raporlarınızı Pdf Formatında Ekleyiniz.</small>
+                        <small class="form-text text-muted">Raporlarınızı Pdf Formatında Ekleyiniz.</small>
+                    </div>
                 </div>
             </div>
+
+
             <fieldset class="  position-relative row form-group" style="margin: 10px">
                 <table class=" table table-hover">
                     <thead>
@@ -72,7 +81,7 @@
                 </table>
             </fieldset>
             <div class="position-relative row form-check" style="margin: 10px">
-                <div class="col-sm-10 offset-sm-2">
+                <div class="col-sm-2 offset-sm-10">
                     <button class="btn btn-outline-success" id="kaydet">Başvuruyu Kaydet</button>
                 </div>
             </div>
@@ -83,7 +92,7 @@
 
 <script type="text/javascript">
     $("#kaydet").click(function () {
-       
+
         var data = [];
         $("table > tbody > tr").each(function (key) {
             var radioval = "radio+" + $(this).find('td').eq(0).text();
@@ -92,7 +101,7 @@
                 return false;
             }
             data.push({ QuestionId: $(this).find('td').eq(0).text(), QuestionResult: $('input[name="' + radioval + '"]:checked').val() });
-        });2
+        });
         console.log(data);
         var myfile = $('#reportfile').get(0).files[0];
         var formData = new FormData();
