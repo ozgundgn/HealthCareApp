@@ -63,5 +63,36 @@ namespace Repository.Concrete
                 return questionList;
             }
         }
+        public Application SetApplication(ApplicationSaveRequestModel model)
+        {
+            var list = new List<QuestionResult>();
+            foreach (var item in model.QuestionResultList)
+            {
+                    var question = new QuestionResult(){QuestionId = item.QuestionId, Result = item.QuestionResult};
+                list.Add(question);
+            }
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var application = context.Applications.Add(new Application
+                {
+                    RelativesName = model.RelativesName,
+                    RelativeSurname = model.RelativesSurname,
+                    RelativesPhone = model.RelativesPhone,
+                    UserId = SessionHelper.DefaultSession.Id,
+                    TransferType = SessionHelper.DefaultSession.UserType,
+                    Statu = 1,
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    QuestionResult = list,
+                    SickApplicationDetails = new List<SickApplicationDetails>
+                        {new SickApplicationDetails {SicknessDate = model.SickDate, SicknessDetail = model.SickDesc}},
+                    Report = new List<Report> {new Report {ReportName = model.ReportName } }
+
+
+                }).Entity;
+                var id=context.SaveChanges();
+                return application;
+            }
+        }
     }
 }

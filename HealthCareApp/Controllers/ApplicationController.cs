@@ -42,14 +42,28 @@ namespace HealthCareApp.Controllers
         public IActionResult ApplicationSave([FromForm]ApplicationSaveRequestModel model)
         {
             model.QuestionResultList= new JavaScriptSerializer().Deserialize<List<QuestionResultList>>(model.QuestionResultListString);
-            if (model.ReportResult != null && model.ReportResult.Length > 0)
+
+            var uploads = Path.Combine(string.Concat( @"C:\HealtyCareApp\"));
+            var dosyaAdi = model.ReportResult.FileName.Split(".");
+            var path = dosyaAdi[1];
+            model.ReportName = dosyaAdi[0];
+            var dosyaKayitId = _applicationService.SetApplication(model);
+            var filePath =
+                Path.Combine(uploads, string.Concat(dosyaKayitId.Data.Id, ".", path)); //dosya kayiıt id döncek
+            using (var dosya = new FileStream(filePath, FileMode.Create))
             {
-                using (var ms = new MemoryStream())
-                {
-                    model.ReportResult.CopyTo(ms);
-                    model.ReportResultByte = ms.ToArray();
-                }
+                model.ReportResult.CopyTo(dosya);
             }
+            //if (model.ReportResult != null && model.ReportResult.Length > 0)
+            //{
+            //    using (var ms = new MemoryStream())
+            //    {
+            //        model.ReportResult.CopyTo(ms);
+            //        model.ReportResultByte = ms.ToArray();
+            //    }
+            //}
+
+
             //var result = _applicationService.GenelTanimlamalarService.SirtlikTasarimKaydet(model);
             return Json(new
             {

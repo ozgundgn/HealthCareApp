@@ -32,5 +32,10 @@ namespace Service.Concrete
             var questionList = _applicationRepository.GetQuestionList();
             return new SuccessDataResult<List<Question>>(questionList);
         }
+        public IDataResult<Application> SetApplication(ApplicationSaveRequestModel model)
+        {
+            var setapp = _applicationRepository.SetApplication(model);
+            return new SuccessDataResult<Application>(setapp);
+        }
     }
 }
