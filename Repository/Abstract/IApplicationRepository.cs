@@ -14,6 +14,7 @@ namespace Repository.Abstract
         List<DonorApplicationListModel> GetDonorApplicationList();
         List<Question> GetQuestionList();
         Application SetApplication(ApplicationSaveRequestModel model);
+        bool SetApplicationState(StateSaveRequestModel model);
 
 
         List<UserApplicationListModel> GetUserApplicationInformList();

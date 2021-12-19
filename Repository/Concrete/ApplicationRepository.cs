@@ -117,5 +117,23 @@ namespace Repository.Concrete
                 return application;
             }
         }
+        public bool SetApplicationState(StateSaveRequestModel model)
+        {
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var app = Get(x => x.Id == model.AppId).FirstOrDefault();
+
+                app.Id = model.AppId;
+                app.CancellationReason = model.PlatformType == 0 ? "" : model.Description;
+                app.Statu = model.PlatformType;
+                app.UserId = SessionHelper.DefaultSession.Id;
+
+                var application = Update(app);
+        
+                var id = context.SaveChanges();
+                return application;
+            }
+
+        }
     }
 }

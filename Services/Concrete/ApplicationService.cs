@@ -37,6 +37,19 @@ namespace Service.Concrete
             var setapp = _applicationRepository.SetApplication(model);
             return new SuccessDataResult<Application>(setapp);
         }
+        public IResult SetApplicationState(StateSaveRequestModel model)
+        {
+            var setapp = _applicationRepository.SetApplicationState(model);
+            if (setapp)
+            {
+                return new SuccessResult();
+            }
+            else
+            {
+                return new ErrorResult();
+            }
+            
+        }
         public IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList()
         {
             var userAppList = _applicationRepository.GetUserApplicationInformList();
