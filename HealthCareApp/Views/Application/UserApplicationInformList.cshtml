@@ -1,0 +1,61 @@
+﻿
+@using ServiceStack
+@using Models.Enums
+@using Core.Extentions
+@model List<Models.Application.UserApplicationListModel>
+
+@{
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title">Başvurularım</h5>
+                <table class="mb-0 table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Başvuru Tarihi</th>
+                            <th>Açıklama</th>
+                            <th>Son Güncelleme Tarihi</th>
+                            <th>Başvuru Tipi</th>
+                            <th>Başvuru Durumu</th>
+                            <th>Başvuru Detay</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.ApplicationDateTime</td>
+                            <td>@item.Description</td>
+                            <td>@(item.UpdateDateTime)</td>
+                            <td>@(((TransferType)item.TransferType).GetDescription())</td>
+                            <td style="text-align:center">
+                                @{
+                                    if (item.Statu == 1)
+                                    {
+                                        <i class="pe-7s-check"></i>
+                                    }
+                                    else if (item.Statu == 0)
+                                    {
+                                        <i class="pe-7s-close-circle"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="pe-7s-hourglass"></i>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <button type="button" id="'application_' + @item.Id">
+                                    <i class="metismenu-icon pe-7s-note2">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

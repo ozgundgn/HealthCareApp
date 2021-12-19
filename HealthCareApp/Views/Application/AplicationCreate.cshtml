@@ -103,7 +103,7 @@
         formData.append('RelativesPhone', $("#relativesphone").val());
         formData.append('SickDate', $("#sickdate").val());
         formData.append('SickDesc', $("#sickdesc").val());
-        formData.append('QuestionResultListString', JSON.stringify(data));
+        formData.append('QuestionResultListString', data);
         console.log(formData);
         $.ajax({
             url: "/Application/ApplicationSave",

@@ -59,7 +59,7 @@ namespace HealthCareApp.Controllers
                     }
                     _notify.Success("Kullanıcı Girişi Başarılı" + SessionHelper.DefaultSession.FirstName);
             
-            return RedirectToAction("Index");
+            return RedirectToAction("UserApplicationInformList","Application");
 
         }
 

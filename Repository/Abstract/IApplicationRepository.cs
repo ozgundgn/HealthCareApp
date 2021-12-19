@@ -16,5 +16,7 @@ namespace Repository.Abstract
         Application SetApplication(ApplicationSaveRequestModel model);
 
 
+        List<UserApplicationListModel> GetUserApplicationInformList();
+        
     }
 }

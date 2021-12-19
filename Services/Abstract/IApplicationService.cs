@@ -13,5 +13,6 @@ namespace Service.Abstract
         IDataResult<List<DonorApplicationListModel>> GetDonorApplicationList();
         IDataResult<List<Question>> GetQuestionList();
         IDataResult<Application> SetApplication(ApplicationSaveRequestModel model);
+        IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList();
     }
 }
