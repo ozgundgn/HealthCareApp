@@ -11,36 +11,45 @@
 
     <div class="col-lg-12">
         <div class="main-card mb-3 card">
+
+            <div class="card-header">
+                <input id="myInput" type="text" placeholder="Search..">
+            </div>
             <div class="card-body">
                 <h5 class="card-title">Donör Listesi</h5>
-                <table class="mb-0 table table-hover">
+                <table id="donorAppTable" class="mb-0 table table-hover">
                     <thead>
-                        <tr>
-                            <th>Adı</th>
-                            <th>Soyadı</th>
-                            <th>Telefon</th>
-                            <th>Mail</th>
-                            <th>Nakil Tipi</th>
-                            <th>Donöre Mail Gönder</th>
-                        </tr>
+                    <tr>
+                        <th>Adı</th>
+                        <th>Soyadı</th>
+                        <th>Telefon</th>
+                        <th>Mail</th>
+                        <th>Nakil Tipi</th>
+                        @{
+                            if (SessionHelper.DefaultSession.Id != 0)
+                            {
+                                <th>Donöre Mail Gönder</th>
+                            }
+                        }
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <th scope="row">@item.Name</th>
-                                <td>@item.Surname</td>
-                                <td>@item.Phone</td>
-                                <td>@item.Mail</td>
-                                <td>@(((TransferType)item.TransferType).GetDescription())</td>
-                                @{
-                                    if (SessionHelper.DefaultSession.Id != 0)
-                                    {
-                                        <td><button type="button" onclick="openMailModal(@item.UserId,'@item.Name'+' '+'@item.Surname')"><i class="pe-7s-mail-open-file"></i></button></td>
-                                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.Name</th>
+                            <td>@item.Surname</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Mail</td>
+                            <td>@(((TransferType) item.TransferType).GetDescription())</td>
+                            @{
+                                if (SessionHelper.DefaultSession.Id != 0)
+                                {
+                                    <td><button type="button" onclick="openMailModal(@item.UserId, '@item.Name' + ' ' + '@item.Surname')"><i class="pe-7s-mail-open-file"></i></button></td>
                                 }
-                            </tr>
-                        }
+                            }
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
@@ -74,8 +83,14 @@
     function openMailModal(donorId, donorName) {
 
         $(".modal-body #id").val(donorId);
-        $(".modal-body label.mail-to").append(donorName);
+        $(".modal-body label.mail-to").html(donorName);
         $("#mailModal").modal("show");
     }
 
+    $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#donorAppTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
 </script>
