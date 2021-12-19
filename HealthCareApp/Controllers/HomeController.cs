@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Entity.Models;
 using Microsoft.AspNetCore.Http;
+using Models.Home;
 using Repository.Helpers;
 using Service.Abstract;
 using ServiceStack;
@@ -23,16 +24,18 @@ namespace HealthCareApp.Controllers
         private readonly INotyfService _notify;
         private static IRedisClient _redisClient;
         private static IHttpContextAccessor _contextAccessor;
-        public HomeController(ILogger<HomeController> logger, IUserService userService, INotyfService notifyService, IRedisClient redisClient, IHttpContextAccessor contextAccessor)
+        private readonly IApplicationService _applicationService;
+    public HomeController(ILogger<HomeController> logger, IUserService userService,IApplicationService applicationService, INotyfService notifyService, IRedisClient redisClient, IHttpContextAccessor contextAccessor)
         {
             _userService = userService;
             _logger = logger;
             _notify = notifyService;
             _redisClient = redisClient;
             _contextAccessor = contextAccessor;
-        }
+            _applicationService = applicationService;
+    }
 
-        public IActionResult Index()
+    public IActionResult Index()
         {
             if (SessionHelper.DefaultSession == null || SessionHelper.DefaultSession.Id == 0)
             {
@@ -71,7 +74,18 @@ namespace HealthCareApp.Controllers
         }
         public IActionResult Register()
         {
-            return View("MemberRegister");
+	        RegisterModel model = new RegisterModel();
+	        model.CityList = _applicationService.GetCityList().Data;
+          return View("MemberRegister",model);
+        }     
+        public IActionResult DistrictList(int id)
+        {
+	        return Json(new
+	        {
+		        result = true,//result.Success,
+		        message = "İşlem Başarılı",
+		        Object = _applicationService.GetDistrictList(id).Data,// result.Object.Id
+	        });
         }
         [HttpPost]
         public IActionResult SendMail(string message, string id)
