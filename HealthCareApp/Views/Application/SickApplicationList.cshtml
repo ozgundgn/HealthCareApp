@@ -25,35 +25,38 @@
     </style>
     <div class="col-lg-12">
         <div class="main-card mb-3 card">
+            <div class="card-header">
+                <input id="myInput" type="text" placeholder="Search..">
+            </div>
             <div class="card-body">
                 <h5 class="card-title">Hasta Listesi</h5>
-                <table class="mb-0 table table-hover">
+                <table  id="sickAppTable"class="mb-0 table table-hover">
                     <thead>
-                        <tr>
-                            <th>Adı</th>
-                            <th>Soyadı</th>
-                            <th>Telefon</th>
-                            <th>Mail</th>
-                            <th>Hastalık Tarihi</th>
-                            <th>Açıklama</th>
-                            <th>Nakil Tipi</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Adı</th>
+                        <th>Soyadı</th>
+                        <th>Telefon</th>
+                        <th>Mail</th>
+                        <th>Hastalık Tarihi</th>
+                        <th>Açıklama</th>
+                        <th>Nakil Tipi</th>
+                        <th></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <th scope="row">@item.Name</th>
-                                <td>@item.Surname</td>
-                                <td>@item.Phone</td>
-                                <td>@item.Mail</td>
-                                <td>@item.SicknesskDate</td>
-                                <td>@item.Description</td>
-                                <td>@(((TransferType)item.TransferType).GetDescription())</td>
-                                <td><button class="btn btn-outline-warning" onclick="FileView(@item.Id);"><i class="fa fa-file-pdf"></i></button></td>
-                            </tr>
-                        }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td scope="row">@item.Name</td>
+                            <td>@item.Surname</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Mail</td>
+                            <td>@item.SicknesskDate</td>
+                            <td>@item.Description</td>
+                            <td>@(((TransferType) item.TransferType).GetDescription())</td>
+                            <td><button class="btn btn-outline-warning" onclick="FileView(@item.Id);"><i class="fa fa-file-pdf"></i></button></td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
@@ -97,4 +100,11 @@
 
     };
 
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#sickAppTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+   
 </script>

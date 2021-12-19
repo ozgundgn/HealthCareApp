@@ -18,6 +18,7 @@
                             <th>Başvuru Tipi</th>
                             <th>Başvuru Durumu</th>
                             <th>Başvuru Detay</th>
+                            <th>Durum Güncelle</th>
 
                         </tr>
                     </thead>
@@ -46,6 +47,9 @@
                                 }
                             </td>
                             <td>
+
+                            </td>
+                            <td>
                                 <button type="button" id="'application_' + @item.Id">
                                     <i class="metismenu-icon pe-7s-note2">
                                     </i>
@@ -59,3 +63,22 @@
         </div>
     </div>
 }
+<script>
+    function FileView(id) {
+        $.ajax({
+                url: "/Application/ApppFileView",
+                type: "POST",
+                data: { id: id },
+                dataType: 'json'
+            })
+            .done(function (data) {
+                console.log(data.object);
+                $("#modalicerik").html("");
+                $("#modalicerik").html("<div style='min-height: 100% !important;'><iframe src='" + data.object + "' frameborder='0' scrolling='auto' height='900' width='750'></iframe></div>");
+                $('#filemodal').modal("show");
+            })
+            .fail(function () {
+            });
+
+    };
+</script>
