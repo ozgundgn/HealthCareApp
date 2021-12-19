@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HealthCareApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -74,6 +75,21 @@ namespace HealthCareApp.Controllers
             //ApplicationCreateViewModel model = new ApplicationCreateViewModel();
             //model.QuestionsList = _applicationService.GetQuestionList().Data;
             //return View(model);
+        }
+
+        public IActionResult ApppFileView(int id)
+        {
+            var uploads = Path.Combine(string.Concat(@"C:\HealtyCareApp\"));
+            var filePath = Path.Combine(uploads, string.Concat(id ,".", "pdf"));
+
+               byte[] bytes = System.IO.File.ReadAllBytes(filePath);
+               var _dosya = string.Concat("data:application/pdf;base64,", Convert.ToBase64String(bytes));
+            return Json(new
+            {
+                result = true,
+                message = "İşlem Başarılı",
+                Object =_dosya
+            });
         }
        
         public IActionResult UserApplicationInformList()

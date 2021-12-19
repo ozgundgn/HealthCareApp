@@ -22,15 +22,16 @@ namespace Repository.Concrete
             {
                 var sickDetailList = context.Applications
                        .Include(favoriteGenre => favoriteGenre.User)
-                       .Include(genre => genre.SickApplicationDetails).Select(x => new SickApplicationListModel()
+                       .Include(genre => genre.SickApplicationDetails).Where(x => x.User.UserType == 1).Select(x => new SickApplicationListModel()
                        {
+                           Id = x.Id,
                            Mail = x.User.Mail,
                            Name = x.User.FirstName,
                            Surname = x.User.LastName,
                            Phone = x.User.Phone,
                            TransferType = x.TransferType,
                            Description = x.Description,
-                           SicknesskDate = x.SickApplicationDetails.ToList()[0].SicknessDate
+                           SicknesskDate = x.SickApplicationDetails.ToList()[0].SicknessDate,
 
                        }).ToList();
                 return sickDetailList;
@@ -43,8 +44,9 @@ namespace Repository.Concrete
             {
                 var sickDetailList = context.Applications
                     .Include(favoriteGenre => favoriteGenre.User)
-                    .Select(x => new DonorApplicationListModel()
+                    .Where(x => x.User.UserType == 2).Select(x => new DonorApplicationListModel()
                     {
+                        Id = x.Id,
                         Mail = x.User.Mail,
                         Name = x.User.FirstName,
                         Surname = x.User.LastName,
@@ -89,7 +91,7 @@ namespace Repository.Concrete
             var list = new List<QuestionResult>();
             foreach (var item in model.QuestionResultList)
             {
-                    var question = new QuestionResult(){QuestionId = item.QuestionId, Result = item.QuestionResult};
+                var question = new QuestionResult() { QuestionId = item.QuestionId, Result = item.QuestionResult };
                 list.Add(question);
             }
             using (HealtyCareContext context = new HealtyCareContext())
@@ -107,11 +109,11 @@ namespace Repository.Concrete
                     QuestionResult = list,
                     SickApplicationDetails = new List<SickApplicationDetails>
                         {new SickApplicationDetails {SicknessDate = model.SickDate, SicknessDetail = model.SickDesc}},
-                    Report = new List<Report> {new Report {ReportName = model.ReportName } }
+                    Report = new List<Report> { new Report { ReportName = model.ReportName } }
 
 
                 }).Entity;
-                var id=context.SaveChanges();
+                var id = context.SaveChanges();
                 return application;
             }
         }
