@@ -1,125 +1,155 @@
 ﻿@using Core.Extentions
 @using Models.Enums
 @model Models.Home.RegisterModel
-<div class="tab-content">
-	<div class="tab-pane tabs-animation fade show active " id="tab-content-0" role="tabpanel">
-		<div class="main-card mb-3 card">
-			<div class="card-body" style="width: 800px;">
-				<h5 class="card-title">KULLANICI KAYIT FORMU</h5>
-				<form class="">
-					<div class="position-relative form-group"><label for="lad" class="">Ad</label><input required name="name" id="ad" type="text" class="form-control"></div>
-					<div class="position-relative form-group"><label for="lsoyad" class="">Soyad</label><input required name="surname" id="soyad" type="text" class="form-control"></div>
-					<div class="position-relative form-group"><label for="ltc" class="">TC</label><input required name="tc" id="tc" type="text" class="form-control"></div>
-					<div class="position-relative form-group"><label for="ldogum" class="">Doğum Tarihi</label><input required name="dogumtarihi" id="dogumtarihi" type="date" class="form-control"></div>
-					<fieldset class="position-relative form-group">
-						Cinsiyet
-						<div class="position-relative form-check">
-							<label class="form-check-label"><input name="cinsiyet" type="radio" value="kadin" class="form-check-input">Kadın</label>
-						</div>
-						<div class="position-relative form-check"><label class="form-check-label"><input name="cinsiyet" type="radio" value="erkek" class="form-check-input">Erkek</label></div>
-						<div class="position-relative form-check"><label class="form-check-label"><input checked name="cinsiyet" type="radio" value="belirsiz" class="form-check-input">Belirtmek istemiyorum</label></div>
-					</fieldset>
-					<fieldset class="position-relative form-group">
-						<div class="position-relative form-check">
-							<label class="form-check-label"><input checked name="tip" type="radio" value="hasta" class="form-check-input">Hasta</label>
-						</div>
-						<div class="position-relative form-check"><label class="form-check-label"><input name="tip" type="radio" value="donor" class="form-check-input">Donör</label></div>
-					</fieldset>
 
-					<div class="position-relative form-group"><label for="lanne" class="">Anne Adı</label><input name="anneadi" id="anneadi" type="text" class="form-control"></div>
-					<div class="position-relative form-group"><label for="lbaba" class="">Baba Adı</label><input name="babaadi" id="babaadi" type="text" class="form-control"></div>
-					<label>İl</label>
-					<select required name="il" id="il" class="mb-2 form-control">
-						@{
-							foreach (var item in Model.CityList)
-							{
-								<option value="@item.Id">@item.CityName</option>
+	
+
+		<div class="tab-pane tabs-animation fade show active " id="tab-content-0" role="tabpanel">
+			<div class="main-card mb-3 card">
+				<div class="card-body" style="width: 800px">
+					<form method="post"  enctype="multipart/form-data" asp-controller="Home" asp-action="Register" class="card-body" >
+						<h5 class="card-title">KULLANICI KAYIT FORMU</h5>
+						<div class="position-relative form-group"><label for="FirstName">Ad</label><input required name="FirstName" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="LastName">Soyad</label><input required name="LastName" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="IdentityNumber">TC</label><input required name="IdentityNumber" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="Birthday">Doğum Tarihi</label><input required name="Birthday" type="date" class="form-control"></div>
+						<fieldset class="position-relative form-group">
+							Cinsiyet
+							<div class="position-relative form-check">
+								<label class="form-check-label"><input name="Gender" type="radio" value="1" class="form-check-input">Kadın</label>
+							</div>
+							<div class="position-relative form-check"><label class="form-check-label"><input name="Gender" type="radio" value="2" class="form-check-input">Erkek</label></div>
+							<div class="position-relative form-check"><label class="form-check-label"><input checked name="Gender" type="radio" value="0" class="form-check-input">Belirtmek istemiyorum</label></div>
+						</fieldset>
+						<fieldset class="position-relative form-group">
+							<div class="position-relative form-check">
+								<label class="form-check-label"><input checked name="UserType" type="radio" value="1" class="form-check-input">Hasta</label>
+							</div>
+							<div class="position-relative form-check"><label class="form-check-label"><input name="UserType" type="radio" value="2" class="form-check-input">Donör</label></div>
+						</fieldset>
+
+						<div class="position-relative form-group"><label for="MotherName">Anne Adı</label><input name="MotherName" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="FatherName" class="">Baba Adı</label><input name="FatherName" type="text" class="form-control"></div>
+						<label>İl</label>
+						<select required name="CityId" id="CityId" class="mb-2 form-control">
+							@{
+								foreach (var item in Model.CityList)
+								{
+									<option value="@item.Id">@item.CityName</option>
+								}
 							}
-						}
-					</select>
-					<label>İlçe</label>
-					<select required name="ilce" id="ilce" class="mb-2 form-control">
-					</select>
-					<div class="position-relative form-group"><label for="ladres" class="">Adres</label><input required name="adres" id="adres" type="text" class="form-control"></div>
-					<div class="position-relative form-group">
-						<label for="ltel" class="">Tel</label>
-						<input required name="tel" id="tel" type="text" class="form-control">
-					</div>
-
-					<div class="position-relative form-group"><label for="lmail" class="">Email</label><input required name="email" id="email" type="email" class="form-control"></div>
-					<div class="position-relative form-group">
-						<label for="lsifre" class="">Şifre</label><input required name="sifre" id="sifre" type="password" class="form-control">
-					</div>
-					<div class="position-relative form-group">
-						<label for="lsifretekrar" class="">Şifre Tekrar</label><input required name="sifretekrar" id="sifretekrar" type="password" class="form-control">
-					</div>
-
-					<div class="position-relative form-group"><label for="lkilo" class="">Kilo</label><input name="lkilo" id="lkilo" type="text" class="form-control"></div>
-					<div class="position-relative form-group"><label for="lboy" class="">Boy</label><input name="lboy" id="lboy" type="text" class="form-control"></div>
-				<div class="row">
-					<div class="col-md-6">
-						<label>Kan Grubu</label>
-						<select name="bloodgroup" id="bloodgroup" class="mb-2 form-control">
-							<option value="@BloodGroupEnum.A">@BloodGroupEnum.A.GetDescription()</option>
-							<option value="@BloodGroupEnum.B">@BloodGroupEnum.B.GetDescription()</option>
-							<option value="@BloodGroupEnum.AB">@BloodGroupEnum.AB.GetDescription()</option>
-							<option value="@BloodGroupEnum.O">@BloodGroupEnum.O.GetDescription()</option>
 						</select>
-					</div>
-					<div class="col-md-6">
-						<select name="bloodgroup" id="bloodgroup" class="mb-2 form-control" style="margin-top: 29px">
-							<option value="@RhEnum.Negative">@RhEnum.Negative.GetDescription()</option>
-							<option value="@RhEnum.Positive">@RhEnum.Positive.GetDescription()</option>
+						<label>İlçe</label>
+						<select required name="DistrictId" id="DistrictId" class="mb-2 form-control">
 						</select>
-					</div>
-					</div>
-					<label>Medeni Durumu</label>
-					<select name="civilstatus" id="civilstatus" class="mb-2 form-control">
-						<option value="@CivilStatusEnum.Single">@CivilStatusEnum.Single.GetDescription()</option>
-						<option value="@CivilStatusEnum.Married">@CivilStatusEnum.Married.GetDescription()</option>
-					</select>
-					<label>Eğitim Durumu</label>
-						<select name="educationstatus" id="educationstatus" class="mb-2 form-control">
-							<option value="@EducationStatusEnum.AssociateDegree">@EducationStatusEnum.AssociateDegree.GetDescription()</option>
-							<option value="@EducationStatusEnum.HighSchool">@EducationStatusEnum.HighSchool.GetDescription()</option>
-							<option value="@EducationStatusEnum.HighUniversity">@EducationStatusEnum.HighUniversity.GetDescription()</option>
-							<option value="@EducationStatusEnum.MiddleSchool">@EducationStatusEnum.MiddleSchool.GetDescription()</option>
-							<option value="@EducationStatusEnum.PrimarySchool">@EducationStatusEnum.PrimarySchool.GetDescription()</option>
-							<option value="@EducationStatusEnum.University">@EducationStatusEnum.University.GetDescription()</option>
+						<div class="position-relative form-group"><label for="AddressDesc" class="">Adres</label><input required name="AddressDesc" type="text" class="form-control"></div>
+						<div class="position-relative form-group">
+							<label for="Phone" class="">Tel</label>
+							<input required name="Phone" type="text" class="form-control">
+						</div>
+
+						<div class="position-relative form-group"><label for="Mail">Email</label><input required name="Mail" type="email" class="form-control"></div>
+						<div class="position-relative form-group">
+							<label for="Password" class="">Şifre</label><input required name="Password" type="password" class="form-control">
+						</div>
+						<div class="position-relative form-group">
+							<label for="RPassword" class="">Şifre Tekrar</label><input required name="RPassword" type="password" class="form-control">
+						</div>
+
+						<div class="position-relative form-group"><label for="Weight">Kilo</label><input name="Weight" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="Height">Boy</label><input name="Height" type="text" class="form-control"></div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>Kan Grubu</label>
+								<select name="BloodGroup" class="mb-2 form-control">
+									<option value="@Convert.ToInt32(BloodGroupEnum.A)">@BloodGroupEnum.A.GetDescription()</option>
+									<option value="@Convert.ToInt32(BloodGroupEnum.B)">@BloodGroupEnum.B.GetDescription()</option>
+									<option value="@Convert.ToInt32(BloodGroupEnum.AB)">@BloodGroupEnum.AB.GetDescription()</option>
+									<option value="@Convert.ToInt32(BloodGroupEnum.O)">@BloodGroupEnum.O.GetDescription()</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<select name="Rh" class="mb-2 form-control" style="margin-top: 29px">
+									<option value="@Convert.ToInt32(RhEnum.Negative)">@RhEnum.Negative.GetDescription()</option>
+									<option value="@Convert.ToInt32(RhEnum.Positive)">@RhEnum.Positive.GetDescription()</option>
+								</select>
+							</div>
+						</div>
+						<label>Medeni Durumu</label>
+						<select name="CivilStatus" class="mb-2 form-control">
+							<option value="@Convert.ToInt32(CivilStatusEnum.Single)">@CivilStatusEnum.Single.GetDescription()</option>
+							<option value="@Convert.ToInt32(CivilStatusEnum.Married)">@CivilStatusEnum.Married.GetDescription()</option>
+						</select>
+						<label>Eğitim Durumu</label>
+						<select name="EducationStatus" class="mb-2 form-control">
+							<option value="@Convert.ToInt32(EducationStatusEnum.AssociateDegree)">@EducationStatusEnum.AssociateDegree.GetDescription()</option>
+							<option value="@Convert.ToInt32(EducationStatusEnum.HighSchool)">@EducationStatusEnum.HighSchool.GetDescription()</option>
+							<option value="@Convert.ToInt32(EducationStatusEnum.HighUniversity)">@EducationStatusEnum.HighUniversity.GetDescription()</option>
+							<option value="@Convert.ToInt32(EducationStatusEnum.MiddleSchool)">@EducationStatusEnum.MiddleSchool.GetDescription()</option>
+							<option value="@Convert.ToInt32(EducationStatusEnum.PrimarySchool)">@EducationStatusEnum.PrimarySchool.GetDescription()</option>
+							<option value="@Convert.ToInt32(EducationStatusEnum.University)">@EducationStatusEnum.University.GetDescription()</option>
 						</select>
 
-					<button class="mt-1 btn btn-primary" onclick="Kaydet()">Kaydet</button>
-				</form>
+					<button class="mt-1 btn btn-primary" type="submit" id="save">Kaydet</button>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
 
-<script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+
+		<script>
 
 
-	function Kaydet() {
-	
-	}
-	$('#il').change(function () {
-
-		var id = $(this).val();
-		var ilceid = $("#ilce");
-		ilceid.empty();
-		$.ajax({
-			url: 'DistrictList',
-			type: 'POST',
-			dataType: 'json',
-			data: { 'id': id },
-			success: function (data) {
+			$("#save").click(function () {
+				var data = [];
+				$("table > tbody > tr").each(function (key) {
+					var radioval = "radio+" + $(this).find('td').eq(0).text();
+					data.push({ QuestionId: $(this).find('td').eq(0).text(), QuestionResult: $('input[name="' + radioval + '"]:checked').val() });
+				});
 				console.log(data);
-				$.each(data.object,
-					function (index, option) {
-						ilceid.append('<option value=' + option.id + '>' + option.districtName + '</option>');
+				var myfile = $('#reportfile').get(0).files[0];
+				var formData = new FormData();
+				formData.append('ReportResult', myfile);
+				formData.append('TransferType', $("#transfertype").val());
+				formData.append('RelativesName', $("#relativesname").val());
+				formData.append('RelativesSurname', $("#relativessurname").val());
+				formData.append('RelativesPhone', $("#relativesphone").val());
+				formData.append('SickDate', $("#sickdate").val());
+				formData.append('SickDesc', $("#sickdesc").val());
+				formData.append('QuestionResultListString', JSON.stringify(data));
+				console.log(formData);
+				$.ajax({
+					url: "/Application/ApplicationSave",
+					type: "POST",
+					data: formData,
+					processData: false,
+					contentType: false
+				})
+					.done(function (data) {
+
+					})
+					.fail(function () {
 					});
-			}
-		});
-	});
-</script>
+			});
+			$('#CityId').change(function () {
+
+				var id = $(this).val();
+				var ilceid = $("#DistrictId");
+				ilceid.empty();
+				$.ajax({
+					url: 'DistrictList',
+					type: 'POST',
+					dataType: 'json',
+					data: { 'id': id },
+					success: function (data) {
+						console.log(data);
+						$.each(data.object,
+							function (index, option) {
+								ilceid.append('<option value=' + option.id + '>' + option.districtName + '</option>');
+							});
+					}
+				});
+			});
+		</script>
