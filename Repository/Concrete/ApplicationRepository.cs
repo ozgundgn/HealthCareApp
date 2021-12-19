@@ -46,7 +46,8 @@ namespace Repository.Concrete
                     .Include(favoriteGenre => favoriteGenre.User)
                     .Where(x => x.User.UserType == 2).Select(x => new DonorApplicationListModel()
                     {
-                        Id = x.User.Id,
+                        Id=x.Id,
+                        UserId = x.User.Id,
                         Mail = x.User.Mail,
                         Name = x.User.FirstName,
                         Surname = x.User.LastName,
