@@ -107,8 +107,16 @@ namespace HealthCareApp.Controllers
           };
 
 					 var result = _userService.Add(user);
-					 return null;
-        }
+					 if (result.Success)
+					 {
+						 _notify.Success("Kullanıcı Kayıt İşlemi Başarılı");
+					 }
+					 else
+					 {
+						 _notify.Error("Kullanıcı Kayıt İşlemi Başarısız");
+					 }
+					 return RedirectToAction("Index");
+    }
     public IActionResult DistrictList(int id)
         {
 	        return Json(new
