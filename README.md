@@ -2,7 +2,7 @@
 https://github.com/ozgundgn/HealthCareApp.git
 
 ---Yapılanlar---
-1-Projenin veritabanı oluşturuldu.İlgili tabloların ilişkileri tamamlandı.
+1-Projenin veritabanı oluşturuldu.İlgili tabloların ilişkileri tamamlandı. 
 2-Projenin Katmanları hazırlandı.
        
        Katmanlar
