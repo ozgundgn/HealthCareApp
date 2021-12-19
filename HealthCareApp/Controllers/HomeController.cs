@@ -73,6 +73,11 @@ namespace HealthCareApp.Controllers
         {
             return View("MemberRegister");
         }
+        [HttpPost]
+        public IActionResult SendMail(string message, string id)
+        {
+            return View("MemberRegister");
+        }
 
         public IActionResult Privacy()
         {
