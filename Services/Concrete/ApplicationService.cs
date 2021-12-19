@@ -31,6 +31,16 @@ namespace Service.Concrete
         {
             var questionList = _applicationRepository.GetQuestionList();
             return new SuccessDataResult<List<Question>>(questionList);
-        }
+        } 
+        public IDataResult<List<City>> GetCityList()
+        {
+            var cityList = _applicationRepository.GetCityList();
+            return new SuccessDataResult<List<City>>(cityList);
+        }      
+        public IDataResult<List<District>> GetDistrictList(int id)
+        {
+            var districtList = _applicationRepository.GetDistrictList(id);
+            return new SuccessDataResult<List<District>>(districtList);
+        }    
     }
 }

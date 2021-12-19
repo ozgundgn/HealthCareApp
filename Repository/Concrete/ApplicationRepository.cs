@@ -63,5 +63,28 @@ namespace Repository.Concrete
                 return questionList;
             }
         }
+        public List<City> GetCityList()
+        {
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var cityList = context.Cities.Select(x => new City()
+	                {
+		                Id = x.Id,
+		                CityName = x.CityName,
+                    District = x.District
+	                })
+                   .ToList();
+                return cityList;
+            }
+        }
+
+        public List<District> GetDistrictList(int id)
+        {
+		      using (HealtyCareContext context = new HealtyCareContext())
+		      {
+			      var districtList = context.Districts.Where(x => x.CityId == id).ToList();
+			      return districtList;
+		      }
+				}
     }
 }

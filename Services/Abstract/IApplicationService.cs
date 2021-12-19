@@ -11,6 +11,8 @@ namespace Service.Abstract
     {
         IDataResult<List<SickApplicationListModel>> GetSickApplicationList();
         IDataResult<List<DonorApplicationListModel>> GetDonorApplicationList();
+        IDataResult<List<City>> GetCityList();
+        IDataResult<List<District>> GetDistrictList(int id);
         IDataResult<List<Question>> GetQuestionList();
     }
 }
