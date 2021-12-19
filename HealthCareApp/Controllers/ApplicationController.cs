@@ -1,14 +1,11 @@
 ﻿using HealthCareApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Entity.Models;
+using System.IO;
 using Models.Application;
 using Service.Abstract;
+using Nancy.Json;
 
 namespace HealthCareApp.Controllers
 {
@@ -33,7 +30,32 @@ namespace HealthCareApp.Controllers
         }
         public IActionResult AplicationCreate()
         {
-            return View();
+            ApplicationCreateViewModel model =new ApplicationCreateViewModel();
+               model.QuestionsList = _applicationService.GetQuestionList().Data;
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult ApplicationSave([FromForm]ApplicationSaveRequestModel model)
+        {
+            var ss= new JavaScriptSerializer().Serialize(model.QuestionResultListString);
+            if (model.ReportResult != null && model.ReportResult.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    model.ReportResult.CopyTo(ms);
+                    model.ReportResultByte = ms.ToArray();
+                }
+            }
+            //var result = _applicationService.GenelTanimlamalarService.SirtlikTasarimKaydet(model);
+            return Json(new
+            {
+                result = true,//result.Success,
+                message = "İşlem Başarılı",
+                //Object =null,// result.Object.Id
+            });
+            //ApplicationCreateViewModel model = new ApplicationCreateViewModel();
+            //model.QuestionsList = _applicationService.GetQuestionList().Data;
+            //return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

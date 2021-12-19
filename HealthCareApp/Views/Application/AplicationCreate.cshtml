@@ -1,1 +1,118 @@
-﻿
+﻿@using Models.Enums
+@using Core.Extentions
+@model Models.Application.ApplicationCreateViewModel
+<div class="row">
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title">Başvuru Oluştur</h5>
+                <div class="position-relative row form-group">
+                    <label for="exampleSelect" class="col-sm-2 col-form-label">Nakil Tipi</label>
+                    <div class="col-sm-10">
+                        <select name="select" id="transfertype" class="form-control">
+                            <option value="@TransferType.BloodTransfer">@TransferType.BloodTransfer.GetDescription()</option>
+                            <option value="@TransferType.MarrowTransfer">@TransferType.MarrowTransfer.GetDescription()</option>
+                            <option value="@TransferType.KidneyTransfer">@TransferType.KidneyTransfer.GetDescription()</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="position-relative row form-group">
+                    <label for="relativesname" class="col-sm-2 col-form-label">Yakın Adı</label>
+                    <div class="col-sm-10"><input id="relativesname" placeholder="Yakın Adı..." type="text" class="form-control"></div>
+                </div>
+                <div class="position-relative row form-group">
+                    <label for="relativessurname" class="col-sm-2 col-form-label">Yakın Soyadı</label>
+                    <div class="col-sm-10"><input id="relativessurname" placeholder="Yakın soyadı..." type="text" class="form-control"></div>
+                </div>
+                <div class="position-relative row form-group">
+                    <label for="relativesphone" class="col-sm-2 col-form-label">Yakın Telefon</label>
+                    <div class="col-sm-10"><input id="relativesphone" placeholder="Yakın Telefon..." type="tel" class="form-control"></div>
+                </div>
+                <div class="position-relative row form-group">
+                    <label for="sickdate" class="col-sm-2 col-form-label">Hastalık Tarihi</label>
+                    <div class="col-sm-10"><input id="sickdate" placeholder="Hastalık Tarihi..." type="datetime" class="form-control"></div>
+                </div>
+                <div class="position-relative row form-group">
+                    <label for="sickdesc" class="col-sm-2 col-form-label">Hastalık Açıklama</label>
+                    <div class="col-sm-10"><textarea name="text" id="sickdesc" class="form-control"></textarea></div>
+                </div>
+
+                <div class="position-relative row form-group">
+                    <label for="reportfile" class="col-sm-2 col-form-label">Raporlar</label>
+                    <div class="col-sm-10">
+                        <input type="file"class="jfilestyle form-control-file" data-text="Logo Ekle" data-theme="asphalt" id="reportfile" placeholder="Logo">
+                      
+                        <small class="form-text text-muted">Raporlarınızı Pdf Formatında Ekleyiniz.</small>
+                    </div>
+                </div>
+                <fieldset class="position-relative row form-group">
+                    <table class="mb-0 table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Soru</th>
+                                <th>Cevap</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.QuestionsList)
+                            {
+                                <tr>
+                                    <td class="questionId">@item.Id</td>
+                                    <td scope="row">@item.QuestionDesc</td>
+                                    <td>
+                                        <input name="radio+@item.Id" value="1"type="radio" class="form-check-input">Evet
+                                        &nbsp;<input name="radio+@item.Id" value="2" type="radio" class="form-check-input">Hayır
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </fieldset>
+                <div class="position-relative row form-check">
+                    <div class="col-sm-10 offset-sm-2">
+                        <button class="btn btn-secondary" id="kaydet">Başvuruyu Kaydet</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#kaydet").click(function () {
+        console.log($("table>tbody>tr>td  input[name='radio+1']:checked").val());
+        var data =[];
+        $("table > tbody > tr").each(function (key) {
+            var radioval = "radio+" + $(this).find('td').eq(0).text();
+            data.push({ QuestionId: $(this).find('td').eq(0).text(), QuestionResult: $('input[name="'+radioval+'"]:checked').val() });
+        });
+        console.log(data);
+        var myfile = $('#reportfile').get(0).files[0];
+        var formData = new FormData();
+        formData.append('ReportResult', myfile);
+        formData.append('TransferType', $("#transfertype").val());
+        formData.append('RelativesName', $("#relativesname").val());
+        formData.append('RelativesSurname', $("#relativessurname").val());
+        formData.append('RelativesPhone', $("#relativesphone").val());
+        formData.append('SickDate', $("#sickdate").val());
+        formData.append('SickDesc', $("#sickdesc").val());
+        formData.append('QuestionResultListString', JSON.stringify(data));
+        console.log(formData);
+        $.ajax({
+            url: "/Application/ApplicationSave",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (data) {
+              
+            })
+            .fail(function () {
+            });
+    });
+</script>

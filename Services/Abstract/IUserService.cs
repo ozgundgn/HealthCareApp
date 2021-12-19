@@ -12,6 +12,6 @@ namespace Service.Abstract
     public interface IUserService
     {
         IResult Add(User user);
-        IResult Login(string email, string password);
+        IDataResult<User> Login(string email, string password);
     }
 }

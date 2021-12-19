@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Core.Utilities.Results;
+using Entity.Models;
 using Models.Application;
 
 namespace Service.Abstract
@@ -10,5 +11,6 @@ namespace Service.Abstract
     {
         IDataResult<List<SickApplicationListModel>> GetSickApplicationList();
         IDataResult<List<DonorApplicationListModel>> GetDonorApplicationList();
+        IDataResult<List<Question>> GetQuestionList();
     }
 }

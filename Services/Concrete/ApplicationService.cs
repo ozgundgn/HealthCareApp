@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Core.Utilities.Results;
+using Entity.Models;
 using Models.Application;
 using Repository.Abstract;
 using Service.Abstract;
@@ -25,6 +26,11 @@ namespace Service.Concrete
         {
             var donorList = _applicationRepository.GetDonorApplicationList();
             return new SuccessDataResult<List<DonorApplicationListModel>>(donorList);
+        }
+        public IDataResult<List<Question>> GetQuestionList()
+        {
+            var questionList = _applicationRepository.GetQuestionList();
+            return new SuccessDataResult<List<Question>>(questionList);
         }
     }
 }

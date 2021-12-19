@@ -29,15 +29,15 @@ namespace Service.Concrete
 
             return new ErrorResult();
         }
-        public IResult Login(string email, string password)
+        public IDataResult<User> Login(string email, string password)
         {
             var result = _userRepository.Get(x => x.Mail == email && x.Password == password).FirstOrDefault();
             if (result == null)
             {
-                return new ErrorResult("Kullanıcı girişi başarısız!");
+                return new DataResult<User>(null,false,"Kullanıcı girişi başarısız!");
             }
 
-            return new SuccessResult();
+            return new DataResult<User>(result, true);
         }
 
     }

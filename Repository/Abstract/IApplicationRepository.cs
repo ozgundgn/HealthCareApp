@@ -12,5 +12,7 @@ namespace Repository.Abstract
     {
         List<SickApplicationListModel> GetSickApplicationList();
         List<DonorApplicationListModel> GetDonorApplicationList();
+        List<Question> GetQuestionList();
+        
     }
 }

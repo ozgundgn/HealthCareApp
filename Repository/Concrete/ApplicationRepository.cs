@@ -8,6 +8,7 @@ using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using Models.Application;
 using Repository.Abstract;
+using Repository.Helpers;
 
 namespace Repository.Concrete
 {
@@ -50,6 +51,16 @@ namespace Repository.Concrete
                         TransferType = x.TransferType,
                     }).ToList();
                 return sickDetailList;
+            }
+        }
+        public List<Question> GetQuestionList()
+        {
+
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var questionList = context.Questions.Where(x=>x.UserType==Convert.ToInt32(SessionHelper.DefaultSession.UserType))
+                   .ToList();
+                return questionList;
             }
         }
     }
