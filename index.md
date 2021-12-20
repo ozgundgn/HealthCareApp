@@ -1,37 +1,96 @@
-## Welcome to GitHub Pages
+@using Repository.Helpers
+@using Models.Enums
+@using Core.Extentions
+@model List<Models.Application.DonorApplicationListModel>
+@{
+    <style>
+        .modal-backdrop {
+            display: none !important;
+        }
+    </style>
 
-You can use the [editor on GitHub](https://github.com/ozgundgn/HealthCareApp/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+            <div class="card-header">
+                <input id="myInput" type="text" placeholder="Search..">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Donör Listesi</h5>
+                <table id="donorAppTable" class="mb-0 table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Adı</th>
+                        <th>Soyadı</th>
+                        <th>Telefon</th>
+                        <th>Mail</th>
+                        <th>Nakil Tipi</th>
+                        @{
+                            if (SessionHelper.DefaultSession.Id != 0)
+                            {
+                                <th>Donöre Mail Gönder</th>
+                            }
+                        }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.Name</th>
+                            <td>@item.Surname</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Mail</td>
+                            <td>@(((TransferType) item.TransferType).GetDescription())</td>
+                            @{
+                                if (SessionHelper.DefaultSession.Id != 0)
+                                {
+                                    <td><button type="button" onclick="openMailModal(@item.UserId, '@item.Name' + ' ' + '@item.Surname')"><i class="pe-7s-mail-open-file"></i></button></td>
+                                }
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-### Markdown
+}
+<!-- Modal -->
+<div class="modal fade" id="mailModal" style="margin-top: 10%;" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="SendMail">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="id" />
+                    <input type="hidden" name="donorPage" value="true" id="donorPage" />
+                    <label class="col-form-label-lg mail-to"></label><br />
+                    <label for="message"><b>Mesaj</b></label>
+                    <textarea id="w3review" class="form-control" name="message" rows="4" required>
+                    </textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-shadow p-2">Gönder</button>
+                    <button type="button" class="btn btn-danger btn-shadow p-2" data-dismiss="modal">Kapat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+<script>
+    function openMailModal(donorId, donorName) {
 
-```markdown
-Syntax highlighted code block
+        $(".modal-body #id").val(donorId);
+        $(".modal-body label.mail-to").html(donorName);
+        $("#mailModal").modal("show");
+    }
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ozgundgn/HealthCareApp/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+    $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#donorAppTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+</script>
