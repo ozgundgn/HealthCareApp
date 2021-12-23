@@ -9,9 +9,9 @@
 				<div class="card-body" style="width: 800px">
 					<form method="post"  enctype="multipart/form-data" asp-controller="Home" asp-action="Register" class="card-body" >
 						<h5 class="card-title">KULLANICI KAYIT FORMU</h5>
-						<div class="position-relative form-group"><label for="FirstName">Ad</label><input required name="FirstName" type="text" class="form-control"></div>
-						<div class="position-relative form-group"><label for="LastName">Soyad</label><input required name="LastName" type="text" class="form-control"></div>
-						<div class="position-relative form-group"><label for="IdentityNumber">TC</label><input required name="IdentityNumber" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="FirstName">Ad</label><input value="@Model.FirstName" required name="FirstName" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="LastName">Soyad</label><input value="@Model.LastName" required name="LastName" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="IdentityNumber">TC</label><input value="@Model.IdentityNumber" required name="IdentityNumber" type="text" class="form-control"></div>
 						<div class="position-relative form-group"><label for="Birthday">Doğum Tarihi</label><input required name="Birthday" type="date" class="form-control"></div>
 						<fieldset class="position-relative form-group">
 							Cinsiyet
@@ -28,10 +28,11 @@
 							<div class="position-relative form-check"><label class="form-check-label"><input name="UserType" type="radio" value="2" class="form-check-input">Donör</label></div>
 						</fieldset>
 
-						<div class="position-relative form-group"><label for="MotherName">Anne Adı</label><input name="MotherName" type="text" class="form-control"></div>
-						<div class="position-relative form-group"><label for="FatherName" class="">Baba Adı</label><input name="FatherName" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="MotherName">Anne Adı</label><input value="@Model.MotherName" name="MotherName" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="FatherName" class="">Baba Adı</label><input value="@Model.FatherName" name="FatherName" type="text" class="form-control"></div>
 						<label>İl</label>
 						<select required name="CityId" id="CityId" class="mb-2 form-control">
+							<option>Seçiniz..</option>
 							@{
 								foreach (var item in Model.CityList)
 								{
@@ -42,13 +43,13 @@
 						<label>İlçe</label>
 						<select required name="DistrictId" id="DistrictId" class="mb-2 form-control">
 						</select>
-						<div class="position-relative form-group"><label for="AddressDesc" class="">Adres</label><input required name="AddressDesc" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="AddressDesc" class="">Adres</label><input value="@Model.AddressDesc" required name="AddressDesc" type="text" class="form-control"></div>
 						<div class="position-relative form-group">
 							<label for="Phone" class="">Tel</label>
-							<input required name="Phone" type="text" class="form-control">
+							<input required name="Phone" value="@Model.Phone" type="text" class="form-control">
 						</div>
 
-						<div class="position-relative form-group"><label for="Mail">Email</label><input required name="Mail" type="email" class="form-control"></div>
+						<div class="position-relative form-group"><label for="Mail">Email</label><input value="@Model.Mail" required name="Mail" type="email" class="form-control"></div>
 						<div class="position-relative form-group">
 							<label for="Password" class="">Şifre</label><input required name="Password" type="password" class="form-control">
 						</div>
@@ -56,12 +57,13 @@
 							<label for="RPassword" class="">Şifre Tekrar</label><input required name="RPassword" type="password" class="form-control">
 						</div>
 
-						<div class="position-relative form-group"><label for="Weight">Kilo</label><input name="Weight" type="text" class="form-control"></div>
-						<div class="position-relative form-group"><label for="Height">Boy</label><input name="Height" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="Weight">Kilo</label><input value="@Model.Weight" name="Weight" type="text" class="form-control"></div>
+						<div class="position-relative form-group"><label for="Height">Boy</label><input value="@Model.Height" name="Height" type="text" class="form-control"></div>
 						<div class="row">
 							<div class="col-md-6">
 								<label>Kan Grubu</label>
-								<select name="BloodGroup" class="mb-2 form-control">
+								<select name="BloodGroup" class="mb-2 form-control" required>
+									<option value="@Convert.ToInt32(BloodGroupEnum.Undefined)">@BloodGroupEnum.Undefined.GetDescription()</option>
 									<option value="@Convert.ToInt32(BloodGroupEnum.A)">@BloodGroupEnum.A.GetDescription()</option>
 									<option value="@Convert.ToInt32(BloodGroupEnum.B)">@BloodGroupEnum.B.GetDescription()</option>
 									<option value="@Convert.ToInt32(BloodGroupEnum.AB)">@BloodGroupEnum.AB.GetDescription()</option>
@@ -69,19 +71,22 @@
 								</select>
 							</div>
 							<div class="col-md-6">
-								<select name="Rh" class="mb-2 form-control" style="margin-top: 29px">
+								<select name="Rh" class="mb-2 form-control" style="margin-top: 29px" required>
+									<option value="@Convert.ToInt32(RhEnum.Undefined)">@RhEnum.Undefined.GetDescription()</option>
 									<option value="@Convert.ToInt32(RhEnum.Negative)">@RhEnum.Negative.GetDescription()</option>
 									<option value="@Convert.ToInt32(RhEnum.Positive)">@RhEnum.Positive.GetDescription()</option>
 								</select>
 							</div>
 						</div>
 						<label>Medeni Durumu</label>
-						<select name="CivilStatus" class="mb-2 form-control">
+						<select name="CivilStatus" class="mb-2 form-control" required>
+							<option value="@Convert.ToInt32(CivilStatusEnum.Undefined)">@CivilStatusEnum.Undefined.GetDescription()</option>
 							<option value="@Convert.ToInt32(CivilStatusEnum.Single)">@CivilStatusEnum.Single.GetDescription()</option>
 							<option value="@Convert.ToInt32(CivilStatusEnum.Married)">@CivilStatusEnum.Married.GetDescription()</option>
 						</select>
 						<label>Eğitim Durumu</label>
-						<select name="EducationStatus" class="mb-2 form-control">
+						<select name="EducationStatus" class="mb-2 form-control" required>
+							<option value="@Convert.ToInt32(EducationStatusEnum.Undefined)">@EducationStatusEnum.Undefined.GetDescription()</option>
 							<option value="@Convert.ToInt32(EducationStatusEnum.AssociateDegree)">@EducationStatusEnum.AssociateDegree.GetDescription()</option>
 							<option value="@Convert.ToInt32(EducationStatusEnum.HighSchool)">@EducationStatusEnum.HighSchool.GetDescription()</option>
 							<option value="@Convert.ToInt32(EducationStatusEnum.HighUniversity)">@EducationStatusEnum.HighUniversity.GetDescription()</option>
