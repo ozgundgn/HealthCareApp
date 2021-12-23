@@ -1,0 +1,185 @@
+﻿
+@using ServiceStack
+@using Models.Enums
+@using Core.Extentions
+@model List<Models.Application.UserApplicationListModel>
+
+@{
+    <style>
+
+        /*      .td-highlight{ background-color: #f00; }*/
+        .modal-backdrop {
+            display: none !important;
+        }
+    </style>
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title">Başvurularım</h5>
+                <table class="mb-0 table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Başvuru Tarihi</th>
+                            <th>Açıklama</th>
+                            <th>Son Güncelleme Tarihi</th>
+                            <th>Başvuru Tipi</th>
+                            <th>Başvuru Durumu</th>
+                            <th>Başvuru Detay</th>
+                            <th>Durum Güncelle</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ApplicationDateTime</td>
+                                <td>@item.Description</td>
+                                <td>@(((DateTime)item.UpdateDateTime).ToString("dd-MM-yyyy"))</td>
+                                <td>@(((TransferType)item.TransferType).GetDescription())</td>
+                                <td style="text-align:center">
+                                    @{
+                                        if (item.Statu == 1)
+                                        {
+                                            <i class="pe-7s-check"></i>
+                                        }
+                                        else if (item.Statu == 0)
+                                        {
+                                            <i class="pe-7s-close-circle"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="pe-7s-hourglass"></i>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <button type="button" id="'application_' + @item.Id">
+                                        <i class="metismenu-icon pe-7s-note2">
+                                        </i>
+                                    </button>
+                                </td>
+                                <td><button class="btn btn-outline-warning" onclick="StateUpdate(@item.Id);"><i class="fa fa-star"></i></button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal fade" id="statemodal" style="margin-top:10%" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="basvuruid"></div>
+
+                <div class="position-relative row form-group">
+                    <label for="transfertype" class="col-sm-2 col-form-label">Başvuru Durumu</label>
+                    <div class="col-sm-10">
+                        <select name="select" id="statetype" class="form-control" placheolder="Seçim Yapınız">
+                            <option value="3">Durum Seçiniz</option>
+                            <option value="0">İptal</option>
+                            <option value="2">Bulundu</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="modalicerik" hidden="true">
+                    <div class='position-relative row form-group'><label for='desc' class='col-sm-2 col-form-label'> İptal Nedeni</label><div class='col-sm-10'><textarea name='text' required id='desc' class='form-control'></textarea></div></div><button class='btn btn-outline-success' id='iptalkaydet'>Durum Kaydet</button>
+
+                </div>
+                <div class='position-relative row form-group' id="platform" hidden="true"><label for='platformtype' class='col-sm-2 col-form-label'>Platform</label><div class='col-sm-10'><select id='platformtype' class='form-control' placheolder='Seçim Yapınız'><option value='3'>Başka bir Platform</option><option value='2'>Bu Platform</option></select></div><button class='btn btn-outline-success' id='bulundukaydet'>Durum Kaydet</button></div>
+                <div id="modalicerikbulundu">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-shadow p-2" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function StateUpdate(id) {
+        $('#statemodal').modal("show");
+        $('#basvuruid').val(id);
+    };
+    $('#statetype').change(function () {
+        var id = $(this).val();
+        $("#modalicerikbulundu").html("");
+        if (id == 0) {
+            $("#platform").attr("hidden", true);
+            $("#modalicerik").removeAttr("hidden");
+        }
+        else if (id == 2) {
+            $("#platform").removeAttr("hidden");
+            $("#modalicerik").attr("hidden", true);
+        }
+    });
+    //$('#platformtype').change(function () {
+    //    var id = $(this).val();
+
+
+    //    //else if (id == 2)
+    //    //{
+    //    //    $.ajax({
+    //    //            url: "/Application/AppDonorList",
+    //    //        type: "POST",
+    //    //            data:null,
+    //    //            dataType: 'json'
+    //    //        })
+    //    //        .done(function (data) {
+    //    //            console.log(data.object);
+    //    //            var tabledata = "";
+    //    //            $.each(data.object,
+    //    //                function (index, option) {
+
+    //    //                    tabledata +="<tr ><td scope='row'>"+option.name+"</td><td>"+option.surname+"</td><td>"+option.phone+"</td><td>"+option.mail+"</td></tr>";
+    //    //                });
+    //    //            $("#modalicerikbulundu").html("<table class='mb-0 table table-hover' id='donortable'><thead><tr><th>Adı</th><th>Soyadı</th><th>Telefon</th><th>Mail</th></tr></thead><tbody>"+tabledata+"</tbody></table><button class='btn btn-outline-success' id='bulundukaydet'>Durum Kaydet</button>");
+    //    //        })
+    //    //        .fail(function () {
+    //    //        });
+    //    //}
+    //});
+    //$('table tr:first').addClass("td-highlight"); // Here your task(1)
+    //// UPDATE your txtProgDesc
+
+    //$('table tr td').live("click",function(){
+    //    $('table tr').removeClass("td-highlight");
+    //    $(this).addClass("td-highlight"); // Here your task (2)
+    //    // UPDATE your txtProgDesc
+    //});
+    $('#bulundukaydet').click(function () {
+        var machdata = { PlatformType: $("#platformtype").val(), AppId: $('#basvuruid').val() };
+        $.ajax({
+            url: "/Application/StateSave",
+            type: "POST",
+            data: machdata,
+            dataType: 'json'
+        })
+            .done(function (data) {
+
+
+            });
+
+    });
+    $('#iptalkaydet').click(function () {
+        var iptaldata = { PlatFormType: 0, Description: $("#desc").val(), AppId: $('#basvuruid').val() };
+        $.ajax({
+            url: "/Application/StateSave",
+            type: "POST",
+            data: iptaldata,
+            dataType: 'json'
+        })
+            .done(function (data) {
+
+
+            });
+
+    });
+</script>

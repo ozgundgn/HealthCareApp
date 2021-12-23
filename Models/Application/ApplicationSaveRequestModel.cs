@@ -9,11 +9,12 @@ namespace Models.Application
     {
         public byte[] ReportResultByte { get; set; }
         public IFormFile ReportResult { get; set; }
+        public string ReportName { get; set; }
         public string TransferType { get; set; }
         public string RelativesName { get; set; }
         public string RelativesSurname { get; set; }
         public string RelativesPhone { get; set; }
-        public string SickDate { get; set; }
+        public DateTime? SickDate { get; set; }
         public string SickDesc { get; set; }
         public string QuestionResultListString { get; set; }
         public List<QuestionResultList> QuestionResultList { get; set; }
@@ -21,7 +22,7 @@ namespace Models.Application
     }
    public class QuestionResultList
    {
-       public string QuestionId { get; set; }
-       public string QuestionResult { get; set; }
+       public int QuestionId { get; set; }
+       public int QuestionResult { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace HealthCareApp.Controllers
         private static IRedisClient _redisClient;
         private static IHttpContextAccessor _contextAccessor;
         private readonly IApplicationService _applicationService;
-    public HomeController(ILogger<HomeController> logger, IUserService userService,IApplicationService applicationService, INotyfService notifyService, IRedisClient redisClient, IHttpContextAccessor contextAccessor)
+        public HomeController(ILogger<HomeController> logger, IUserService userService, IApplicationService applicationService, INotyfService notifyService, IRedisClient redisClient, IHttpContextAccessor contextAccessor)
         {
             _userService = userService;
             _logger = logger;
@@ -36,13 +36,13 @@ namespace HealthCareApp.Controllers
             _redisClient = redisClient;
             _contextAccessor = contextAccessor;
             _applicationService = applicationService;
-    }
+        }
 
-    public IActionResult Index()
+        public IActionResult Index()
         {
             if (SessionHelper.DefaultSession == null || SessionHelper.DefaultSession.Id == 0)
             {
-                return RedirectToAction("DonorApplicationList","Application");
+                return RedirectToAction("DonorApplicationList", "Application");
             }
             return View();
         }
@@ -57,15 +57,15 @@ namespace HealthCareApp.Controllers
 
             }
             var encUserId = Guid.NewGuid().ToString().Replace("-", "");
-                    CookieOptions cookie = new CookieOptions { Expires = DateTime.Now.AddDays(1) };
-                    Response.Cookies.Append("user", encUserId, cookie);
-                    if (!_redisClient.ContainsKey(string.Concat("user:", encUserId)))
-                    {
-                        _redisClient.Add(string.Concat("user:", encUserId), result.Data);
-                    }
-                    _notify.Success("Kullanıcı Girişi Başarılı" + SessionHelper.DefaultSession.FirstName);
-            
-            return RedirectToAction("Index");
+            CookieOptions cookie = new CookieOptions { Expires = DateTime.Now.AddDays(1) };
+            Response.Cookies.Append("user", encUserId, cookie);
+            if (!_redisClient.ContainsKey(string.Concat("user:", encUserId)))
+            {
+                _redisClient.Add(string.Concat("user:", encUserId), result.Data);
+            }
+            _notify.Success("Kullanıcı Girişi Başarılı" + SessionHelper.DefaultSession.FirstName);
+
+            return RedirectToAction("UserApplicationInformList", "Application");
 
         }
 
@@ -77,6 +77,7 @@ namespace HealthCareApp.Controllers
         }
         public IActionResult RegisterScreen()
         {
+
 	        RegisterModel model = new RegisterModel();
 	        model.CityList = _applicationService.GetCityList().Data;
           return View("MemberRegister",model);
@@ -138,12 +139,30 @@ namespace HealthCareApp.Controllers
     }
     public IActionResult DistrictList(int id)
         {
-	        return Json(new
-	        {
-		        result = true,//result.Success,
-		        message = "İşlem Başarılı",
-		        Object = _applicationService.GetDistrictList(id).Data,// result.Object.Id
-	        });
+            return Json(new
+            {
+                result = true,//result.Success,
+                message = "İşlem Başarılı",
+                Object = _applicationService.GetDistrictList(id).Data,// result.Object.Id
+            });
+        }
+        [HttpPost]
+        public IActionResult SendMail(string message, int id,bool donorPage)
+        {
+            var result = _userService.SendMailToUser(message, id);
+            if (result.Success)
+            {
+                _notify.Success("Mesajınız gönderildi.");
+            }else
+            {
+                _notify.Error("Mesajınız gönderilirken bir hata oluştu.");
+            }
+
+            if (donorPage)
+            {
+                return RedirectToAction("DonorApplicationList", "Application");
+            }
+            return RedirectToAction("SickApplicationList", "Application");
         }
 
         public IActionResult Privacy()

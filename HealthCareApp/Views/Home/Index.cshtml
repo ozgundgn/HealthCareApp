@@ -1,9 +1,26 @@
 ﻿@using Repository.Helpers
+@using Models.Enums
+@using Core.Extentions
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    @SessionHelper.DefaultSession.FirstName   @SessionHelper.DefaultSession.LastName
-    <h1 class="display-4">HoşGeldiniz</h1>
+
+<div class="row">
+    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
+        <div class="card mb-3 widget-content bg-night-fade">
+            <div class="widget-content-wrapper text-white">
+                <div class="widget-content-left">
+                    <div class="widget-heading">@SessionHelper.DefaultSession.FirstName &nbsp; @SessionHelper.DefaultSession.LastName</div>
+                    <div class="widget-subheading">@SessionHelper.DefaultSession.IdentityNumber</div>
+                </div>
+                <div class="widget-content-right">
+                    <div class="widget-numbers text-white"><span>@(((BloodGroupEnum) SessionHelper.DefaultSession.BloodGroup).GetDescription())</span><span>&nbsp;@(((RhEnum) SessionHelper.DefaultSession.Rh).GetDescription())</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+ 
 </div>

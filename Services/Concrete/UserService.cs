@@ -40,5 +40,19 @@ namespace Service.Concrete
             return new DataResult<User>(result, true);
         }
 
+        public IResult SendMailToUser(string message, int id)
+        {
+            var toUser = _userRepository.Get(x => x.Id == id).FirstOrDefault();
+            if (toUser != null)
+            {
+               var response= _userRepository.SendMail(message, toUser.Mail);
+               if (response)
+               {
+                   return new SuccessResult();
+               }
+            }
+            return new ErrorResult();
+        }
+
     }
 }

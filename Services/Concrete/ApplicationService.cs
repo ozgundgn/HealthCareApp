@@ -5,6 +5,7 @@ using Core.Utilities.Results;
 using Entity.Models;
 using Models.Application;
 using Repository.Abstract;
+using Repository.Helpers;
 using Service.Abstract;
 
 namespace Service.Concrete
@@ -31,7 +32,32 @@ namespace Service.Concrete
         {
             var questionList = _applicationRepository.GetQuestionList();
             return new SuccessDataResult<List<Question>>(questionList);
-        } 
+
+        }
+        public IDataResult<Application> SetApplication(ApplicationSaveRequestModel model)
+        {
+            var setapp = _applicationRepository.SetApplication(model);
+            return new SuccessDataResult<Application>(setapp);
+        }
+        public IResult SetApplicationState(StateSaveRequestModel model)
+        {
+            var setapp = _applicationRepository.SetApplicationState(model);
+            if (setapp)
+            {
+                return new SuccessResult();
+            }
+            else
+            {
+                return new ErrorResult();
+            }
+            
+        }
+        public IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList()
+        {
+            var userAppList = _applicationRepository.GetUserApplicationInformList();
+            return new SuccessDataResult<List<UserApplicationListModel>>(userAppList);
+        }
+
         public IDataResult<List<City>> GetCityList()
         {
             var cityList = _applicationRepository.GetCityList();
@@ -42,5 +68,6 @@ namespace Service.Concrete
             var districtList = _applicationRepository.GetDistrictList(id);
             return new SuccessDataResult<List<District>>(districtList);
         }    
+
     }
 }

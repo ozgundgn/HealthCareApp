@@ -13,6 +13,13 @@ namespace Repository.Abstract
         List<SickApplicationListModel> GetSickApplicationList();
         List<DonorApplicationListModel> GetDonorApplicationList();
         List<Question> GetQuestionList();
+
+        Application SetApplication(ApplicationSaveRequestModel model);
+        bool SetApplicationState(StateSaveRequestModel model);
+
+
+        List<UserApplicationListModel> GetUserApplicationInformList();
+
         List<City> GetCityList();
         List<District> GetDistrictList(int id);
     }
