@@ -84,6 +84,25 @@ namespace HealthCareApp.Controllers
         }     
         public IActionResult Register(UserSaveRequestModel usermodel)
         {
+          if (usermodel.Password!= usermodel.RPassword)
+					{
+						RegisterModel model = new RegisterModel()
+						{
+							AddressDesc = usermodel.AddressDesc,
+							CityList = _applicationService.GetCityList().Data,
+							FatherName = usermodel.FatherName,
+							FirstName = usermodel.FirstName,
+							Height = usermodel.Height,
+							IdentityNumber = usermodel.IdentityNumber,
+							LastName = usermodel.LastName,
+							Mail = usermodel.Mail,
+							MotherName = usermodel.MotherName,
+							Phone = usermodel.Phone,
+							Weight = usermodel.Weight
+						};
+						_notify.Warning("Lütfen şifrenizi kontrol ediniz");
+						return View("MemberRegister", model);
+					}
           User user=new User()
           {
 	          Address = new List<Address>

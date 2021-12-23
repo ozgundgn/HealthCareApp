@@ -35,7 +35,7 @@ namespace HealthCareApp
             {
                 cfg.DurationInSeconds = 5;
                 cfg.IsDismissable = true;
-                cfg.Position = NotyfPosition.BottomRight;
+                cfg.Position = NotyfPosition.TopCenter;
             });
 
             services.AddControllersWithViews();
