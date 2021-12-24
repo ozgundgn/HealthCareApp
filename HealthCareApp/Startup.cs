@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Service.Abstract;
 using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Newtonsoft.Json.Serialization;
 using Repository.Abstract;
 using Repository.Concrete;
@@ -28,6 +30,17 @@ namespace HealthCareApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("tr"), // turkish
+                };
+                options.DefaultRequestCulture = new RequestCulture(culture: "tr", uiCulture: "tr");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+                options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider()); // type of CultureProvider you want.
+            });
             services.AddNotyf(cfg =>
             {
                 cfg.DurationInSeconds = 5;
