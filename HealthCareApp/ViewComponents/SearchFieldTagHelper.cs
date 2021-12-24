@@ -21,7 +21,7 @@ namespace HealthCareApp.ViewComponents
             var sb = new StringBuilder();
             sb.AppendFormat(@"
                 <div class='row'>
-                    <div class='col-md-9'>
+                    <div class='col-md-3'>
                         <input type='text' id='{0}' class='form-control' placeholder='{1}'>
                     </div>
                     <div class='col-md-3'>

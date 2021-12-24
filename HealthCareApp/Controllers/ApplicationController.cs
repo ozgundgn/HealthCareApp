@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using HealthCareApp.Helpers;
 using Models.Application;
+using Models.Enums;
 using Service.Abstract;
 using Nancy.Json;
 using Newtonsoft.Json;
@@ -36,9 +38,10 @@ namespace HealthCareApp.Controllers
 
       
 
-        public IActionResult DonorApplicationList()
+        public IActionResult DonorApplicationList(DonorApplicationListViewModel model)
         {
-            return View();
+            model.TransferTypeEnumList =Enum.GetValues(typeof(TransferType)).Cast<TransferType>();
+            return View(model);
         }
 
         public JsonResult GetDonorList(DonorAplicationRequestModel model)
@@ -77,8 +80,8 @@ namespace HealthCareApp.Controllers
             });
            
         }
-    
-        public IActionResult ApppFileView(int id)
+    [HttpPost]
+        public IActionResult AppFileView(int id)
         {
             var uploads = Path.Combine(string.Concat(@"C:\HealtyCareApp\"));
             var filePath = Path.Combine(uploads, string.Concat(id ,".", "pdf"));

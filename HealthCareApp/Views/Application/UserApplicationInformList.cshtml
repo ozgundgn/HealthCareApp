@@ -6,8 +6,6 @@
 
 @{
     <style>
-
-        /*      .td-highlight{ background-color: #f00; }*/
         .modal-backdrop {
             display: none !important;
         }
@@ -35,7 +33,7 @@
                             <tr>
                                 <td>@item.ApplicationDateTime</td>
                                 <td>@item.Description</td>
-                                <td>@(((DateTime)item.UpdateDateTime).ToString("dd-MM-yyyy"))</td>
+                                <td>@(item.UpdateDateTime.HasValue?item.UpdateDateTime.Value.ToString("dd-MM-yyyy"):"")</td>
                                 <td>@(((TransferType)item.TransferType).GetDescription())</td>
                                 <td style="text-align:center">
                                     @{

@@ -49,11 +49,15 @@ namespace Repository.Concrete
                 var detailList = context.Applications
                     .Include(favoriteGenre => favoriteGenre.User)
                     .Where(x => x.User.UserType == 2);
-                if (!string.IsNullOrEmpty(model.Name))
+                if (!string.IsNullOrEmpty(model.Filter))
                 {
-                    detailList = detailList.Where(x => x.User.FirstName.Contains(model.Name) || x.User.LastName.Contains(model.Name));
+                    detailList = detailList.Where(x => x.User.FirstName.Contains(model.Filter) || x.User.LastName.Contains(model.Filter) || x.User.Mail.Contains(model.Filter) || x.User.Phone.Contains(model.Filter));
                 }
-               var list= detailList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Select(x => new DonorApplicationListModel()
+                if (model.TransferType != 0)
+                {
+                    detailList = detailList.Where(x => x.TransferType==model.TransferType);
+                }
+var list= detailList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Select(x => new DonorApplicationListModel()
                 {
                     Id = x.Id,
                     UserId = x.User.Id,

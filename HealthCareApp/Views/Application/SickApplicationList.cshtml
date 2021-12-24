@@ -63,7 +63,7 @@
         </div>
     </div>
 }
-<div class="modal fade" id="filemodal" style="position:relative" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
+<div class="modal fade" id="filemodal" style="position:relative" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -83,21 +83,7 @@
 </div>
 <script type="text/javascript">
     function FileView(id) {
-        $.ajax({
-            url: "/Application/ApppFileView",
-            type: "POST",
-            data: { id: id },
-            dataType: 'json'
-        })
-            .done(function (data) {
-                console.log(data.object);
-                $("#modalicerik").html("");
-                $("#modalicerik").html("<div style='min-height: 100% !important;'><iframe src='" + data.object + "' frameborder='0' scrolling='auto' height='900' width='750'></iframe></div>");
-                $('#filemodal').modal("show");
-            })
-            .fail(function () {
-            });
-
+      
     };
 
     $("#myInput").on("keyup", function() {
