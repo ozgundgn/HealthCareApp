@@ -45,28 +45,34 @@ namespace Repository.Concrete
 
             using (HealtyCareContext context = new HealtyCareContext())
             {
+
                 var detailList = context.Applications
                     .Include(favoriteGenre => favoriteGenre.User)
-                    .Where(x => x.User.UserType == 2).Skip((model.Page-1)*model.Limit).Take(model.Limit).Select(x => new DonorApplicationListModel()
-                    {
-                        Id=x.Id,
-                        UserId = x.User.Id,
-                        Mail = x.User.Mail,
-                        Name = x.User.FirstName,
-                        Surname = x.User.LastName,
-                        Phone = x.User.Phone,
-                        TransferType = x.TransferType,
-                        TransferTypeString = ((TransferType)x.TransferType).GetDescription()
+                    .Where(x => x.User.UserType == 2);
+                if (!string.IsNullOrEmpty(model.Name))
+                {
+                    detailList = detailList.Where(x => x.User.FirstName.Contains(model.Name) || x.User.LastName.Contains(model.Name));
+                }
+               var list= detailList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Select(x => new DonorApplicationListModel()
+                {
+                    Id = x.Id,
+                    UserId = x.User.Id,
+                    Mail = x.User.Mail,
+                    Name = x.User.FirstName,
+                    Surname = x.User.LastName,
+                    Phone = x.User.Phone,
+                    TransferType = x.TransferType,
+                    TransferTypeString = ((TransferType)x.TransferType).GetDescription()
 
-                    }).ToList();
+                }).ToList();
 
                 var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType == 2);
-                PagedList<DonorApplicationListModel> donorListModel=new PagedList<DonorApplicationListModel>();
-                donorListModel.Items = detailList;
+                PagedList<DonorApplicationListModel> donorListModel = new PagedList<DonorApplicationListModel>();
+                donorListModel.Items = list;
                 donorListModel.PageSize = model.Limit;
                 donorListModel.PageIndex = model.Page;
                 donorListModel.TotalRecord = totalCount;
-                donorListModel.TotalPage = totalCount/model.Limit;
+                donorListModel.TotalPage = totalCount / model.Limit;
                 return donorListModel;
             }
         }
@@ -138,11 +144,11 @@ namespace Repository.Concrete
             using (HealtyCareContext context = new HealtyCareContext())
             {
                 var cityList = context.Cities.Select(x => new City()
-	                {
-		                Id = x.Id,
-		                CityName = x.CityName,
+                {
+                    Id = x.Id,
+                    CityName = x.CityName,
                     District = x.District
-	                })
+                })
                    .ToList();
                 return cityList;
             }
@@ -151,12 +157,12 @@ namespace Repository.Concrete
 
         public List<District> GetDistrictList(int id)
         {
-		      using (HealtyCareContext context = new HealtyCareContext())
-		      {
-			      var districtList = context.Districts.Where(x => x.CityId == id).ToList();
-			      return districtList;
-		      }
-				}
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var districtList = context.Districts.Where(x => x.CityId == id).ToList();
+                return districtList;
+            }
+        }
         public bool SetApplicationState(StateSaveRequestModel model)
         {
             using (HealtyCareContext context = new HealtyCareContext())
@@ -169,7 +175,7 @@ namespace Repository.Concrete
                 app.UserId = SessionHelper.DefaultSession.Id;
 
                 var application = Update(app);
-        
+
                 var id = context.SaveChanges();
                 return application;
             }

@@ -18,7 +18,7 @@ var DonorApplicationList = {
                 { field: "Mail", title: "Mail"},
                 { field: "Phone", title: "Telefon"},
                 { field: "TransferTypeString", title: "TransferType" },
-                { width: 64, tmpl: '<span class="material-icons gj-cursor-pointer">edit</span>', align: 'center', events: { "click": DonorApplicationList.Edit } },
+                { width: 64, tmpl: '<span class="material-icons md-18 gj-cursor-pointer">edit</span>', align: 'center', events: { "click": DonorApplicationList.Edit } },
             ],
             pager: { enable: true, limit: 20, sizes: [2, 5, 10, 20] }
         });
@@ -36,7 +36,7 @@ var DonorApplicationList = {
         $("#mailModal").modal("show");
     },
     EnterArama: function () {
-        $(".nameara").on('keyup', function (e) {
+        $("#search").on('keyup', function (e) {
             if (e.key === 'Enter' || e.keyCode === 13) {
                 DonorApplicationList.Search();
             }
