@@ -14,55 +14,20 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">Donör Listesi</h5>
-                <div class="col-md-3">
-                    <input type="text" id="search" class="form-control nameara" placeholder="Arama...">
-                    <button type="button" id="btnSearch" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Ara</button>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" id="search" class="form-control nameara" placeholder="Arama...">
+
+                    </div> <div class="col-md-3">
+                        <button type="button" id="btnSearch" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Ara</button>
+                    </div>
                 </div>
-                
-                <table id="grid"  class="table table-bordered"></table>
-                @*<table class="mb-0 table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Adı</th>
-                        <th>Soyadı</th>
-                        <th>Telefon</th>
-                        <th>Mail</th>
-                        <th>Nakil Tipi</th>
-                        @{
-                            if (SessionHelper.DefaultSession.Id != 0)
-                            {
-                                <th>Donöre Mail Gönder</th>
-                            }
-                        }
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <th scope="row">@item.Name</th>
-                            <td>@item.Surname</td>
-                            <td>@item.Phone</td>
-                            <td>@item.Mail</td>
-                            <td>@(((TransferType) item.TransferType).GetDescription())</td>
-                            @{
-                                if (SessionHelper.DefaultSession.Id != 0)
-                                {
-                                    <td><button type="button" onclick="openMailModal(@item.UserId, '@item.Name' + ' ' + '@item.Surname')"><i class="pe-7s-mail-open-file"></i></button></td>
-                                }
-                            }
-                        </tr>
-                    }
-                    </tbody>
-                </table>*@
+                    <table id="grid" class="table table-bordered"></table>
+                </div>
             </div>
-        </div>
     </div>
 
 }
-
-
-
 <!-- Modal -->
 <div class="modal fade" id="mailModal" style="margin-top: 10%;" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -5,12 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Service.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Serialization;
 using Repository.Abstract;
 using Repository.Concrete;
 using Repository.Helpers;
@@ -39,6 +36,8 @@ namespace HealthCareApp
             });
 
             services.AddControllersWithViews();
+
+
             services.AddSession();
             //services
             services.AddSingleton<IUserService, UserService>();
@@ -55,7 +54,9 @@ namespace HealthCareApp
             services.AddSingleton<ISickRepository, SickRepository>();
             services.AddSingleton<IRedisClient, RedisClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            
+            services.AddControllersWithViews()
+                .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
             SessionHelper.Configure(services.BuildServiceProvider().GetService<IHttpContextAccessor>(), services.BuildServiceProvider().GetService<IRedisClient>());
 
 

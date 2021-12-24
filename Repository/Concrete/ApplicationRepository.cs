@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Core.DataAccess.EntityFramework;
+using Core.Extentions;
 using Core.Paged;
 using Core.Utilities.Results;
 using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using Models.Application;
+using Models.Enums;
 using Repository.Abstract;
 using Repository.Helpers;
 using ServiceStack;
@@ -54,6 +56,8 @@ namespace Repository.Concrete
                         Surname = x.User.LastName,
                         Phone = x.User.Phone,
                         TransferType = x.TransferType,
+                        TransferTypeString = ((TransferType)x.TransferType).GetDescription()
+
                     }).ToList();
 
                 var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType == 2);
@@ -100,15 +104,11 @@ namespace Repository.Concrete
         public Application SetApplication(ApplicationSaveRequestModel model)
         {
             var list = new List<QuestionResult>();
-            if (model.QuestionResultList != null)
+            foreach (var item in model.QuestionResultList)
             {
-                foreach (var item in model.QuestionResultList)
-                {
-                    var question = new QuestionResult() { QuestionId = item.QuestionId, Result = item.QuestionResult };
-                    list.Add(question);
-                }
+                var question = new QuestionResult() { QuestionId = item.QuestionId, Result = item.QuestionResult };
+                list.Add(question);
             }
-       
             using (HealtyCareContext context = new HealtyCareContext())
             {
                 var application = context.Applications.Add(new Application

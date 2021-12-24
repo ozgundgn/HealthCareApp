@@ -22,7 +22,6 @@ namespace HealthCareApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IApplicationService _applicationService;
         private readonly INotyfService _notify;
-
         public ApplicationController(ILogger<HomeController> logger, IApplicationService applicationService,INotyfService notify)
         {
             _applicationService = applicationService;
@@ -44,72 +43,60 @@ namespace HealthCareApp.Controllers
 
         public JsonResult GetDonorList(DonorAplicationRequestModel model)
         {
-            var aa = _applicationService.GetDonorApplicationList(model).Data;
-            return ActionResultHelper.GridStoreLoad(aa);
+         
+            return ActionResultHelper.GridStoreLoad(_applicationService.GetDonorApplicationList(model).Data);
         }
         public IActionResult AplicationCreate()
         {
-            ApplicationCreateViewModel model = new ApplicationCreateViewModel();
-            model.QuestionsList = _applicationService.GetQuestionList().Data;
+            ApplicationCreateViewModel model =new ApplicationCreateViewModel();
+               model.QuestionsList = _applicationService.GetQuestionList().Data;
             return View(model);
         }
         [HttpPost]
-        public IActionResult ApplicationSave([FromForm] ApplicationSaveRequestModel model)
+        public IActionResult ApplicationSave([FromForm]ApplicationSaveRequestModel model)
         {
-            model.QuestionResultList = new JavaScriptSerializer().Deserialize<List<QuestionResultList>>(model.QuestionResultListString);
+            model.QuestionResultList= new JavaScriptSerializer().Deserialize<List<QuestionResultList>>(model.QuestionResultListString);
 
-            var uploads = Path.Combine(string.Concat(@"C:\HealtyCareApp\"));
-
-
+            var uploads = Path.Combine(string.Concat( @"C:\HealtyCareApp\"));
+            var dosyaAdi = model.ReportResult.FileName.Split(".");
+            var path = dosyaAdi[1];
+            model.ReportName = dosyaAdi[0];
             var dosyaKayitId = _applicationService.SetApplication(model);
-
-            if (model.ReportResult != null)
+            var filePath =
+                Path.Combine(uploads, string.Concat(dosyaKayitId.Data.Id, ".", path)); //dosya kayiıt id döncek
+            using (var dosya = new FileStream(filePath, FileMode.Create))
             {
-                var dosyaAdi = model.ReportResult.FileName.Split(".");
-                var path = dosyaAdi[1];
-                model.ReportName = dosyaAdi[0];
-
-                var filePath =
-                    Path.Combine(uploads, string.Concat(dosyaKayitId.Data.Id, ".", path)); //dosya kayiıt id döncek
-                using (var dosya = new FileStream(filePath, FileMode.Create))
-                {
-                    model.ReportResult.CopyTo(dosya);
-                }
+                model.ReportResult.CopyTo(dosya);
             }
 
-            if (dosyaKayitId.Success)
+            return Json(new
             {
-                _notify.Success("Başvuru oluşturuldu.");
-            }
-            else
-            {
-                _notify.Error("Başvuru oluşturulurken hata oldu.");
-
-            }
-
-            return RedirectToAction("AplicationCreate");
-
+                result = true,
+                message = "İşlem Başarılı",
+               
+            });
+           
         }
     
         public IActionResult ApppFileView(int id)
         {
             var uploads = Path.Combine(string.Concat(@"C:\HealtyCareApp\"));
-            var filePath = Path.Combine(uploads, string.Concat(id, ".", "pdf"));
+            var filePath = Path.Combine(uploads, string.Concat(id ,".", "pdf"));
 
-            byte[] bytes = System.IO.File.ReadAllBytes(filePath);
-            var _dosya = string.Concat("data:application/pdf;base64,", Convert.ToBase64String(bytes));
+               byte[] bytes = System.IO.File.ReadAllBytes(filePath);
+               var _dosya = string.Concat("data:application/pdf;base64,", Convert.ToBase64String(bytes));
             return Json(new
             {
                 result = true,
                 message = "İşlem Başarılı",
-                Object = _dosya
+                Object =_dosya
             });
         }
-
+       
         public IActionResult UserApplicationInformList()
         {
-            var appList = _applicationService.GetUserApplicationInformList().Data;
-            return View(appList);
+          var appList= _applicationService.GetUserApplicationInformList().Data;
+          return View(appList);
         }
         //[HttpPost]
         //public IActionResult AppDonorList()

@@ -13,5 +13,6 @@ namespace Models.Application
         public string Mail { get; set; }
         public string Phone { get; set; }
         public int? TransferType { get; set; }
+        public string TransferTypeString { get; set; }
     }
 }
