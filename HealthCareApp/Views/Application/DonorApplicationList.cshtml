@@ -9,24 +9,25 @@
     <div class="col-lg-12">
         <div class="main-card mb-3 card">
 
-            <search-field text="Ara..." id="donorSearchId"></search-field>
-
+            <div class="card-header">
+                <input id="myInput" type="text" placeholder="Search..">
+            </div>
             <div class="card-body">
                 <h5 class="card-title">Donör Listesi</h5>
-                <div class="col-md-3">
-                    <input type="text" id="search" class="form-control nameara" placeholder="Arama...">
-                    <button type="button" id="btnSearch" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Ara</button>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" id="search" class="form-control nameara" placeholder="Arama...">
+
+                    </div> <div class="col-md-3">
+                        <button type="button" id="btnSearch" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Ara</button>
+                    </div>
                 </div>
-                
-                <table id="grid"  class="table table-bordered"></table>
+                    <table id="grid" class="table table-bordered"></table>
+                </div>
             </div>
-        </div>
     </div>
 
 }
-
-
-
 <!-- Modal -->
 <div class="modal fade" id="mailModal" style="margin-top: 10%;" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -48,6 +49,4 @@
         </div>
     </div>
 </div>
-
 <script src="~/PageJs/DonorApplicationList.js"></script>
-
