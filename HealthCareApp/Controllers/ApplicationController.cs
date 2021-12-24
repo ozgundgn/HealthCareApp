@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HealthCareApp.Helpers;
 using HealthCareApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models.Application;
+using Models.Enums;
+using Nancy.Json;
+using Service.Abstract;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using AspNetCoreHero.ToastNotification.Abstractions;
-using HealthCareApp.Helpers;
-using Models.Application;
-using Models.Enums;
-using Service.Abstract;
-using Nancy.Json;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Repository.Helpers;
-using ServiceStack.Text;
 
 namespace HealthCareApp.Controllers
 {
@@ -31,11 +27,16 @@ namespace HealthCareApp.Controllers
             _notify = notify;
         }
 
-        public IActionResult SickApplicationList()
+        public IActionResult SickApplicationList(SickApplicationListViewModel model)
         {
-            return View(_applicationService.GetSickApplicationList().Data);
+            model.TransferTypeEnumList = Enum.GetValues(typeof(TransferType)).Cast<TransferType>();
+            return View(model);
         }
+        public JsonResult GetSickList(SickAplicationRequestModel model)
+        {
 
+            return ActionResultHelper.GridStoreLoad(_applicationService.GetSickApplicationList(model).Data);
+        }
       
 
         public IActionResult DonorApplicationList(DonorApplicationListViewModel model)

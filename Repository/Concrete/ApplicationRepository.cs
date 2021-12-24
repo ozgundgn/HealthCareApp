@@ -18,26 +18,43 @@ namespace Repository.Concrete
 {
     public class ApplicationRepository : EntityRepositoryBase<HealtyCareContext, Application>, IApplicationRepository
     {
-        public List<SickApplicationListModel> GetSickApplicationList()
+        public PagedList<SickApplicationListModel> GetSickApplicationList(SickAplicationRequestModel model)
         {
 
             using (HealtyCareContext context = new HealtyCareContext())
             {
-                var sickDetailList = context.Applications
-                       .Include(favoriteGenre => favoriteGenre.User)
-                       .Include(genre => genre.SickApplicationDetails).Where(x => x.User.UserType == 1).Select(x => new SickApplicationListModel()
-                       {
-                           Id = x.Id,
-                           Mail = x.User.Mail,
-                           Name = x.User.FirstName,
-                           Surname = x.User.LastName,
-                           Phone = x.User.Phone,
-                           TransferType = x.TransferType,
-                           Description = x.Description,
-                           SicknesskDate = x.SickApplicationDetails.ToList()[0].SicknessDate,
+                var detailList = context.Applications
+                    .Include(favoriteGenre => favoriteGenre.User)
+                    .Where(x => x.User.UserType == 1);
+                if (!string.IsNullOrEmpty(model.Filter))
+                {
+                    detailList = detailList.Where(x => x.User.FirstName.Contains(model.Filter) || x.User.LastName.Contains(model.Filter) || x.User.Mail.Contains(model.Filter) || x.User.Phone.Contains(model.Filter));
+                }
+                if (model.TransferType != 0)
+                {
+                    detailList = detailList.Where(x => x.TransferType == model.TransferType);
+                }
+                var list = detailList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Select(x => new SickApplicationListModel()
+                {
+                    Id = x.Id,
+                    UserId = x.User.Id,
+                    Mail = x.User.Mail,
+                    Name = x.User.FirstName,
+                    Surname = x.User.LastName,
+                    Phone = x.User.Phone,
+                    TransferType = x.TransferType,
+                    TransferTypeString = ((TransferType)x.TransferType).GetDescription()
 
-                       }).ToList();
-                return sickDetailList;
+                }).ToList();
+
+                var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType == 1);
+                PagedList<SickApplicationListModel> donorListModel = new PagedList<SickApplicationListModel>();
+                donorListModel.Items = list;
+                donorListModel.PageSize = model.Limit;
+                donorListModel.PageIndex = model.Page;
+                donorListModel.TotalRecord = totalCount;
+                donorListModel.TotalPage = totalCount / model.Limit;
+                return donorListModel;
             }
         }
         public PagedList<DonorApplicationListModel> GetDonorApplicationList(DonorAplicationRequestModel model)
@@ -55,9 +72,9 @@ namespace Repository.Concrete
                 }
                 if (model.TransferType != 0)
                 {
-                    detailList = detailList.Where(x => x.TransferType==model.TransferType);
+                    detailList = detailList.Where(x => x.TransferType == model.TransferType);
                 }
-var list= detailList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Select(x => new DonorApplicationListModel()
+                var list = detailList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Select(x => new DonorApplicationListModel()
                 {
                     Id = x.Id,
                     UserId = x.User.Id,
@@ -70,7 +87,7 @@ var list= detailList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Sele
 
                 }).ToList();
 
-                var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType == 2);
+                var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType ==2);
                 PagedList<DonorApplicationListModel> donorListModel = new PagedList<DonorApplicationListModel>();
                 donorListModel.Items = list;
                 donorListModel.PageSize = model.Limit;

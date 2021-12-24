@@ -25,7 +25,7 @@ namespace HealthCareApp.ViewComponents
                         <input type='text' id='{0}' class='form-control' placeholder='{1}'>
                     </div>
                     <div class='col-md-3'>
-                        <button type='button' id='btnSearch' class='btn btn-primary'><span class='glyphicon glyphicon-search'></span>Ara</button>
+                        <button type='button' id='btnSearch' class='btn btn-primary'>Ara</button>
                     </div>
                 </div>", this.Id,this.PlaceHolder);
 

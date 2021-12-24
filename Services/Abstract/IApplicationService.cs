@@ -10,7 +10,7 @@ namespace Service.Abstract
 {
     public interface IApplicationService
     {
-        IDataResult<List<SickApplicationListModel>> GetSickApplicationList();
+        IDataResult<PagedList<SickApplicationListModel>> GetSickApplicationList(SickAplicationRequestModel model);
         IDataResult<PagedList<DonorApplicationListModel>> GetDonorApplicationList(DonorAplicationRequestModel model);
         IDataResult<List<City>> GetCityList();
         IDataResult<List<District>> GetDistrictList(int id);

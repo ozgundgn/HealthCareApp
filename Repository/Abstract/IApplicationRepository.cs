@@ -11,7 +11,7 @@ namespace Repository.Abstract
 {
     public interface IApplicationRepository : IEntityRepository<Application>
     {
-        List<SickApplicationListModel> GetSickApplicationList();
+        PagedList<SickApplicationListModel> GetSickApplicationList(SickAplicationRequestModel model);
         PagedList<DonorApplicationListModel> GetDonorApplicationList(DonorAplicationRequestModel model);
         List<Question> GetQuestionList();
 

@@ -19,10 +19,10 @@ namespace Service.Concrete
             _applicationRepository = applicationRepository;
         }
 
-        public IDataResult<List<SickApplicationListModel>> GetSickApplicationList()
+        public IDataResult<PagedList<SickApplicationListModel>> GetSickApplicationList(SickAplicationRequestModel model)
         {
-            var sickList = _applicationRepository.GetSickApplicationList();
-            return new SuccessDataResult<List<SickApplicationListModel>>(sickList);
+            var sickList = _applicationRepository.GetSickApplicationList(model);
+            return new SuccessDataResult<PagedList<SickApplicationListModel>>(sickList);
         }
         public IDataResult<PagedList<DonorApplicationListModel>> GetDonorApplicationList(DonorAplicationRequestModel model)
         {

@@ -1,57 +1,58 @@
-﻿
-@using Models.Enums
-@using Core.Extentions
-@model List<Models.Application.SickApplicationListModel>
+﻿@using Core.Extentions
+@model SickApplicationListViewModel
 @{
     <style>
-    
         .modal-backdrop {
             display: none !important;
         }
     </style>
 
-
     <div class="col-lg-12">
-        <div class="main-card mb-3 card">
+        <div class="card">
             <div class="card-header">
-                <input id="myInput" type="text" placeholder="Search..">
+                <h5 class="card-header-title" style="color:midnightblue">Hasta Başvuru Listesi </h5>
             </div>
             <div class="card-body">
-                <h5 class="card-title">Hasta Listesi</h5>
-                <table  id="sickAppTable"class="mb-0 table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Adı</th>
-                        <th>Soyadı</th>
-                        <th>Telefon</th>
-                        <th>Mail</th>
-                        <th>Hastalık Tarihi</th>
-                        <th>Açıklama</th>
-                        <th>Nakil Tipi</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td scope="row">@item.Name</td>
-                            <td>@item.Surname</td>
-                            <td>@item.Phone</td>
-                            <td>@item.Mail</td>
-                            <td>@item.SicknesskDate</td>
-                            <td>@item.Description</td>
-                            <td>@(((TransferType) item.TransferType).GetDescription())</td>
-                            <td><button class="btn btn-outline-warning" onclick="FileView(@item.Id);"><i class="fa fa-file-pdf"></i></button></td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+                <div class="col-md-3">
+                    <select name="select" id="transferType" class="form-control">
+                        @foreach (var item in Model.TransferTypeEnumList)
+                        {
+                            <option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+
+                        }
+                    </select>
+                </div>
+                <search-field id="search" place-holder="Hasta Başvurusu Arama..."></search-field>
+
+                <br />
+                <table id="grid" class="table table-bordered"></table>
             </div>
         </div>
     </div>
+
 }
-<div class="modal fade" id="filemodal" style="position:relative" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="mailModal" style="margin-top: 10%;" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="SendMail">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="id" />
+                    <input type="hidden" name="donorPage" value="true" id="donorPage" />
+                    <label class="col-form-label-lg mail-to"></label><br />
+                    <label for="message"><b>Mesaj</b></label>
+                    <textarea id="w3review" class="form-control" name="message" rows="4" required>
+                    </textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-shadow p-2">Gönder</button>
+                    <button type="button" class="btn btn-danger btn-shadow p-2" data-dismiss="modal">Kapat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="filemodal" style="margin-top: 2%;margin-bottom: 2%;" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -69,16 +70,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function FileView(id) {
-      
-    };
-
-    $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#sickAppTable tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-    });
-   
-</script>
+<script src="~/PageJs/SickApplicationList.js"></script>
