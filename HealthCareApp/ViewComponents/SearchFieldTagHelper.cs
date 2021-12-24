@@ -11,7 +11,7 @@ namespace HealthCareApp.ViewComponents
     [HtmlTargetElement("search-field")]
     public class SearchFieldTagHelper:TagHelper
     {
-        public string Text { get; set; }
+        public string PlaceHolder { get; set; }
         public string Id { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -19,7 +19,15 @@ namespace HealthCareApp.ViewComponents
             output.TagMode = TagMode.StartTagAndEndTag;
 
             var sb = new StringBuilder();
-            sb.AppendFormat(@"<div class='form-group search-form'><div class='form-control card-header'><input id ='{0}' type='text' placeholder='{1}'></div></div>", this.Id,this.Text);
+            sb.AppendFormat(@"
+                <div class='row'>
+                    <div class='col-md-9'>
+                        <input type='text' id='{0}' class='form-control' placeholder='{1}'>
+                    </div>
+                    <div class='col-md-3'>
+                        <button type='button' id='btnSearch' class='btn btn-primary'><span class='glyphicon glyphicon-search'></span>Ara</button>
+                    </div>
+                </div>", this.Id,this.PlaceHolder);
 
             output.PreContent.SetHtmlContent(sb.ToString());
             base.Process(context, output);
