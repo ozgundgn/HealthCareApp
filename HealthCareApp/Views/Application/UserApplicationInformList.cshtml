@@ -2,7 +2,7 @@
 @using ServiceStack
 @using Models.Enums
 @using Core.Extentions
-@model List<Models.Application.UserApplicationListModel>
+@model List<Models.Application.UserApplicationModel>
 
 @{
     <style>
@@ -54,10 +54,10 @@
                                     }
                                 </td>
                                 <td>
-                                    <button type="button" id="'application_' + @item.Id">
+                                    <a href="@Url.Action("AplicationCreate", "Application",new {basvuruId=item.Id})">
                                         <i class="metismenu-icon pe-7s-note2">
                                         </i>
-                                    </button>
+                                    </a>
                                 </td>
                                 <td><button class="btn btn-outline-warning" onclick="StateUpdate(@item.Id);"><i class="fa fa-star"></i></button></td>
                             </tr>
@@ -104,6 +104,9 @@
     </div>
 </div>
 <script>
+    function basvuruDetay(basvuruId) {
+
+    }
     function StateUpdate(id) {
         $('#statemodal').modal("show");
         $('#basvuruid').val(id);
@@ -157,11 +160,11 @@
     $('#bulundukaydet').click(function () {
         var machdata = { PlatformType: $("#platformtype").val(), AppId: $('#basvuruid').val() };
         $.ajax({
-            url: "/Application/StateSave",
-            type: "POST",
-            data: machdata,
-            dataType: 'json'
-        })
+                url: "/Application/StateSave",
+                type: "POST",
+                data: machdata,
+                dataType: 'json'
+            })
             .done(function (data) {
 
 
@@ -171,11 +174,11 @@
     $('#iptalkaydet').click(function () {
         var iptaldata = { PlatFormType: 0, Description: $("#desc").val(), AppId: $('#basvuruid').val() };
         $.ajax({
-            url: "/Application/StateSave",
-            type: "POST",
-            data: iptaldata,
-            dataType: 'json'
-        })
+                url: "/Application/StateSave",
+                type: "POST",
+                data: iptaldata,
+                dataType: 'json'
+            })
             .done(function (data) {
 
 
