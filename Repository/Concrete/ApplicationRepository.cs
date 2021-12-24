@@ -100,11 +100,15 @@ namespace Repository.Concrete
         public Application SetApplication(ApplicationSaveRequestModel model)
         {
             var list = new List<QuestionResult>();
-            foreach (var item in model.QuestionResultList)
+            if (model.QuestionResultList != null)
             {
-                var question = new QuestionResult() { QuestionId = item.QuestionId, Result = item.QuestionResult };
-                list.Add(question);
+                foreach (var item in model.QuestionResultList)
+                {
+                    var question = new QuestionResult() { QuestionId = item.QuestionId, Result = item.QuestionResult };
+                    list.Add(question);
+                }
             }
+       
             using (HealtyCareContext context = new HealtyCareContext())
             {
                 var application = context.Applications.Add(new Application

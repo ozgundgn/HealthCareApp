@@ -10,7 +10,7 @@ namespace Entity.Models
     public partial class SickApplicationDetails : IEntity
     {
         public int Id { get; set; }
-        public DateTime SicknessDate { get; set; }
+        public DateTime? SicknessDate { get; set; }
         public string SicknessDetail { get; set; }
         public int? ApplicationId { get; set; }
 

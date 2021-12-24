@@ -14,7 +14,7 @@ namespace Models.Application
         public string RelativesName { get; set; }
         public string RelativesSurname { get; set; }
         public string RelativesPhone { get; set; }
-        public DateTime SickDate { get; set; }
+        public DateTime? SickDate { get; set; }
         public string SickDesc { get; set; }
         public string QuestionResultListString { get; set; }
         public List<QuestionResultList> QuestionResultList { get; set; }

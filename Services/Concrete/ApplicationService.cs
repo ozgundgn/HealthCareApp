@@ -6,6 +6,7 @@ using Core.Utilities.Results;
 using Entity.Models;
 using Models.Application;
 using Repository.Abstract;
+using Repository.Helpers;
 using Service.Abstract;
 
 namespace Service.Concrete
