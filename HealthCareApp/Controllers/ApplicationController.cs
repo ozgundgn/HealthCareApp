@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.IO;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using HealthCareApp.Helpers;
 using Models.Application;
 using Service.Abstract;
 using Nancy.Json;
@@ -33,9 +34,17 @@ namespace HealthCareApp.Controllers
             return View(_applicationService.GetSickApplicationList().Data);
         }
 
+      
+
         public IActionResult DonorApplicationList()
         {
-            return View(_applicationService.GetDonorApplicationList().Data);
+            return View();
+        }
+
+        public JsonResult GetDonorList(DonorAplicationRequestModel model)
+        {
+            var aa = _applicationService.GetDonorApplicationList(model).Data;
+            return ActionResultHelper.GridStoreLoad(aa);
         }
         public IActionResult AplicationCreate()
         {
@@ -89,17 +98,17 @@ namespace HealthCareApp.Controllers
           var appList= _applicationService.GetUserApplicationInformList().Data;
           return View(appList);
         }
-        [HttpPost]
-        public IActionResult AppDonorList()
-        {
+        //[HttpPost]
+        //public IActionResult AppDonorList()
+        //{
          
-            return Json(new
-            {
-                result = true,
-                message = "İşlem Başarılı",
-                Object = _applicationService.GetDonorApplicationList().Data
-            });
-        }
+        //    return Json(new
+        //    {
+        //        result = true,
+        //        message = "İşlem Başarılı",
+        //        Object = _applicationService.GetDonorApplicationList().Data
+        //    });
+        //}
         [HttpPost]
         public IActionResult StateSave(StateSaveRequestModel model)
         {

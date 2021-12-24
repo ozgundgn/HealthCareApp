@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Core.DataAccess.EntityFramework;
+using Core.Paged;
 using Core.Utilities.Results;
 using Entity.Models;
 using Microsoft.EntityFrameworkCore;
@@ -37,14 +38,14 @@ namespace Repository.Concrete
                 return sickDetailList;
             }
         }
-        public List<DonorApplicationListModel> GetDonorApplicationList()
+        public PagedList<DonorApplicationListModel> GetDonorApplicationList(DonorAplicationRequestModel model)
         {
 
             using (HealtyCareContext context = new HealtyCareContext())
             {
-                var sickDetailList = context.Applications
+                var detailList = context.Applications
                     .Include(favoriteGenre => favoriteGenre.User)
-                    .Where(x => x.User.UserType == 2).Select(x => new DonorApplicationListModel()
+                    .Where(x => x.User.UserType == 2).Skip((model.Page-1)*model.Limit).Take(model.Limit).Select(x => new DonorApplicationListModel()
                     {
                         Id=x.Id,
                         UserId = x.User.Id,
@@ -54,7 +55,15 @@ namespace Repository.Concrete
                         Phone = x.User.Phone,
                         TransferType = x.TransferType,
                     }).ToList();
-                return sickDetailList;
+
+                var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType == 2);
+                PagedList<DonorApplicationListModel> donorListModel=new PagedList<DonorApplicationListModel>();
+                donorListModel.Items = detailList;
+                donorListModel.PageSize = model.Limit;
+                donorListModel.PageIndex = model.Page;
+                donorListModel.TotalRecord = totalCount;
+                donorListModel.TotalPage = totalCount/model.Limit;
+                return donorListModel;
             }
         }
         public List<Question> GetQuestionList()

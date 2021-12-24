@@ -1,7 +1,4 @@
-﻿@using Repository.Helpers
-@using Models.Enums
-@using Core.Extentions
-@model List<Models.Application.DonorApplicationListModel>
+﻿
 @{
     <style>
         .modal-backdrop {
@@ -13,7 +10,13 @@
         <div class="main-card mb-3 card">
             <div class="card-body">
                 <h5 class="card-title">Donör Listesi</h5>
-                <table class="mb-0 table table-hover">
+                <div class="col-md-3">
+                    <input type="text" id="search" class="form-control nameara" placeholder="Arama...">
+                    <button type="button" id="btnSearch" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Ara</button>
+                </div>
+                
+                <table id="grid"  class="table table-bordered"></table>
+                @*<table class="mb-0 table table-hover">
                     <thead>
                         <tr>
                             <th>Adı</th>
@@ -42,12 +45,15 @@
                             </tr>
                         }
                     </tbody>
-                </table>
+                </table>*@
             </div>
         </div>
     </div>
 
 }
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="mailModal" style="margin-top: 10%;" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -69,13 +75,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    function openMailModal(donorId, donorName) {
-
-        $(".modal-body #id").val(donorId);
-        $(".modal-body label.mail-to").append(donorName);
-        $("#mailModal").modal("show");
-    }
-
-</script>
+<script src="~/PageJs/DonorApplicationList.js"></script>

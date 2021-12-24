@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Paged;
 using Core.Utilities.Results;
 using Entity.Models;
 using Models.Application;
@@ -22,10 +23,10 @@ namespace Service.Concrete
             var sickList = _applicationRepository.GetSickApplicationList();
             return new SuccessDataResult<List<SickApplicationListModel>>(sickList);
         }
-        public IDataResult<List<DonorApplicationListModel>> GetDonorApplicationList()
+        public IDataResult<PagedList<DonorApplicationListModel>> GetDonorApplicationList(DonorAplicationRequestModel model)
         {
-            var donorList = _applicationRepository.GetDonorApplicationList();
-            return new SuccessDataResult<List<DonorApplicationListModel>>(donorList);
+            var donorList = _applicationRepository.GetDonorApplicationList(model);
+            return new SuccessDataResult<PagedList<DonorApplicationListModel>>(donorList);
         }
         public IDataResult<List<Question>> GetQuestionList()
         {

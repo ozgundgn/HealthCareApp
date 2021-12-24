@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Paged;
 using Core.Utilities.Results;
 using Entity.Models;
 using Models.Application;
@@ -10,7 +11,7 @@ namespace Service.Abstract
     public interface IApplicationService
     {
         IDataResult<List<SickApplicationListModel>> GetSickApplicationList();
-        IDataResult<List<DonorApplicationListModel>> GetDonorApplicationList();
+        IDataResult<PagedList<DonorApplicationListModel>> GetDonorApplicationList(DonorAplicationRequestModel model);
         IDataResult<List<City>> GetCityList();
         IDataResult<List<District>> GetDistrictList(int id);
         IDataResult<List<Question>> GetQuestionList();
