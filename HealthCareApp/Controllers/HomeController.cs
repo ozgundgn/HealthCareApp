@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Core.Extentions;
 using Entity.Models;
 using Microsoft.AspNetCore.Http;
 using Models.Application;
@@ -130,37 +131,17 @@ namespace HealthCareApp.Controllers
         }     
         public IActionResult Register(UserSaveRequestModel usermodel)
         {
-	        RegisterModel model = new RegisterModel()
-	        {
-		        AddressDesc = usermodel.AddressDesc,
-		        CityList = _applicationService.GetCityList().Data,
-		        FatherName = usermodel.FatherName,
-		        FirstName = usermodel.FirstName,
-		        Height = usermodel.Height,
-		        IdentityNumber = usermodel.IdentityNumber,
-		        LastName = usermodel.LastName,
-		        Mail = usermodel.Mail,
-		        MotherName = usermodel.MotherName,
-		        Phone = usermodel.Phone,
-		        Weight = usermodel.Weight,
-		        Birthday = usermodel.Birthday,
-		        CityId = usermodel.CityId,
-		        Gender = usermodel.Gender,
-		        BloodGroup = usermodel.BloodGroup,
-		        CivilStatus = usermodel.CivilStatus,
-		        EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
-		        BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
-		        CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
-		        EducationStatus = usermodel.EducationStatus,
-		        DistrictId = usermodel.DistrictId,
-		        DistrictList = _applicationService.GetDistrictList(usermodel.CityId).Data,
-		        Rh = usermodel.Rh,
-		        RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
-		        UserType = usermodel.UserType,
-		        TitleButton = "Kaydet",
-		        TitleHead = "KULLANICI KAYIT FORMU",
-		        Id = usermodel.Id
-					  };
+	        RegisterModel model = new RegisterModel();
+	        usermodel.MapTo(model);
+	        model.CityList = _applicationService.GetCityList().Data;
+	        model.EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>();
+	        model.EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>();
+	        model.BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>();
+	        model.CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>();
+	        model.DistrictList = _applicationService.GetDistrictList(usermodel.CityId).Data;
+	        model.RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>();
+	        model.TitleButton = "Kaydet";
+	        model.TitleHead = "KULLANICI KAYIT FORMU";
 		      if (usermodel.Password!= usermodel.RPassword)
 		      {
 						_notify.Warning("Lütfen şifrenizi kontrol ediniz");
