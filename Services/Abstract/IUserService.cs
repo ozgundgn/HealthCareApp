@@ -14,5 +14,6 @@ namespace Service.Abstract
         IResult Add(User user);
         IDataResult<User> Login(string email, string password);
         IResult SendMailToUser(string message, int id);
+        IDataResult<Address> GetUserAddress(int id);
     }
 }

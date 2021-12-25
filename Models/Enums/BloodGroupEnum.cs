@@ -4,8 +4,6 @@ namespace Models.Enums
 {
     public enum BloodGroupEnum
     {
-        [Description("Tanımsız")]
-        Undefined = 0,
         [Description("A")]
         A = 1,
         [Description("B")]

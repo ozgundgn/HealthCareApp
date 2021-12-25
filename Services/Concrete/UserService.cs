@@ -52,7 +52,11 @@ namespace Service.Concrete
                }
             }
             return new ErrorResult();
-        }
-
+        }   
+        public IDataResult<Address> GetUserAddress(int id)
+        {
+		      var result = _userRepository.GetUserAddress(id);
+		      return new DataResult<Address>(result, true);
+				}
     }
 }

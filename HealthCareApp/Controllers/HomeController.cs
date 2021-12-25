@@ -11,6 +11,7 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Entity.Models;
 using Microsoft.AspNetCore.Http;
 using Models.Application;
+using Models.Enums;
 using Models.Home;
 using Nancy.Json;
 using Repository.Helpers;
@@ -75,11 +76,56 @@ namespace HealthCareApp.Controllers
             Response.Cookies.Delete(_contextAccessor.HttpContext?.Request.Cookies["user"]);
             return RedirectToAction("Index");
         }
+        public IActionResult RegisterUpdateScreen(int userid)
+        {
+	        var userAddresInformation = _userService.GetUserAddress(SessionHelper.DefaultSession.Id).Data;
+          RegisterModel model = new RegisterModel()
+	        {
+            AddressDesc = userAddresInformation.AddressDesc,
+            CityId = userAddresInformation.CityId,
+            DistrictId = userAddresInformation.DistrictId,
+            FatherName = SessionHelper.DefaultSession.FatherName,
+            FirstName = SessionHelper.DefaultSession.FirstName,
+            Height = SessionHelper.DefaultSession.Height,
+            Birthday = SessionHelper.DefaultSession.Birthday,
+            CityList = _applicationService.GetCityList().Data,
+            Gender = SessionHelper.DefaultSession.Gender,
+            DistrictList = _applicationService.GetDistrictList(userAddresInformation.CityId).Data,
+            LastName = SessionHelper.DefaultSession.LastName,
+            UserType = SessionHelper.DefaultSession.UserType,
+            IdentityNumber = SessionHelper.DefaultSession.IdentityNumber,
+            MotherName = SessionHelper.DefaultSession.MotherName,
+            Weight =  SessionHelper.DefaultSession.Weight,
+            Phone =  SessionHelper.DefaultSession.Phone,
+            Mail =  SessionHelper.DefaultSession.Mail,
+            EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
+            BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
+            CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
+            RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
+            BloodGroup = SessionHelper.DefaultSession.BloodGroup,
+            CivilStatus = SessionHelper.DefaultSession.CivilStatus,
+            EducationStatus = SessionHelper.DefaultSession.EducationStatus,
+            Rh = SessionHelper.DefaultSession.Rh,
+            TitleHead = "KULLANICI BİLGİLERİ DÜZENLEME FORMU",
+            TitleButton = "Güncelle"
+          };
+
+	        return View("MemberRegister", model);
+			  }  
         public IActionResult RegisterScreen()
         {
 
-	        RegisterModel model = new RegisterModel();
-	        model.CityList = _applicationService.GetCityList().Data;
+	        RegisterModel model = new RegisterModel()
+	        {
+            CityList = _applicationService.GetCityList().Data,
+            EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
+            BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
+            CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
+            RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
+            TitleHead = "KULLANICI KAYIT FORMU",
+            TitleButton = "Kaydet"
+          };
+
           return View("MemberRegister",model);
         }     
         public IActionResult Register(UserSaveRequestModel usermodel)
@@ -98,8 +144,24 @@ namespace HealthCareApp.Controllers
 							Mail = usermodel.Mail,
 							MotherName = usermodel.MotherName,
 							Phone = usermodel.Phone,
-							Weight = usermodel.Weight
-						};
+							Weight = usermodel.Weight,
+              Birthday = usermodel.Birthday,
+              CityId = usermodel.CityId,
+              Gender = usermodel.Gender,
+              BloodGroup = usermodel.BloodGroup,
+              CivilStatus = usermodel.CivilStatus,
+              EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
+              BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
+              CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
+              EducationStatus = usermodel.EducationStatus,
+              DistrictId = usermodel.DistrictId,
+              DistrictList = _applicationService.GetDistrictList(usermodel.CityId).Data,
+              Rh = usermodel.Rh,
+              RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
+              UserType = usermodel.UserType,
+              TitleButton = "Kaydet",
+              TitleHead = "KULLANICI KAYIT FORMU"
+            };
 						_notify.Warning("Lütfen şifrenizi kontrol ediniz");
 						return View("MemberRegister", model);
 					}
@@ -136,8 +198,8 @@ namespace HealthCareApp.Controllers
 						 _notify.Error("Kullanıcı Kayıt İşlemi Başarısız");
 					 }
 					 return RedirectToAction("Index");
-    }
-    public IActionResult DistrictList(int id)
+		    }
+		    public IActionResult DistrictList(int id)
         {
             return Json(new
             {
