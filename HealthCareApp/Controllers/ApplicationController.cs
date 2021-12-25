@@ -34,17 +34,13 @@ namespace HealthCareApp.Controllers
         }
         public JsonResult GetSickList(SickAplicationRequestModel model)
         {
-
             return ActionResultHelper.GridStoreLoad(_applicationService.GetSickApplicationList(model).Data);
         }
-      
-
         public IActionResult DonorApplicationList(DonorApplicationListViewModel model)
         {
             model.TransferTypeEnumList =Enum.GetValues(typeof(TransferType)).Cast<TransferType>();
             return View(model);
         }
-
         public JsonResult GetDonorList(DonorAplicationRequestModel model)
         {
          
@@ -97,30 +93,40 @@ namespace HealthCareApp.Controllers
             });
         }
        
-        public IActionResult UserApplicationInformList()
+        public IActionResult UserApplicationInformList(UserApplicationListViewModel model)
         {
-          var appList= _applicationService.GetUserApplicationInformList().Data;
-          return View(appList);
+            model.TransferTypeEnumList = Enum.GetValues(typeof(TransferType)).Cast<TransferType>();
+            return View(model);
         }
-        //[HttpPost]
-        //public IActionResult AppDonorList()
-        //{
-         
-        //    return Json(new
-        //    {
-        //        result = true,
-        //        message = "İşlem Başarılı",
-        //        Object = _applicationService.GetDonorApplicationList().Data
-        //    });
-        //}
+
+        public JsonResult GetUserApplicationList(UserAplicationRequestModel model)
+        {
+            return ActionResultHelper.GridStoreLoad(_applicationService.GetUserApplicationInformList(model).Data);
+        }
         [HttpPost]
         public IActionResult StateSave(StateSaveRequestModel model)
         {
             var result = _applicationService.SetApplicationState(model);
             if(result.Success)
             _notify.Success("Başvuru Durumu Güncellendi.");
-            else _notify.Success("Başvuru Durumu Güncellenemedi.");
-            return RedirectToAction("UserApplicationInformList", "Application");
+            else _notify.Error("Başvuru Durumu Güncellenemedi.");
+            return Json(new
+            {
+                result = result.Success
+              
+            });
+        }
+        [HttpPost]
+        public IActionResult DonorUserMach(DonorUserMachRequestModel model)
+        {
+            var result = _applicationService.SetDonorUserMach(model);
+            if (result.Success)
+                _notify.Success("Donör Eşleştirme Gerçekleşti");
+            else _notify.Error("Donör Eşletirme Gerçekleşmedi");
+            return Json(new
+            {
+                result = result.Success
+            }); //RedirectToAction("UserApplicationInformList", "Application");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

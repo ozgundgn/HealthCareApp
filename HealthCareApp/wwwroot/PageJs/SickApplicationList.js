@@ -7,7 +7,6 @@ var SickApplicationList = {
     GridGetir: function () {
         grid = $("#grid").grid({
             dataKey: "Id",
-            dataSource: '/Application/GetSickList',
             fixedHeader: true,
             height: 500,
             columns: [
@@ -29,7 +28,8 @@ var SickApplicationList = {
     Search: function () {
         grid.reload({
             Filter: $("#search").val(),
-            TransferType: $("#transferType").val()
+            TransferType: $("#transferType").val(),
+            Status: $("#statuType").val()
         });
     },
     Mail: function (e) {
@@ -61,6 +61,9 @@ var SickApplicationList = {
             }
         });
         $("#transferType").change(function() {
+            SickApplicationList.Search();
+        });
+        $("#statuType").change(function () {
             SickApplicationList.Search();
         });
     }

@@ -1505,7 +1505,8 @@ ul.gj-list-md li.disabled > [data-role=wrapper] > [data-role=expander] {
     }
 
     .gj-checkbox-md input[type=checkbox]:checked + span {
-        border: 2px solid #536DFE
+        border: 2px solid #536DFE;
+        background-color: #536DFE;
     }
 
         .gj-checkbox-md input[type=checkbox]:checked + span:after {

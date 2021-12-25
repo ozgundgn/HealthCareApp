@@ -25,7 +25,7 @@ namespace Repository.Concrete
             {
                 var detailList = context.Applications
                     .Include(favoriteGenre => favoriteGenre.User)
-                    .Where(x => x.User.UserType == 1);
+                    .Where(x => x.User.UserType == 1 && x.Statu == model.Status);
                 if (!string.IsNullOrEmpty(model.Filter))
                 {
                     detailList = detailList.Where(x => x.User.FirstName.Contains(model.Filter) || x.User.LastName.Contains(model.Filter) || x.User.Mail.Contains(model.Filter) || x.User.Phone.Contains(model.Filter));
@@ -47,7 +47,7 @@ namespace Repository.Concrete
 
                 }).ToList();
 
-                var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType == 1);
+                var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType == 1 && x.Statu == model.Status);
                 PagedList<SickApplicationListModel> donorListModel = new PagedList<SickApplicationListModel>();
                 donorListModel.Items = list;
                 donorListModel.PageSize = model.Limit;
@@ -65,7 +65,7 @@ namespace Repository.Concrete
 
                 var detailList = context.Applications
                     .Include(favoriteGenre => favoriteGenre.User)
-                    .Where(x => x.User.UserType == 2);
+                    .Where(x => x.User.UserType == 2 && x.Statu == model.Status);
                 if (!string.IsNullOrEmpty(model.Filter))
                 {
                     detailList = detailList.Where(x => x.User.FirstName.Contains(model.Filter) || x.User.LastName.Contains(model.Filter) || x.User.Mail.Contains(model.Filter) || x.User.Phone.Contains(model.Filter));
@@ -87,7 +87,7 @@ namespace Repository.Concrete
 
                 }).ToList();
 
-                var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType ==2);
+                var totalCount = context.Applications.Include(favoriteGenre => favoriteGenre.User).Count(x => x.User.UserType == 2 && x.Statu == model.Status);
                 PagedList<DonorApplicationListModel> donorListModel = new PagedList<DonorApplicationListModel>();
                 donorListModel.Items = list;
                 donorListModel.PageSize = model.Limit;
@@ -108,11 +108,22 @@ namespace Repository.Concrete
             }
         }
 
-        public List<UserApplicationListModel> GetUserApplicationInformList()
+        public PagedList<UserApplicationModel> GetUserApplicationInformList(UserAplicationRequestModel model)
         {
             using (HealtyCareContext context = new HealtyCareContext())
             {
-                var appList = context.Applications.Include(app => app.User).Where(x => x.UserId == Convert.ToInt32(SessionHelper.DefaultSession.Id)).Select(m => new UserApplicationListModel()
+                var appList = context.Applications.Include(app => app.User)
+                    .Where(x => x.UserId == Convert.ToInt32(SessionHelper.DefaultSession.Id) && x.Statu == model.Status);
+
+                if (!string.IsNullOrEmpty(model.Filter))
+                {
+                    appList = appList.Where(x => x.RelativesName.Contains(model.Filter) || x.RelativeSurname.Contains(model.Filter)||x.RelativesPhone.Contains(model.Filter));
+                }
+                if (model.TransferType != 0)
+                {
+                    appList = appList.Where(x => x.TransferType == model.TransferType);
+                }
+                var list = appList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Select(m => new UserApplicationModel()
                 {
                     Id = m.Id,
                     Name = m.User.FirstName,
@@ -121,11 +132,23 @@ namespace Repository.Concrete
                     Statu = m.Statu,
                     Description = m.Description,
                     RelativesName = m.RelativesName,
+                    RelativesSurname = m.RelativeSurname,
+                    RelativesPhone = m.RelativesPhone,
                     UpdateDateTime = m.UpdateDate,
-                    TransferType = m.TransferType
-                })
-                   .ToList();
-                return appList;
+                    TransferType = m.TransferType,
+                    TransferTypeString = ((TransferType)m.TransferType).GetDescription()
+                }).ToList();
+
+
+                var totalCount = context.Applications.Include(x => x.User).Count(x => x.UserId == SessionHelper.DefaultSession.Id && x.Statu == model.Status);
+                PagedList<UserApplicationModel> donorListModel = new PagedList<UserApplicationModel>();
+                donorListModel.Items = list;
+                donorListModel.PageSize = model.Limit;
+                donorListModel.PageIndex = model.Page;
+                donorListModel.TotalRecord = totalCount;
+                donorListModel.TotalPage = totalCount / model.Limit;
+                return donorListModel;
+
             }
         }
         public Application SetApplication(ApplicationSaveRequestModel model)
@@ -193,7 +216,7 @@ namespace Repository.Concrete
                 app.Id = model.AppId;
                 app.CancellationReason = model.PlatformType == 0 ? "" : model.Description;
                 app.Statu = model.PlatformType;
-                app.UserId = SessionHelper.DefaultSession.Id;
+                app.UserId = model.UserId;
 
                 var application = Update(app);
 
@@ -201,6 +224,15 @@ namespace Repository.Concrete
                 return application;
             }
 
+        }
+        public bool SetDonorUserMach(UserApplicationMatch model)
+        {
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var application = context.UserApplicationMatches.Add(model);
+                var result = context.SaveChanges();
+                return result > 0 ? true : false;
+            }
         }
     }
 }

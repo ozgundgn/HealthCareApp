@@ -42,6 +42,10 @@ namespace Service.Concrete
         }
         public IResult SetApplicationState(StateSaveRequestModel model)
         {
+         
+                model.UserId = SessionHelper.DefaultSession.Id;
+
+
             var setapp = _applicationRepository.SetApplicationState(model);
             if (setapp)
             {
@@ -51,12 +55,38 @@ namespace Service.Concrete
             {
                 return new ErrorResult();
             }
-            
         }
-        public IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList()
+        public IResult SetDonorUserMach(DonorUserMachRequestModel model)
         {
-            var userAppList = _applicationRepository.GetUserApplicationInformList();
-            return new SuccessDataResult<List<UserApplicationListModel>>(userAppList);
+            UserApplicationMatch requestmodel=new UserApplicationMatch();
+            requestmodel.DonorUserId = model.DonorUserId;
+            requestmodel.ApplicationDonorId = model.DonorAppId;
+            requestmodel.SickUserId = SessionHelper.DefaultSession.Id;
+            requestmodel.ApplicationSickId = model.UserAppId;
+            requestmodel.MatchDate=DateTime.Now;
+            var setapp = _applicationRepository.SetDonorUserMach(requestmodel);
+
+            StateSaveRequestModel donormodel=new StateSaveRequestModel();
+            donormodel.AppId = model.DonorAppId;
+            donormodel.PlatformType = 2;
+            donormodel.UserId = model.DonorUserId;
+            var setdonorApp = _applicationRepository.SetApplicationState(donormodel);
+
+
+            if (setapp)
+            {
+                return new SuccessResult();
+            }
+            else
+            {
+                return new ErrorResult();
+            }
+        }
+        
+        public IDataResult<PagedList<UserApplicationModel>> GetUserApplicationInformList(UserAplicationRequestModel model)
+        {
+            var userAppList = _applicationRepository.GetUserApplicationInformList(model);
+            return new SuccessDataResult<PagedList<UserApplicationModel>>(userAppList);
         }
 
         public IDataResult<List<City>> GetCityList()

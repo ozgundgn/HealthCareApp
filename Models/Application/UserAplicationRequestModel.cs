@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Models.Application
 {
-    public class SickAplicationRequestModel : BaseSearchModel
+    public class UserAplicationRequestModel : BaseSearchModel
     {
         public string Filter { get; set; }
-        public int TransferType { get; set; }
         public int Status { get; set; }
+        public int TransferType { get; set; }
     }
 }

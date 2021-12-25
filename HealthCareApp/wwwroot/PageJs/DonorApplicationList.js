@@ -7,7 +7,6 @@ var DonorApplicationList = {
     GridGetir: function () {
         grid = $("#grid").grid({
             dataKey: "Id",
-            dataSource: '/Application/GetDonorList',
             fixedHeader: true,
             height: 500,
             columns: [
@@ -29,7 +28,8 @@ var DonorApplicationList = {
     Search: function () {
         grid.reload({
             Filter: $("#search").val(),
-            TransferType: $("#transferType").val()
+            TransferType: $("#transferType").val(),
+            Status: $("#statuType").val()
         });
     },
     Mail: function (e) {
@@ -61,6 +61,8 @@ var DonorApplicationList = {
             }
         });
         $("#transferType").change(function() {
+            DonorApplicationList.Search();
+        }); $("#statuType").change(function () {
             DonorApplicationList.Search();
         });
     }

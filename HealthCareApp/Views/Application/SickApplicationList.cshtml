@@ -13,19 +13,10 @@
                 <h5 class="card-header-title" style="color:midnightblue">Hasta Başvuru Listesi </h5>
             </div>
             <div class="card-body">
-                <div class="col-md-3">
-                    <select name="select" id="transferType" class="form-control">
-                        @foreach (var item in Model.TransferTypeEnumList)
-                        {
-                            <option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                <search-field transfer-items="@Model.TransferTypeEnumList" place-holder=" Hasta Başvurusu Arama..."></search-field>
 
-                        }
-                    </select>
-                </div>
-                <search-field id="search" place-holder="Hasta Başvurusu Arama..."></search-field>
-
-                <br />
-                <table id="grid" class="table table-bordered"></table>
+                <br/>
+                <table id="grid"  data-source="@Url.Action("GetSickList","Application" ,new {Status=1})" class="table table-bordered"></table>
             </div>
         </div>
     </div>

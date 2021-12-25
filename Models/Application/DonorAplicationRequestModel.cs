@@ -8,5 +8,6 @@ namespace Models.Application
     {
         public string Filter { get; set; }
         public int TransferType { get; set; }
+        public int Status { get; set; }
     }
 }

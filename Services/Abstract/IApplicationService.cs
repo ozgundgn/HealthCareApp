@@ -17,6 +17,7 @@ namespace Service.Abstract
         IDataResult<List<Question>> GetQuestionList();
         IDataResult<Application> SetApplication(ApplicationSaveRequestModel model);
         IResult SetApplicationState(StateSaveRequestModel model);
-        IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList();
+        IResult SetDonorUserMach(DonorUserMachRequestModel model);
+        IDataResult<PagedList<UserApplicationModel>> GetUserApplicationInformList(UserAplicationRequestModel model);
     }
 }
