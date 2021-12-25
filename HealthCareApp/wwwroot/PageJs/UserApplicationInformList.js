@@ -41,16 +41,7 @@ var UserApplicationInformList = {
         });
     },
     Edit: function (e) {
-        $.ajax({
-            url: "/Application/ApplicationCreate",
-                type: "POST",
-                data: { basvuruId: e.data.record.Id },
-                dataType: 'json'
-            })
-            .done(function(data) {
-
-
-            });
+        window.location.href = "/Application/ApplicationCreate/?applicationId=" + e.data.record.Id;
     },
     PdfViewer: function (e) {
         $.ajax({

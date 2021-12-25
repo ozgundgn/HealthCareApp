@@ -59,9 +59,9 @@ namespace HealthCareApp.Controllers
         }
         public JsonResult GetDonorList(DonorAplicationRequestModel model)
         {
-
             return ActionResultHelper.GridStoreLoad(_applicationService.GetDonorApplicationList(model).Data);
         }
+        
         public IActionResult ApplicationCreate(int? applicationId)
         {
             ApplicationCreateViewModel model = new ApplicationCreateViewModel();
