@@ -52,6 +52,15 @@ namespace Service.Concrete
             return new DataResult<User>(result, true);
         }
 
+        public bool UserIdentityNumberControl(string identityNumber)
+        {
+            bool isIdentityNumber = _userRepository.Get(x => x.IdentityNumber == identityNumber).Count>0;
+            if (isIdentityNumber)
+            {
+	            return true;
+            }
+            return false;
+        }      
         public IResult SendMailToUser(string message, int id)
         {
             var toUser = _userRepository.Get(x => x.Id == id).FirstOrDefault();

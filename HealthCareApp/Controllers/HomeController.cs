@@ -130,44 +130,43 @@ namespace HealthCareApp.Controllers
         }     
         public IActionResult Register(UserSaveRequestModel usermodel)
         {
-          if (usermodel.Password!= usermodel.RPassword)
-					{
-						RegisterModel model = new RegisterModel()
-						{
-							AddressDesc = usermodel.AddressDesc,
-							CityList = _applicationService.GetCityList().Data,
-							FatherName = usermodel.FatherName,
-							FirstName = usermodel.FirstName,
-							Height = usermodel.Height,
-							IdentityNumber = usermodel.IdentityNumber,
-							LastName = usermodel.LastName,
-							Mail = usermodel.Mail,
-							MotherName = usermodel.MotherName,
-							Phone = usermodel.Phone,
-							Weight = usermodel.Weight,
-              Birthday = usermodel.Birthday,
-              CityId = usermodel.CityId,
-              Gender = usermodel.Gender,
-              BloodGroup = usermodel.BloodGroup,
-              CivilStatus = usermodel.CivilStatus,
-              EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
-              BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
-              CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
-              EducationStatus = usermodel.EducationStatus,
-              DistrictId = usermodel.DistrictId,
-              DistrictList = _applicationService.GetDistrictList(usermodel.CityId).Data,
-              Rh = usermodel.Rh,
-              RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
-              UserType = usermodel.UserType,
-              TitleButton = "Kaydet",
-              TitleHead = "KULLANICI KAYIT FORMU",
-              Id = usermodel.Id
-
-            };
+	        RegisterModel model = new RegisterModel()
+	        {
+		        AddressDesc = usermodel.AddressDesc,
+		        CityList = _applicationService.GetCityList().Data,
+		        FatherName = usermodel.FatherName,
+		        FirstName = usermodel.FirstName,
+		        Height = usermodel.Height,
+		        IdentityNumber = usermodel.IdentityNumber,
+		        LastName = usermodel.LastName,
+		        Mail = usermodel.Mail,
+		        MotherName = usermodel.MotherName,
+		        Phone = usermodel.Phone,
+		        Weight = usermodel.Weight,
+		        Birthday = usermodel.Birthday,
+		        CityId = usermodel.CityId,
+		        Gender = usermodel.Gender,
+		        BloodGroup = usermodel.BloodGroup,
+		        CivilStatus = usermodel.CivilStatus,
+		        EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
+		        BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
+		        CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
+		        EducationStatus = usermodel.EducationStatus,
+		        DistrictId = usermodel.DistrictId,
+		        DistrictList = _applicationService.GetDistrictList(usermodel.CityId).Data,
+		        Rh = usermodel.Rh,
+		        RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
+		        UserType = usermodel.UserType,
+		        TitleButton = "Kaydet",
+		        TitleHead = "KULLANICI KAYIT FORMU",
+		        Id = usermodel.Id
+					  };
+		      if (usermodel.Password!= usermodel.RPassword)
+		      {
 						_notify.Warning("Lütfen şifrenizi kontrol ediniz");
 						return View("MemberRegister", model);
 					}
-          User user = new User()
+					User user = new User()
           {
 	          Address = new List<Address>
 		          { new Address {DistrictId = usermodel.DistrictId, CityId = usermodel.CityId,AddressDesc = usermodel.AddressDesc}},
@@ -190,7 +189,7 @@ namespace HealthCareApp.Controllers
 	          Weight = usermodel.Weight,
             Id = usermodel.Id
           };
-				  if (usermodel.Id!=0)
+				  if (usermodel.Id != 0)
           {
 					 var result = _userService.Update(user);
 					 if (result.Success)
@@ -204,6 +203,14 @@ namespace HealthCareApp.Controllers
 					}
 					else
           {
+	         bool isIdentityNumber= _userService.UserIdentityNumberControl(usermodel.IdentityNumber);
+
+	         if (isIdentityNumber)
+	         {
+          _notify.Error("Sistemde TC numarası zaten kayıtlı");
+					 return View("MemberRegister", model);
+					 }
+
 					 var result = _userService.Add(user);
 					 if (result.Success)
 					 {
