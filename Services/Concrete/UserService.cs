@@ -21,12 +21,14 @@ namespace Service.Concrete
 
         public IResult Add(User user)
         {
-            var result = _userRepository.Add(user);
-            if (result)
+            if (user.Mail != null)
             {
-                return new SuccessResult();
+                var result = _userRepository.Add(user);
+                if (result)
+                {
+                    return new SuccessResult();
+                }
             }
-
             return new ErrorResult();
         }
 
