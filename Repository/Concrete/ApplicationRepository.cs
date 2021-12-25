@@ -70,7 +70,7 @@ namespace Repository.Concrete
                 {
                     detailList = detailList.Where(x => x.User.FirstName.Contains(model.Filter) || x.User.LastName.Contains(model.Filter) || x.User.Mail.Contains(model.Filter) || x.User.Phone.Contains(model.Filter));
                 }
-				
+
                 if (model.TransferType != 0)
                 {
                     detailList = detailList.Where(x => x.TransferType == model.TransferType);
@@ -119,7 +119,7 @@ namespace Repository.Concrete
 
                 if (!string.IsNullOrEmpty(model.Filter))
                 {
-                    appList = appList.Where(x => x.RelativesName.Contains(model.Filter) || x.RelativeSurname.Contains(model.Filter)||x.RelativesPhone.Contains(model.Filter));
+                    appList = appList.Where(x => x.RelativesName.Contains(model.Filter) || x.RelativeSurname.Contains(model.Filter) || x.RelativesPhone.Contains(model.Filter));
                 }
                 if (model.TransferType != 0)
                 {
@@ -211,11 +211,11 @@ namespace Repository.Concrete
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 QuestionResult = list,
-                SickApplicationDetails = new List<SickApplicationDetails>(){ sicknessDetail },
+                SickApplicationDetails = new List<SickApplicationDetails>() { sicknessDetail },
                 Report = new List<Report> { new Report { ReportName = model.ReportName } }
             };
 
-            if (model.Id == null || model.Id==0)
+            if (model.Id == null || model.Id == 0)
             {
                 Add(userApplication);
             }
@@ -240,8 +240,7 @@ namespace Repository.Concrete
                 app.UserId = model.UserId;
 
                 var application = Update(app);
-
-                var id = context.SaveChanges();
+                context.SaveChanges();
                 return application;
             }
         }

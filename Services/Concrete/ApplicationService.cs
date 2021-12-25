@@ -23,11 +23,19 @@ namespace Service.Concrete
         }
         public IDataResult<PagedList<SickApplicationListModel>> GetSickApplicationList(SickAplicationRequestModel model)
         {
+            if (model == null)
+            {
+                return new ErrorDataResult<PagedList<SickApplicationListModel>>();
+            }
             var sickList = _applicationRepository.GetSickApplicationList(model);
             return new SuccessDataResult<PagedList<SickApplicationListModel>>(sickList);
         }
         public IDataResult<PagedList<DonorApplicationListModel>> GetDonorApplicationList(DonorAplicationRequestModel model)
         {
+            if (model == null)
+            {
+                return new ErrorDataResult<PagedList<DonorApplicationListModel>>();
+            }
             var donorList = _applicationRepository.GetDonorApplicationList(model);
             return new SuccessDataResult<PagedList<DonorApplicationListModel>>(donorList);
         }
@@ -35,41 +43,43 @@ namespace Service.Concrete
         {
             var questionList = _applicationRepository.GetQuestionList();
             return new SuccessDataResult<List<Question>>(questionList);
-
         }
         public IDataResult<Application> SetApplication(ApplicationSaveRequestModel model)
         {
+            if (model == null)
+                return new ErrorDataResult<Application>();
+
             var setapp = _applicationRepository.SetApplication(model);
             return new SuccessDataResult<Application>(setapp);
         }
         public IResult SetApplicationState(StateSaveRequestModel model)
         {
-         
-                model.UserId = SessionHelper.DefaultSession.Id;
-
-
-            var setapp = _applicationRepository.SetApplicationState(model);
-            if (setapp)
-            {
-                return new SuccessResult();
-            }
-            else
-            {
+            if (model == null)
                 return new ErrorResult();
-            }
+
+            model.UserId = SessionHelper.DefaultSession.Id;
+            bool setapp = _applicationRepository.SetApplicationState(model);
+
+            if (setapp)
+                return new SuccessResult();
+            else
+                return new ErrorResult();
 
         }
         public IResult SetDonorUserMach(DonorUserMachRequestModel model)
         {
-            UserApplicationMatch requestmodel=new UserApplicationMatch();
+            if (model == null)
+                return new ErrorResult();
+
+            UserApplicationMatch requestmodel = new UserApplicationMatch();
             requestmodel.DonorUserId = model.DonorUserId;
             requestmodel.ApplicationDonorId = model.DonorAppId;
             requestmodel.SickUserId = SessionHelper.DefaultSession.Id;
             requestmodel.ApplicationSickId = model.UserAppId;
-            requestmodel.MatchDate=DateTime.Now;
+            requestmodel.MatchDate = DateTime.Now;
             var setapp = _applicationRepository.SetDonorUserMach(requestmodel);
 
-            StateSaveRequestModel donormodel=new StateSaveRequestModel();
+            StateSaveRequestModel donormodel = new StateSaveRequestModel();
             donormodel.AppId = model.DonorAppId;
             donormodel.PlatformType = 2;
             donormodel.UserId = model.DonorUserId;
@@ -77,24 +87,25 @@ namespace Service.Concrete
 
 
             if (setapp)
-            {
                 return new SuccessResult();
-            }
             else
-            {
                 return new ErrorResult();
-            }
         }
-        
+
         public IDataResult<PagedList<UserApplicationModel>> GetUserApplicationInformList(UserAplicationRequestModel model)
         {
+            if (model == null)
+                return new ErrorDataResult<PagedList<UserApplicationModel>>();
+
             var userAppList = _applicationRepository.GetUserApplicationInformList(model);
             return new SuccessDataResult<PagedList<UserApplicationModel>>(userAppList);
-
         }
 
         public IDataResult<ApplicationCreateViewModel> GetById(int applicationId)
         {
+            if (applicationId == 0)
+                return new ErrorDataResult<ApplicationCreateViewModel>();
+
             var appData = _applicationRepository.GetUserApplicationInform(applicationId);
 
             var returnModel = new ApplicationCreateViewModel()
@@ -112,10 +123,8 @@ namespace Service.Concrete
                 SicknessDate = appData.SicknessDate,
                 SicknessDetailId = appData.SicknessDetailId,
                 QuestionResulList = appData.QuestionResulList
-
             };
             return new SuccessDataResult<ApplicationCreateViewModel>(returnModel);
-
         }
     }
 }
