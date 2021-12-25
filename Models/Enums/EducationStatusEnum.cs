@@ -4,8 +4,6 @@ namespace Models.Enums
 {
     public enum EducationStatusEnum
     {
-        [Description("Tanımsız")]
-        Undefined = 0,
         [Description("İlk Okul")]
         PrimarySchool = 1,
         [Description("Orta Okul")]

@@ -32,7 +32,7 @@ namespace Entity.Models
         public decimal? Weight { get; set; }
         public decimal? Height { get; set; }
         public int? BloodGroup { get; set; }
-        public int? Rh { get; set; }
+        public int Rh { get; set; }
         public int? CivilStatus { get; set; }
         public int? EducationStatus { get; set; }
         public short? UserType { get; set; }

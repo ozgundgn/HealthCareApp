@@ -29,6 +29,18 @@ namespace Service.Concrete
 
             return new ErrorResult();
         }
+
+        public IResult Update(User user)
+        {
+		      var result = _userRepository.Update(user);
+		      if (result)
+		      {
+			      return new SuccessResult();
+		      }
+
+		      return new ErrorResult();
+		    }
+
         public IDataResult<User> Login(string email, string password)
         {
             var result = _userRepository.Get(x => x.Mail == email && x.Password == password).FirstOrDefault();
@@ -40,6 +52,15 @@ namespace Service.Concrete
             return new DataResult<User>(result, true);
         }
 
+        public bool UserIdentityNumberControl(string identityNumber)
+        {
+            bool isIdentityNumber = _userRepository.Get(x => x.IdentityNumber == identityNumber).Count>0;
+            if (isIdentityNumber)
+            {
+	            return true;
+            }
+            return false;
+        }      
         public IResult SendMailToUser(string message, int id)
         {
             var toUser = _userRepository.Get(x => x.Id == id).FirstOrDefault();
@@ -52,7 +73,11 @@ namespace Service.Concrete
                }
             }
             return new ErrorResult();
-        }
-
+        }   
+        public IDataResult<Address> GetUserAddress(int id)
+        {
+		      var result = _userRepository.GetUserAddress(id);
+		      return new DataResult<Address>(result, true);
+				}
     }
 }

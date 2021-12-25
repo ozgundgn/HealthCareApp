@@ -10,8 +10,8 @@ namespace Entity.Models
     {
         public int Id { get; set; }
         public string AddressDesc { get; set; }
-        public int? CityId { get; set; }
-        public int? DistrictId { get; set; }
+        public int CityId { get; set; }
+        public int DistrictId { get; set; }
         public int UserId { get; set; }
 
         public virtual District District { get; set; }

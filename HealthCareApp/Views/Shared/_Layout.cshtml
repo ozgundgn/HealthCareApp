@@ -155,7 +155,7 @@
                                 <i class="fa fa-angle-down ml-2 opacity-8"></i>
                             </a>
                             <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                <button type="button" tabindex="0" class="dropdown-item">Kullanıcı Ayarları</button>
+                                <button type="button" tabindex="0" onclick="@("location.href='"+Url.Action("RegisterUpdateScreen","Home")+ "'")" class="dropdown-item">Kullanıcı Ayarları</button>
                                 <div tabindex="-1" class="dropdown-divider"></div>
                                 <button onclick="@("location.href='"+Url.Action("LogOut","Home")+ "'")" type="button" tabindex="0" class="dropdown-item">
                                     Çıkış Yap

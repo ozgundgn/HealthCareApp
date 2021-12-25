@@ -6,5 +6,6 @@ namespace Repository.Abstract
     public interface IUserRepository : IEntityRepository<User>
     {
         bool SendMail(string message, string email);
+        Address GetUserAddress(int userid);
     }
 }
