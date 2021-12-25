@@ -89,9 +89,9 @@ namespace HealthCareApp.Controllers
             FirstName = SessionHelper.DefaultSession.FirstName,
             Height = SessionHelper.DefaultSession.Height,
             Birthday = SessionHelper.DefaultSession.Birthday,
-            CityList = _applicationService.GetCityList().Data,
+            CityList = _userService.GetCityList().Data,
             Gender = SessionHelper.DefaultSession.Gender,
-            DistrictList = _applicationService.GetDistrictList(userAddresInformation.CityId).Data,
+            DistrictList = _userService.GetDistrictList(userAddresInformation.CityId).Data,
             LastName = SessionHelper.DefaultSession.LastName,
             UserType = SessionHelper.DefaultSession.UserType,
             IdentityNumber = SessionHelper.DefaultSession.IdentityNumber,
@@ -118,7 +118,7 @@ namespace HealthCareApp.Controllers
         {
 	        RegisterModel model = new RegisterModel()
 	        {
-            CityList = _applicationService.GetCityList().Data,
+            CityList = _userService.GetCityList().Data,
             EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
             BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
             CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
@@ -133,12 +133,12 @@ namespace HealthCareApp.Controllers
         {
 	        RegisterModel model = new RegisterModel();
 	        usermodel.MapTo(model);
-	        model.CityList = _applicationService.GetCityList().Data;
+	        model.CityList = _userService.GetCityList().Data;
 	        model.EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>();
 	        model.EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>();
 	        model.BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>();
 	        model.CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>();
-	        model.DistrictList = _applicationService.GetDistrictList(usermodel.CityId).Data;
+	        model.DistrictList = _userService.GetDistrictList(usermodel.CityId).Data;
 	        model.RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>();
 	        model.TitleButton = "Kaydet";
 	        model.TitleHead = "KULLANICI KAYIT FORMU";
@@ -210,7 +210,7 @@ namespace HealthCareApp.Controllers
             {
                 result = true,//result.Success,
                 message = "İşlem Başarılı",
-                Object = _applicationService.GetDistrictList(id).Data,// result.Object.Id
+                Object = _userService.GetDistrictList(id).Data,// result.Object.Id
             });
         }
         [HttpPost]

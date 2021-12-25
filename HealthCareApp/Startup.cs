@@ -55,16 +55,10 @@ namespace HealthCareApp
             //services
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IApplicationService, ApplicationService>();
-            services.AddSingleton<IDonorService, DonorService>();
-            services.AddSingleton<IQuestionService, QuestionService>();
-            services.AddSingleton<ISickService, SickService>();
             //repositories
 
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IApplicationRepository, ApplicationRepository>();
-            services.AddSingleton<IDonorRepository, DonorRepository>();
-            services.AddSingleton<IQuestionRepository, QuestionRepository>();
-            services.AddSingleton<ISickRepository, SickRepository>();
             services.AddSingleton<IRedisClient, RedisClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
