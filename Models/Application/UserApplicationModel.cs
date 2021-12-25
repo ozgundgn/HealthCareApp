@@ -22,5 +22,6 @@ namespace Models.Application
         public int? TransferType { get; set; }
         public DateTime? SicknessDate { get; set; }
         public List<QuestionResult> QuestionResulList { get; set; }
+        public int? SicknessDetailId { get; set; }
     }
 }

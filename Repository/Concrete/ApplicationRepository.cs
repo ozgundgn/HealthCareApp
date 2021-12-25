@@ -70,10 +70,12 @@ namespace Repository.Concrete
                 {
                     detailList = detailList.Where(x => x.User.FirstName.Contains(model.Filter) || x.User.LastName.Contains(model.Filter) || x.User.Mail.Contains(model.Filter) || x.User.Phone.Contains(model.Filter));
                 }
+				
                 if (model.TransferType != 0)
                 {
                     detailList = detailList.Where(x => x.TransferType == model.TransferType);
                 }
+
                 var list = detailList.Skip((model.Page - 1) * model.Limit).Take(model.Limit).Select(x => new DonorApplicationListModel()
                 {
                     Id = x.Id,
@@ -108,7 +110,9 @@ namespace Repository.Concrete
             }
         }
 
+
         public PagedList<UserApplicationModel> GetUserApplicationInformList(UserAplicationRequestModel model)
+
         {
             using (HealtyCareContext context = new HealtyCareContext())
             {
@@ -151,36 +155,82 @@ namespace Repository.Concrete
 
             }
         }
+
+
+        public UserApplicationModel GetUserApplicationInform(int applicationId)
+        {
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                return context.Applications.Include(app => app.User).Include(app => app.QuestionResult)
+                    .Where(x => x.Id == applicationId)
+                    .Select(m => new UserApplicationModel()
+                    {
+                        Id = m.Id,
+                        Name = m.User.FirstName,
+                        Surname = m.User.LastName,
+                        ApplicationDateTime = m.CreateDate,
+                        Statu = m.Statu,
+                        Description = m.SickApplicationDetails.First().SicknessDetail,
+                        RelativesName = m.RelativesName,
+                        UpdateDateTime = m.UpdateDate,
+                        TransferType = m.TransferType,
+                        RelativesPhone = m.RelativesPhone,
+                        RelativesSurname = m.RelativeSurname,
+                        SicknessDate = m.SickApplicationDetails.First().SicknessDate,
+                        SicknessDetailId = m.SickApplicationDetails.First().Id,
+                        QuestionResulList = m.QuestionResult.ToList()
+                    }).FirstOrDefault();
+            }
+        }
         public Application SetApplication(ApplicationSaveRequestModel model)
         {
             var list = new List<QuestionResult>();
+
             foreach (var item in model.QuestionResultList)
             {
-                var question = new QuestionResult() { QuestionId = item.QuestionId, Result = item.QuestionResult };
+                var question = new QuestionResult() { QuestionId = item.QuestionId, Result = item.QuestionResult, ApplicationId = model.Id };
+                if (item.Id != 0)
+                {
+                    question.Id = item.Id;
+                }
                 list.Add(question);
             }
-            using (HealtyCareContext context = new HealtyCareContext())
+
+            var sicknessDetail =
+                new SickApplicationDetails
+                { SicknessDate = model.SickDate, SicknessDetail = model.SickDesc };
+            if (model.SicknessDetailId != null)
             {
-                var application = context.Applications.Add(new Application
-                {
-                    RelativesName = model.RelativesName,
-                    RelativeSurname = model.RelativesSurname,
-                    RelativesPhone = model.RelativesPhone,
-                    UserId = SessionHelper.DefaultSession.Id,
-                    TransferType = SessionHelper.DefaultSession.UserType,
-                    Statu = 1,
-                    CreateDate = DateTime.Now,
-                    UpdateDate = DateTime.Now,
-                    QuestionResult = list,
-                    SickApplicationDetails = new List<SickApplicationDetails>
-                        {new SickApplicationDetails {SicknessDate = model.SickDate, SicknessDetail = model.SickDesc}},
-                    Report = new List<Report> { new Report { ReportName = model.ReportName } }
-
-
-                }).Entity;
-                var id = context.SaveChanges();
-                return application;
+                sicknessDetail.Id = model.SicknessDetailId.Value;
             }
+
+            var userApplication = new Application()
+            {
+                RelativesName = model.RelativesName,
+                RelativeSurname = model.RelativesSurname,
+                RelativesPhone = model.RelativesPhone,
+                UserId = SessionHelper.DefaultSession.Id,
+                TransferType = model.TransferType,
+                Statu = 1,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                QuestionResult = list,
+                SickApplicationDetails = new List<SickApplicationDetails>(){ sicknessDetail },
+                Report = new List<Report> { new Report { ReportName = model.ReportName } }
+            };
+
+            if (model.Id == null || model.Id==0)
+            {
+                Add(userApplication);
+            }
+            else
+            {
+                userApplication.Id = model.Id.Value;
+                Update(userApplication);
+            }
+
+            return userApplication;
+
         }
 
         public List<City> GetCityList()
@@ -223,7 +273,6 @@ namespace Repository.Concrete
                 var id = context.SaveChanges();
                 return application;
             }
-
         }
         public bool SetDonorUserMach(UserApplicationMatch model)
         {

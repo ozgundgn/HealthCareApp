@@ -17,10 +17,13 @@ namespace Repository.Abstract
 
         Application SetApplication(ApplicationSaveRequestModel model);
         bool SetApplicationState(StateSaveRequestModel model);
+
         bool SetDonorUserMach(UserApplicationMatch model);
 
 
         PagedList<UserApplicationModel> GetUserApplicationInformList(UserAplicationRequestModel model);
+        
+        UserApplicationModel GetUserApplicationInform(int applicationId);
 
         List<City> GetCityList();
         List<District> GetDistrictList(int id);

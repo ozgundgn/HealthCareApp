@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using Core.Paged;
 using Core.Utilities.Results;
@@ -19,5 +20,8 @@ namespace Service.Abstract
         IResult SetApplicationState(StateSaveRequestModel model);
         IResult SetDonorUserMach(DonorUserMachRequestModel model);
         IDataResult<PagedList<UserApplicationModel>> GetUserApplicationInformList(UserAplicationRequestModel model);
+        
+        IDataResult<ApplicationCreateViewModel> GetById(int applicationId);
+
     }
 }

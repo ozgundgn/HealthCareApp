@@ -42,7 +42,7 @@ var UserApplicationInformList = {
     },
     Edit: function (e) {
         $.ajax({
-            url: "/Application/AplicationCreate",
+            url: "/Application/ApplicationCreate",
                 type: "POST",
                 data: { basvuruId: e.data.record.Id },
                 dataType: 'json'
