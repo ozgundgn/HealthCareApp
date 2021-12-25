@@ -21,7 +21,6 @@ namespace Service.Concrete
         {
             _applicationRepository = applicationRepository;
         }
-
         public IDataResult<PagedList<SickApplicationListModel>> GetSickApplicationList(SickAplicationRequestModel model)
         {
             var sickList = _applicationRepository.GetSickApplicationList(model);
@@ -92,17 +91,6 @@ namespace Service.Concrete
             var userAppList = _applicationRepository.GetUserApplicationInformList(model);
             return new SuccessDataResult<PagedList<UserApplicationModel>>(userAppList);
 
-        }
-
-        public IDataResult<List<City>> GetCityList()
-        {
-            var cityList = _applicationRepository.GetCityList();
-            return new SuccessDataResult<List<City>>(cityList);
-        }
-        public IDataResult<List<District>> GetDistrictList(int id)
-        {
-            var districtList = _applicationRepository.GetDistrictList(id);
-            return new SuccessDataResult<List<District>>(districtList);
         }
 
         public IDataResult<ApplicationCreateViewModel> GetById(int applicationId)

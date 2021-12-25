@@ -17,5 +17,7 @@ namespace Service.Abstract
         IResult SendMailToUser(string message, int id);
         IDataResult<Address> GetUserAddress(int id);
         bool UserIdentityNumberControl(string identityNumber);
+        IDataResult<List<City>> GetCityList();
+        IDataResult<List<District>> GetDistrictList(int id);
     }
 }

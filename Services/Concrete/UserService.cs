@@ -79,5 +79,16 @@ namespace Service.Concrete
 		      var result = _userRepository.GetUserAddress(id);
 		      return new DataResult<Address>(result, true);
 				}
+        public IDataResult<List<City>> GetCityList()
+        {
+            var cityList = _userRepository.GetCityList();
+            return new SuccessDataResult<List<City>>(cityList);
+        }
+        public IDataResult<List<District>> GetDistrictList(int id)
+        {
+            var districtList = _userRepository.GetDistrictList(id);
+            return new SuccessDataResult<List<District>>(districtList);
+        }
+
     }
 }

@@ -109,8 +109,6 @@ namespace Repository.Concrete
                 return questionList;
             }
         }
-
-
         public PagedList<UserApplicationModel> GetUserApplicationInformList(UserAplicationRequestModel model)
 
         {
@@ -155,8 +153,6 @@ namespace Repository.Concrete
 
             }
         }
-
-
         public UserApplicationModel GetUserApplicationInform(int applicationId)
         {
             using (HealtyCareContext context = new HealtyCareContext())
@@ -231,31 +227,6 @@ namespace Repository.Concrete
 
             return userApplication;
 
-        }
-
-        public List<City> GetCityList()
-        {
-            using (HealtyCareContext context = new HealtyCareContext())
-            {
-                var cityList = context.Cities.Select(x => new City()
-                {
-                    Id = x.Id,
-                    CityName = x.CityName,
-                    District = x.District
-                })
-                   .ToList();
-                return cityList;
-            }
-        }
-
-
-        public List<District> GetDistrictList(int id)
-        {
-            using (HealtyCareContext context = new HealtyCareContext())
-            {
-                var districtList = context.Districts.Where(x => x.CityId == id).ToList();
-                return districtList;
-            }
         }
         public bool SetApplicationState(StateSaveRequestModel model)
         {

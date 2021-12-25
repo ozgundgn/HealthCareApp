@@ -18,10 +18,32 @@ namespace Repository.Concrete
         }
         public Address GetUserAddress(int userid)
         {
-			      using (HealtyCareContext context = new HealtyCareContext())
-			      {
-				        return  context.Addresses.Include(x => x.User).Where(x => x.UserId == userid).FirstOrDefault();
-					  }
-				}
-  }
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                return context.Addresses.Include(x => x.User).FirstOrDefault(x => x.UserId == userid);
+            }
+        }
+        public List<City> GetCityList()
+        {
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var cityList = context.Cities.Select(x => new City()
+                {
+                    Id = x.Id,
+                    CityName = x.CityName,
+                    District = x.District
+                })
+                    .ToList();
+                return cityList;
+            }
+        }
+        public List<District> GetDistrictList(int id)
+        {
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var districtList = context.Districts.Where(x => x.CityId == id).ToList();
+                return districtList;
+            }
+        }
+    }
 }
