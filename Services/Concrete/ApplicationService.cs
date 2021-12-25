@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Core.Paged;
 using Core.Utilities.Results;
@@ -8,6 +10,7 @@ using Models.Application;
 using Repository.Abstract;
 using Repository.Helpers;
 using Service.Abstract;
+using ServiceStack;
 
 namespace Service.Concrete
 {
@@ -51,24 +54,48 @@ namespace Service.Concrete
             {
                 return new ErrorResult();
             }
-            
+
         }
-        public IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList()
+        public IDataResult<List<UserApplicationModel>> GetUserApplicationInformList()
         {
             var userAppList = _applicationRepository.GetUserApplicationInformList();
-            return new SuccessDataResult<List<UserApplicationListModel>>(userAppList);
+            return new SuccessDataResult<List<UserApplicationModel>>(userAppList);
         }
 
         public IDataResult<List<City>> GetCityList()
         {
             var cityList = _applicationRepository.GetCityList();
             return new SuccessDataResult<List<City>>(cityList);
-        }      
+        }
         public IDataResult<List<District>> GetDistrictList(int id)
         {
             var districtList = _applicationRepository.GetDistrictList(id);
             return new SuccessDataResult<List<District>>(districtList);
-        }    
+        }
 
+        public IDataResult<ApplicationCreateViewModel> GetById(int applicationId)
+        {
+            var appData = _applicationRepository.GetUserApplicationInform(applicationId);
+
+            var returnModel = new ApplicationCreateViewModel()
+            {
+                Id = appData.Id,
+                ApplicationDateTime = appData.ApplicationDateTime,
+                Description = appData.Description,
+                Statu = appData.Statu,
+                Surname = SessionHelper.DefaultSession.LastName,
+                Name = SessionHelper.DefaultSession.FirstName,
+                TransferType = appData.TransferType,
+                RelativesName = appData.RelativesName,
+                RelativesSurname = appData.RelativesSurname,
+                RelativesPhone = appData.RelativesPhone,
+                SicknessDate = appData.SicknessDate,
+                SicknessDetailId = appData.SicknessDetailId,
+                QuestionResulList = appData.QuestionResulList
+
+            };
+            return new SuccessDataResult<ApplicationCreateViewModel>(returnModel);
+
+        }
     }
 }

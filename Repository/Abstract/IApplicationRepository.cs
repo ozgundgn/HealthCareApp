@@ -17,10 +17,8 @@ namespace Repository.Abstract
 
         Application SetApplication(ApplicationSaveRequestModel model);
         bool SetApplicationState(StateSaveRequestModel model);
-
-
-        List<UserApplicationListModel> GetUserApplicationInformList();
-
+        List<UserApplicationModel> GetUserApplicationInformList();
+        UserApplicationModel GetUserApplicationInform(int applicationId);
         List<City> GetCityList();
         List<District> GetDistrictList(int id);
     }

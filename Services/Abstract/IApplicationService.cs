@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using Core.Paged;
 using Core.Utilities.Results;
@@ -17,6 +18,7 @@ namespace Service.Abstract
         IDataResult<List<Question>> GetQuestionList();
         IDataResult<Application> SetApplication(ApplicationSaveRequestModel model);
         IResult SetApplicationState(StateSaveRequestModel model);
-        IDataResult<List<UserApplicationListModel>> GetUserApplicationInformList();
+        IDataResult<List<UserApplicationModel>> GetUserApplicationInformList();
+        IDataResult<ApplicationCreateViewModel> GetById(int applicationId);
     }
 }
