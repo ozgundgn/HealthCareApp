@@ -12,6 +12,7 @@ namespace Models.Home
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Mail { get; set; }
+        public int Id { get; set; }
         public string Password { get; set; }
         public string RPassword { get; set; }
         public short? Gender { get; set; }

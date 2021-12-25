@@ -27,5 +27,7 @@ namespace Models.Home
 			public string AddressDesc { get; set; }
 			public int CityId { get; set; }
 			public int DistrictId { get; set; }
+			public bool Update { get; set; }
+			public int Id { get; set; }
 	}
 }

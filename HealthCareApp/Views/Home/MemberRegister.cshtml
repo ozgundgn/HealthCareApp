@@ -1,13 +1,11 @@
 ﻿@using Core.Extentions
-@using Models.Enums
 @model Models.Home.RegisterModel
-
-	
 
 		<div class="tab-pane tabs-animation fade show active " id="tab-content-0" role="tabpanel">
 			<div class="main-card mb-3 card">
 				<div class="card-body" style="width: 800px">
 					<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Register" class="card-body">
+					<input value="@Model.Id" name="Id" type="text" class="form-control" hidden>
 						<h5 class="card-title">@Model.TitleHead</h5>
 						<div class="position-relative form-group">
 							<label for="FirstName">Ad</label>
@@ -23,7 +21,7 @@
 						</div>
 						<div class="position-relative form-group">
 							<label for="Birthday">Doğum Tarihi</label>
-							@Html.TextBox("Birthday", Model.Birthday ,"{0:yyyy-MM-dd}",new{ @class="form-control",@style="width:100%", type="date" ,required="required"})
+							@Html.TextBox("Birthday", Model.Birthday, "{0:yyyy-MM-dd}", new {@class = "form-control", @style = "width:100%", type = "date", required = "required"})
 						</div>
 
 						<fieldset class="position-relative form-group">
@@ -105,7 +103,7 @@
 						<label>İlçe</label>
 						<select required name="DistrictId" id="DistrictId" class="mb-2 form-control">
 							@{
-							if (Model.DistrictList!=null)
+							if (Model.DistrictList != null)
 							{
 							foreach (var item in Model.DistrictList)
 							{
@@ -144,7 +142,7 @@
 									@{
 									foreach (var item in Model.BloodGroupList)
 									{
-									if (Convert.ToInt32(item)==Model.BloodGroup)
+									if (Convert.ToInt32(item) == Model.BloodGroup)
 									{
 									<option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
 									}
@@ -161,7 +159,7 @@
 									@{
 									foreach (var item in Model.RhList)
 									{
-									if (Convert.ToInt32(item)==Model.Rh)
+									if (Convert.ToInt32(item) == Model.Rh)
 									{
 									<option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
 									}
@@ -179,7 +177,7 @@
 							@{
 							foreach (var item in Model.CivilStatusList)
 							{
-							if (Convert.ToInt32(item)==Model.CivilStatus)
+							if (Convert.ToInt32(item) == Model.CivilStatus)
 							{
 							<option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
 							}
@@ -196,7 +194,7 @@
 							@{
 							foreach (var item in Model.EducationStatusList)
 							{
-							if (Convert.ToInt32(item)==Model.EducationStatus)
+							if (Convert.ToInt32(item) == Model.EducationStatus)
 							{
 							<option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
 							}
@@ -209,7 +207,7 @@
 						</select>
 
 						<button class="btn btn-primary btn-shadow p-2" type="submit">@Model.TitleButton</button>
-						<button type="button" class="btn btn-danger btn-shadow p-2" onclick="@("location.href='"+ Url.Action("Index","Home")+ "'")">Kapat</button>
+						<button type="button" class="btn btn-danger btn-shadow p-2" onclick="@(" location.href='" + Url.Action("Index", "Home") + "' ")">Kapat</button>
 					</form>
 				</div>
 			</div>

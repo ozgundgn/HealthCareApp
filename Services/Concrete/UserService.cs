@@ -29,6 +29,18 @@ namespace Service.Concrete
 
             return new ErrorResult();
         }
+
+        public IResult Update(User user)
+        {
+		      var result = _userRepository.Update(user);
+		      if (result)
+		      {
+			      return new SuccessResult();
+		      }
+
+		      return new ErrorResult();
+		    }
+
         public IDataResult<User> Login(string email, string password)
         {
             var result = _userRepository.Get(x => x.Mail == email && x.Password == password).FirstOrDefault();

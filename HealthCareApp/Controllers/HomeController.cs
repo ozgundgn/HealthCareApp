@@ -76,7 +76,7 @@ namespace HealthCareApp.Controllers
             Response.Cookies.Delete(_contextAccessor.HttpContext?.Request.Cookies["user"]);
             return RedirectToAction("Index");
         }
-        public IActionResult RegisterUpdateScreen(int userid)
+        public IActionResult RegisterUpdateScreen()
         {
 	        var userAddresInformation = _userService.GetUserAddress(SessionHelper.DefaultSession.Id).Data;
           RegisterModel model = new RegisterModel()
@@ -107,14 +107,14 @@ namespace HealthCareApp.Controllers
             EducationStatus = SessionHelper.DefaultSession.EducationStatus,
             Rh = SessionHelper.DefaultSession.Rh,
             TitleHead = "KULLANICI BİLGİLERİ DÜZENLEME FORMU",
-            TitleButton = "Güncelle"
+            TitleButton = "Güncelle",
+            Id = SessionHelper.DefaultSession.Id
           };
 
 	        return View("MemberRegister", model);
 			  }  
         public IActionResult RegisterScreen()
         {
-
 	        RegisterModel model = new RegisterModel()
 	        {
             CityList = _applicationService.GetCityList().Data,
@@ -160,34 +160,50 @@ namespace HealthCareApp.Controllers
               RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
               UserType = usermodel.UserType,
               TitleButton = "Kaydet",
-              TitleHead = "KULLANICI KAYIT FORMU"
+              TitleHead = "KULLANICI KAYIT FORMU",
+              Id = usermodel.Id
+
             };
 						_notify.Warning("Lütfen şifrenizi kontrol ediniz");
 						return View("MemberRegister", model);
 					}
-          User user=new User()
+          User user = new User()
           {
 	          Address = new List<Address>
-	          { new Address {DistrictId = usermodel.DistrictId, CityId = usermodel.CityId,AddressDesc = usermodel.AddressDesc}},
-            Birthday = usermodel.Birthday,
-            BloodGroup = usermodel.BloodGroup,
-            CivilStatus = usermodel.CivilStatus,
-            EducationStatus = usermodel.EducationStatus,
-            FatherName = usermodel.FatherName,
-            FirstName = usermodel.FirstName,
-            Gender = usermodel.Gender,
-            Height = usermodel.Height,
-            IdentityNumber = usermodel.IdentityNumber,
-            LastName = usermodel.LastName,
-            Mail = usermodel.Mail,
-            MotherName = usermodel.MotherName,
-            Password = usermodel.Password,
-            Phone = usermodel.Phone,
-            Rh = usermodel.Rh,
-            UserType = usermodel.UserType,
-            Weight = usermodel.Weight
+		          { new Address {DistrictId = usermodel.DistrictId, CityId = usermodel.CityId,AddressDesc = usermodel.AddressDesc}},
+	          Birthday = usermodel.Birthday,
+	          BloodGroup = usermodel.BloodGroup,
+	          CivilStatus = usermodel.CivilStatus,
+	          EducationStatus = usermodel.EducationStatus,
+	          FatherName = usermodel.FatherName,
+	          FirstName = usermodel.FirstName,
+	          Gender = usermodel.Gender,
+	          Height = usermodel.Height,
+	          IdentityNumber = usermodel.IdentityNumber,
+	          LastName = usermodel.LastName,
+	          Mail = usermodel.Mail,
+	          MotherName = usermodel.MotherName,
+	          Password = usermodel.Password,
+	          Phone = usermodel.Phone,
+	          Rh = usermodel.Rh,
+	          UserType = usermodel.UserType,
+	          Weight = usermodel.Weight,
+            Id = usermodel.Id
           };
-
+				  if (usermodel.Id!=0)
+          {
+					 var result = _userService.Update(user);
+					 if (result.Success)
+					 {
+						 _notify.Success("Kullanıcı Güncelleme İşlemi Başarılı");
+					 }
+					 else
+					 {
+						 _notify.Error("Güncelleme İşlemi Başarısız");
+					 }
+					}
+					else
+          {
 					 var result = _userService.Add(user);
 					 if (result.Success)
 					 {
@@ -195,9 +211,10 @@ namespace HealthCareApp.Controllers
 					 }
 					 else
 					 {
-						 _notify.Error("Kullanıcı Kayıt İşlemi Başarısız");
+						 _notify.Error("Kayıt İşlemi Başarısız");
 					 }
-					 return RedirectToAction("Index");
+          }
+					return RedirectToAction("Index");
 		    }
 		    public IActionResult DistrictList(int id)
         {
