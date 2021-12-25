@@ -34,13 +34,16 @@ namespace Service.Concrete
 
         public IResult Update(User user)
         {
-		      var result = _userRepository.Update(user);
-		      if (result)
-		      {
-			      return new SuccessResult();
-		      }
+            if (user.Id > 0)
+            {
+                var result = _userRepository.Update(user);
+                if (result)
+                {
+                    return new SuccessResult();
+                }
+            }
 
-		      return new ErrorResult();
+            return new ErrorResult();
 		    }
 
         public IDataResult<User> Login(string email, string password)
@@ -76,6 +79,7 @@ namespace Service.Concrete
             }
             return new ErrorResult();
         }   
+
         public IDataResult<Address> GetUserAddress(int id)
         {
 		      var result = _userRepository.GetUserAddress(id);

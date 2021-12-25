@@ -75,7 +75,7 @@ var UserApplicationInformList = {
             UserApplicationInformList.Search();
         });
         $("#statuType").change(function () {
-            if ($("#statuType") == 1) {
+            if ($("#statuType").val() == 1) {
                 grid.showColumn('Durum');
             } else {
                 grid.hideColumn('Durum');
@@ -157,7 +157,13 @@ var UserApplicationInformList = {
             var platformType= $("#platformtype").val();
             var basvuruId = $('#basvuruid').val();
             if (platformType == 2 && donorUserId == 0) {
-                alert("Lütfen Donör Seçiniz");
+                notif({
+                    type: "error",
+                    msg: "Lütfen Donör Seçiniz",
+                    width: 300,
+                    height: 20,
+                    position: "center"
+                });
                 return false;
             }
             var machdata = { PlatformType: platformType, AppId: basvuruId  };
@@ -191,7 +197,13 @@ var UserApplicationInformList = {
         $('#iptalkaydet').click(function () {
 
             if ($("#desc").val()=="") {
-                alert("Lütfen Açıklama Giriniz");
+                notif({
+                    type: "error",
+                    msg: "Lütfen Açıklama Giriniz",
+                    width: 300,
+                    height: 20,
+                    position: "center"
+                });
                 return false;
             }
             var iptaldata = { PlatFormType: 0, Description: $("#desc").val(), AppId: $('#basvuruid').val() };

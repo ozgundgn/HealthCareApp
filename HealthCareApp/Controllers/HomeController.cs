@@ -79,132 +79,132 @@ namespace HealthCareApp.Controllers
         }
         public IActionResult RegisterUpdateScreen()
         {
-	        var userAddresInformation = _userService.GetUserAddress(SessionHelper.DefaultSession.Id).Data;
-          RegisterModel model = new RegisterModel()
-	        {
-            AddressDesc = userAddresInformation.AddressDesc,
-            CityId = userAddresInformation.CityId,
-            DistrictId = userAddresInformation.DistrictId,
-            FatherName = SessionHelper.DefaultSession.FatherName,
-            FirstName = SessionHelper.DefaultSession.FirstName,
-            Height = SessionHelper.DefaultSession.Height,
-            Birthday = SessionHelper.DefaultSession.Birthday,
-            CityList = _userService.GetCityList().Data,
-            Gender = SessionHelper.DefaultSession.Gender,
-            DistrictList = _userService.GetDistrictList(userAddresInformation.CityId).Data,
-            LastName = SessionHelper.DefaultSession.LastName,
-            UserType = SessionHelper.DefaultSession.UserType,
-            IdentityNumber = SessionHelper.DefaultSession.IdentityNumber,
-            MotherName = SessionHelper.DefaultSession.MotherName,
-            Weight =  SessionHelper.DefaultSession.Weight,
-            Phone =  SessionHelper.DefaultSession.Phone,
-            Mail =  SessionHelper.DefaultSession.Mail,
-            EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
-            BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
-            CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
-            RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
-            BloodGroup = SessionHelper.DefaultSession.BloodGroup,
-            CivilStatus = SessionHelper.DefaultSession.CivilStatus,
-            EducationStatus = SessionHelper.DefaultSession.EducationStatus,
-            Rh = SessionHelper.DefaultSession.Rh,
-            TitleHead = "KULLANICI BİLGİLERİ DÜZENLEME FORMU",
-            TitleButton = "Güncelle",
-            Id = SessionHelper.DefaultSession.Id
-          };
+            var userAddresInformation = _userService.GetUserAddress(SessionHelper.DefaultSession.Id).Data;
+            RegisterModel model = new RegisterModel()
+            {
+                AddressDesc = userAddresInformation.AddressDesc,
+                CityId = userAddresInformation.CityId,
+                DistrictId = userAddresInformation.DistrictId,
+                FatherName = SessionHelper.DefaultSession.FatherName,
+                FirstName = SessionHelper.DefaultSession.FirstName,
+                Height = SessionHelper.DefaultSession.Height,
+                Birthday = SessionHelper.DefaultSession.Birthday,
+                CityList = _userService.GetCityList().Data,
+                Gender = SessionHelper.DefaultSession.Gender,
+                DistrictList = _userService.GetDistrictList(userAddresInformation.CityId).Data,
+                LastName = SessionHelper.DefaultSession.LastName,
+                UserType = SessionHelper.DefaultSession.UserType,
+                IdentityNumber = SessionHelper.DefaultSession.IdentityNumber,
+                MotherName = SessionHelper.DefaultSession.MotherName,
+                Weight = SessionHelper.DefaultSession.Weight,
+                Phone = SessionHelper.DefaultSession.Phone,
+                Mail = SessionHelper.DefaultSession.Mail,
+                EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
+                BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
+                CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
+                RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
+                BloodGroup = SessionHelper.DefaultSession.BloodGroup,
+                CivilStatus = SessionHelper.DefaultSession.CivilStatus,
+                EducationStatus = SessionHelper.DefaultSession.EducationStatus,
+                Rh = SessionHelper.DefaultSession.Rh,
+                TitleHead = "KULLANICI BİLGİLERİ DÜZENLEME FORMU",
+                TitleButton = "Güncelle",
+                Id = SessionHelper.DefaultSession.Id
+            };
 
-	        return View("MemberRegister", model);
-			  }  
+            return View("MemberRegister", model);
+        }
         public IActionResult RegisterScreen()
         {
-	        RegisterModel model = new RegisterModel()
-	        {
-            CityList = _userService.GetCityList().Data,
-            EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
-            BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
-            CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
-            RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
-            TitleHead = "KULLANICI KAYIT FORMU",
-            TitleButton = "Kaydet"
-          };
+            RegisterModel model = new RegisterModel()
+            {
+                CityList = _userService.GetCityList().Data,
+                EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>(),
+                BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>(),
+                CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>(),
+                RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>(),
+                TitleHead = "KULLANICI KAYIT FORMU",
+                TitleButton = "Kaydet"
+            };
 
-          return View("MemberRegister",model);
-        }     
+            return View("MemberRegister", model);
+        }
         public IActionResult Register(UserSaveRequestModel usermodel)
         {
-	        RegisterModel model = new RegisterModel();
-	        usermodel.MapTo(model);
-	        model.CityList = _userService.GetCityList().Data;
-	        model.EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>();
-	        model.EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>();
-	        model.BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>();
-	        model.CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>();
-	        model.DistrictList = _userService.GetDistrictList(usermodel.CityId).Data;
-	        model.RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>();
-	        model.TitleButton = "Kaydet";
-	        model.TitleHead = "KULLANICI KAYIT FORMU";
-		      if (usermodel.Password!= usermodel.RPassword)
-		      {
-						_notify.Warning("Lütfen şifrenizi kontrol ediniz");
-						return View("MemberRegister", model);
-					}
-					User user = new User()
-          {
-	          Address = new List<Address>
-		          { new Address {DistrictId = usermodel.DistrictId, CityId = usermodel.CityId,AddressDesc = usermodel.AddressDesc}},
-	          Birthday = usermodel.Birthday,
-	          BloodGroup = usermodel.BloodGroup,
-	          CivilStatus = usermodel.CivilStatus,
-	          EducationStatus = usermodel.EducationStatus,
-	          FatherName = usermodel.FatherName,
-	          FirstName = usermodel.FirstName,
-	          Gender = usermodel.Gender,
-	          Height = usermodel.Height,
-	          IdentityNumber = usermodel.IdentityNumber,
-	          LastName = usermodel.LastName,
-	          Mail = usermodel.Mail,
-	          MotherName = usermodel.MotherName,
-	          Password = usermodel.Password,
-	          Phone = usermodel.Phone,
-	          Rh = usermodel.Rh,
-	          UserType = usermodel.UserType,
-	          Weight = usermodel.Weight,
-            Id = usermodel.Id
-          };
-				  if (usermodel.Id != 0)
-          {
-					 var result = _userService.Update(user);
-					 if (result.Success)
-					 {
-						 _notify.Success("Kullanıcı Güncelleme İşlemi Başarılı");
-					 }
-					 else
-					 {
-						 _notify.Error("Güncelleme İşlemi Başarısız");
-					 }
-					}
-					else
-          {
-	         bool isIdentityNumber= _userService.UserIdentityNumberControl(usermodel.IdentityNumber);
+            RegisterModel model = new RegisterModel();
+            usermodel.MapTo(model);
+            model.CityList = _userService.GetCityList().Data;
+            model.EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>();
+            model.EducationStatusList = Enum.GetValues(typeof(EducationStatusEnum)).Cast<EducationStatusEnum>();
+            model.BloodGroupList = Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>();
+            model.CivilStatusList = Enum.GetValues(typeof(CivilStatusEnum)).Cast<CivilStatusEnum>();
+            model.DistrictList = _userService.GetDistrictList(usermodel.CityId).Data;
+            model.RhList = Enum.GetValues(typeof(RhEnum)).Cast<RhEnum>();
+            model.TitleButton = "Kaydet";
+            model.TitleHead = "KULLANICI KAYIT FORMU";
+            if (usermodel.Password != usermodel.RPassword)
+            {
+                _notify.Warning("Lütfen şifrenizi kontrol ediniz");
+                return View("MemberRegister", model);
+            }
+            User user = new User()
+            {
+                Address = new List<Address>
+                  { new Address {DistrictId = usermodel.DistrictId, CityId = usermodel.CityId,AddressDesc = usermodel.AddressDesc}},
+                Birthday = usermodel.Birthday,
+                BloodGroup = usermodel.BloodGroup,
+                CivilStatus = usermodel.CivilStatus,
+                EducationStatus = usermodel.EducationStatus,
+                FatherName = usermodel.FatherName,
+                FirstName = usermodel.FirstName,
+                Gender = usermodel.Gender,
+                Height = usermodel.Height,
+                IdentityNumber = usermodel.IdentityNumber,
+                LastName = usermodel.LastName,
+                Mail = usermodel.Mail,
+                MotherName = usermodel.MotherName,
+                Password = usermodel.Password,
+                Phone = usermodel.Phone,
+                Rh = usermodel.Rh,
+                UserType = usermodel.UserType,
+                Weight = usermodel.Weight,
+                Id = usermodel.Id
+            };
+            if (usermodel.Id != 0)
+            {
+                var result = _userService.Update(user);
+                if (result.Success)
+                {
+                    _notify.Success("Kullanıcı Güncelleme İşlemi Başarılı");
+                }
+                else
+                {
+                    _notify.Error("Güncelleme İşlemi Başarısız");
+                }
+            }
+            else
+            {
+                bool isIdentityNumber = _userService.UserIdentityNumberControl(usermodel.IdentityNumber);
 
-	         if (isIdentityNumber)
-	         {
-          _notify.Error("Sistemde TC numarası zaten kayıtlı");
-					 return View("MemberRegister", model);
-					 }
+                if (isIdentityNumber)
+                {
+                    _notify.Error("Sistemde TC numarası zaten kayıtlı");
+                    return View("MemberRegister", model);
+                }
 
-					 var result = _userService.Add(user);
-					 if (result.Success)
-					 {
-						 _notify.Success("Kullanıcı Kayıt İşlemi Başarılı");
-					 }
-					 else
-					 {
-						 _notify.Error("Kayıt İşlemi Başarısız");
-					 }
-          }
-					return RedirectToAction("Index");
-		    }
-		    public IActionResult DistrictList(int id)
+                var result = _userService.Add(user);
+                if (result.Success)
+                {
+                    _notify.Success("Kullanıcı Kayıt İşlemi Başarılı");
+                }
+                else
+                {
+                    _notify.Error("Kayıt İşlemi Başarısız");
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        public IActionResult DistrictList(int id)
         {
             return Json(new
             {
@@ -214,13 +214,14 @@ namespace HealthCareApp.Controllers
             });
         }
         [HttpPost]
-        public IActionResult SendMail(string message, int id,bool donorPage)
+        public IActionResult SendMail(string message, int id, bool donorPage)
         {
             var result = _userService.SendMailToUser(message, id);
             if (result.Success)
             {
                 _notify.Success("Mesajınız gönderildi.");
-            }else
+            }
+            else
             {
                 _notify.Error("Mesajınız gönderilirken bir hata oluştu.");
             }

@@ -36,14 +36,6 @@
                     </div>
                 </div>
                 <div class="position-relative row form-group">
-                    @*@Html.LabelFor(x => x.RelativesName, new
-                          {
-                            @class = "col-sm-2 col-form-label"
-                          })
-                        @Html.TextBoxFor(x=>x.RelativesName,new
-                        {
-                            @class= "form-control", @placeholder="Yakın Adı..."
-                        })*@
                     <label for="relativesname" class="col-sm-2 col-form-label">Yakın Adı</label>
                     <div class="col-sm-6"><input required id="relativesname" placeholder="Yakın Adı..."  readonly="@basvuruDuzenleme" type="text" class="form-control" value="@Model.RelativesName"></div>
                 </div>
@@ -155,42 +147,4 @@
         </div>
     </div>
 </div>
-
-
-<script type="text/javascript">
-    $("#kaydet").click(function () {
-
-        var data = [];
-        $("table > tbody > tr").each(function (key) {
-            var questionId = $(this).find('td').eq(0).text();
-
-            data.push({ Id: $('input[name="hidden+' + questionId + '"]').val(), QuestionId: $(this).find('td').eq(0).text(), QuestionResult: $('input[name="radio+' + questionId + '"]:checked').val() });
-        });
-        console.log(data);
-        var myfile = $('#reportfile').get(0).files[0];
-        var formData = new FormData();
-        formData.append('ReportResult', myfile);
-        formData.append('TransferType', $("#transfertype").val());
-        formData.append('RelativesName', $("#relativesname").val());
-        formData.append('RelativesSurname', $("#relativessurname").val());
-        formData.append('RelativesPhone', $("#relativesphone").val());
-        formData.append('SickDate', $("#sickdate").val());
-        formData.append('SickDesc', $("#sickdesc").val());
-        formData.append('QuestionResultListString', JSON.stringify(data));
-        formData.append('Id', $("#basvuruid").val());
-        formData.append('SicknessDetailId', $("#sicknessdetailid").val());
-        console.log(formData);
-        $.ajax({
-            url: "/Application/ApplicationSave",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false
-        })
-            .done(function (data) {
-                alert(data.message);
-            })
-            .fail(function () {
-            });
-    });
-</script>
+<script src="~/PageJs/ApplicationCreate.js"></script>
