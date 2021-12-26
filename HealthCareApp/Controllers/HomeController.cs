@@ -42,11 +42,8 @@ namespace HealthCareApp.Controllers
 
         public IActionResult Index()
         {
-            if (SessionHelper.DefaultSession == null || SessionHelper.DefaultSession.Id == 0)
-            {
-                return RedirectToAction("DonorApplicationList", "Application");
-            }
-            return View();
+            var iData = new List<object>(){4,6,7};
+            return new JsonResult(iData);
         }
         [HttpPost]
         public IActionResult Login(string email, string password)
@@ -67,7 +64,7 @@ namespace HealthCareApp.Controllers
             }
             _notify.Success("Kullanıcı Girişi Başarılı" + SessionHelper.DefaultSession.FirstName);
 
-            return RedirectToAction("UserApplicationInformList", "Application");
+            return RedirectToAction("Index");
 
         }
 
