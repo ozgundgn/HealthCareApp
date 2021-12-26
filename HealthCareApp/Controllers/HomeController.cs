@@ -75,17 +75,24 @@ namespace HealthCareApp.Controllers
             {
                 return Json(new
                 {
-                    result = true,
-                    message = "Bu Mail Adresi Sistemde KAyıtlı Değildir",
+                    result = false,
+                    message = "Bu Mail Adresi Sistemde Kayıtlı Değildir",
 
                 });
 
             }
-
             //result.Data.Password;
-   
 
-            return Json("Index");
+            var message = "Yeni Şifreniz:" + result.Data.Password;
+            _userService.SendMailToUser(message, result.Data.Id);
+
+
+            return Json(new
+            {
+                result = true,
+                message = "Şifreniz Mailinize Gönderildi.",
+
+            });
 
         }
         public IActionResult LogOut()

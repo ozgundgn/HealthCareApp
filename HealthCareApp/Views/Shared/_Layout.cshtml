@@ -339,12 +339,18 @@
     $.ajax({
             url: "/Home/SifremiUnuttum",
             type: "POST",
-        data: { mail: $('#email').val() },
+        data: { email: $('#email').val() },
             dataType: 'json'
         })
         .done(function(data) {
 
-
+            notif({
+                type: data.result ?"success":"error",
+                msg: data.message,
+                width: 300,
+                height: 20,
+                position: "center"
+            });
         });
 
     });
