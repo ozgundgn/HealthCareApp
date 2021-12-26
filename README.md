@@ -55,6 +55,8 @@ Veritabanı diagram şemasına projenin içerisinden ulaşabilirsiniz.
  
  17-Search componentini resuable hale getirildi.
 
+18-Mapto methodu ile modellerin içeriklerinin birbirlerine tek kodla aktarılmasını sağladık(uzun kod satırları yazmamış olduk)
+
 
 ----Projenin Devamında Yapmayı Düşündüğümüz İşler----
  
