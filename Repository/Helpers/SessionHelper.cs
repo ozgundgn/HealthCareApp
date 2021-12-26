@@ -13,7 +13,7 @@ namespace Repository.Helpers
         public static IRedisClient _redisClient;
         static SessionHelper()
         {
-            _redisClient = new RedisClient("37.247.104.251?db=10");
+            _redisClient = new RedisClient("37.247.104.247?db=10");
         }
         public static void Configure(IHttpContextAccessor accessor)
         {
