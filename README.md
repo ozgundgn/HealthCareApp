@@ -2,7 +2,7 @@
 https://ozgundgn.github.io/HealthCareApp
 
 Not:Projenin backup dosyası projesinin içerisindedir.Mssql versiyonu 2019 dur.Başka bir versiyonda denendiğinde backup yüklenmesi başarısız olacaktır.Repository katmanında
-HealtyCareContext.cs sayfasından configüre ayarını kendi Server adınıza göre değiştirerek projeyi çalıştırabilirsiniz.
+HealtyCareContext.cs sayfasından configüre ayarını kendi Server adınıza göre değiştirerek projeyi çalıştırabilirsiniz.Ayrıca Lochalde çalıştırmak için redis yüklenmesi gerekmektedir.
 
 Veritabanı diagram şemasına projenin içerisinden ulaşabilirsiniz.
 
@@ -21,6 +21,7 @@ Veritabanı diagram şemasına projenin içerisinden ulaşabilirsiniz.
        4-Repository Katmanı:Linq Sorgularının yazıldığı veritabından veri çekme ,insert ve update işlemlerinin yapıldığı katmandır.HealtyCareContext.cs dosyasında veri tabanı ilişkilerinin (pk,fk,onetomany gibi yapıların)olduğu dosya bulunmaktadır.
        5-Service Katmanı:İş akışlarının olduğu katmandır controller ile repository arasında ki  ara katmandır.
        6-HealtyCareApp:UI Katmanı css,js html projenin arayüzünün bulunduğu katmandır.
+       7-TestKatmanı:Service Katmanındaki iş akışlarını durumlarını hataları test eden katman.
        -----------------
        
  3-Projenin katmalarının oluşmasının ardından ilk olarak veri tabanı configürasyonunu hazırladık.
@@ -41,25 +42,23 @@ Veritabanı diagram şemasına projenin içerisinden ulaşabilirsiniz.
  
  11-Kullanıcıların yüklemiş olduğu raporları görüntülendiği sayfayı hazırladık.
  
+ 12-Kullanıcı şifre yenileme sayfası hazılama (Mailline yeni bir şifre gönderme işlemi şife sıfırlama)
  
- ---Eksikler---(Yapmayı düşündüğümüz fakat çalıştığımız için yapmaya zamanımızın olmadığı maddeler)
+ 13-Kullanıcının girmiş olduğu kayıt verilerini güncellebildği kullanıcı ayarları sayfası.
  
- 1-Kullanıcı şifre yenileme sayfası hazılama (Mailline yeni bir şifre gönderme işlemi şife sıfırlama)
+ 14-Kullanıcı kendi başvuru durumunu  güncellediğinde eşleştiği donörü listeden seçmesini sağlamak. Eşleşen hasta ve donörü ayrı bir tabloda tutup veri analizi çıkartıldı.(AnaSayfa).
  
- 2-Kullanıcının girmiş olduğu kayıt verilerini güncellebildği kullanıcı ayarları sayfası.
+ 15-cshtml sayfalarının altında yazılan javascriptleri wwwroot kısmında sayfaismi.js şeklinde tutmayı sağladık.(Browser  her yenilendiğinde sayfadaki javascriptleri tekrardan yüklemesini önlemek için).
  
- 3-Soru listesine daha fazla ayrıntı verme evet ise neden açıklama kısımlarının eklenmesi.
+ 16- TestUnit hazırlandı.
  
- 4-Kullanıcıların platform üzerinden birbirlerine mesaj gönderebileceği bir yapı hazırlama.(Bildirimler)
+ 17-Search componentini resuable hale getirildi.
+
+
+----Projenin Devamında Yapmayı Düşündüğümüz İşler----
  
- 5-Kullanıcı kendi başvuru durumunu  güncellediğinde eşleştiği donörü listeden seçmesini sağlamak. Eşleşen hasta ve donörü ayrı bir tabloda tutup veri analizi çıkarma.(Ayda şu kadar hasta bu platformdan yararlanıp  kendilerine donör bulması,Yüzde olarak dashboardlarda gösterim(yüzde 60 olarak bulunun donörler bu platformdan bulundu gibi))
+ 1-Soru listesine daha fazla ayrıntı verme evet ise neden açıklama kısımlarının eklenmesi.
  
- 6-Kullanıcıların raporlarının text içeriklerini bir companentle okuyup(pdfpig) rapor içeriğinden arama işleminin gerçekleşmesini sağlamak.Rapor içeriğine göre arama sayfası.
+ 2-Kullanıcıların platform üzerinden birbirlerine mesaj gönderebileceği bir yapı hazırlama.(Bildirimler/signalr)
  
- 7-cshtml sayfalarının altında yazılan javascriptleri wwwroot kısmında sayfaismi.js şeklinde tutmayı sağlamak.(Browser  her yenilendiğinde sayfadaki javascriptleri tekrardan yüklemesini önlemek için)
- 
- 8-Testutil hazırlamak.
- 
- 9-Bazı componenetleri resuable hale getirmek.
-       
-       
+ 3-Kullanıcıların raporlarının text içeriklerini bir companentle okuyup(pdfpig) rapor içeriğinden arama işleminin gerçekleşmesini sağlamak.Rapor içeriğine göre arama sayfası.
