@@ -42,8 +42,7 @@ namespace HealthCareApp.Controllers
 
         public IActionResult Index()
         {
-            var iData = new List<object>(){4,6,7};
-            return new JsonResult(iData);
+            return View();
         }
         [HttpPost]
         public IActionResult Login(string email, string password)
