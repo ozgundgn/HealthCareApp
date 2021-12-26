@@ -12,16 +12,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using AspNetCoreHero.ToastNotification.Abstractions;
-using HealthCareApp.Helpers;
-using Models.Application;
-using Models.Enums;
-using Service.Abstract;
-using Nancy.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Repository.Helpers;

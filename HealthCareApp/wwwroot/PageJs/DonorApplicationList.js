@@ -13,12 +13,12 @@ var DonorApplicationList = {
                 { field: "Id", hidden: true },
                 { field: "UserId", hidden:true },
                 { field: "Name", title: " Adı", sortable: true },
-                { field: "Surname", title: "Soy Adı" },
+                { field: "Surname", title: "Soyadı" },
                 { field: "Mail", title: "Mail"},
                 { field: "Phone", title: "Telefon"},
                 { field: "TransferTypeString", title: "TransferType" },
-                { width: 64, tmpl: '<span class="material-icons md-18 gj-cursor-pointer orange600">mail</span>', align: 'center', events: { "click": DonorApplicationList.Mail } },
-                { width: 64, tmpl: '<span class="material-icons md-18 gj-cursor-pointer red600">picture_as_pdf</span>', align: 'center', events: { "click": DonorApplicationList.PdfViewer } },
+                { width: 64, tmpl: '<span class="material-icons md-18 gj-cursor-pointer orange600">mail</span>', align: 'center', events: { "click": DonorApplicationList.Mail },tooltip:"Mail Gönder" },
+                { width: 64, tmpl: '<span class="material-icons md-18 gj-cursor-pointer red600">picture_as_pdf</span>', align: 'center', events: { "click": DonorApplicationList.PdfViewer } ,tooltip:"Pdf Görüntüle"},
             ],
             pager: { enable: true, limit: 20, sizes: [2, 5, 10, 20] }
         });

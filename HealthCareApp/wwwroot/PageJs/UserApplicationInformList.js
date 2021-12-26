@@ -16,7 +16,7 @@ var UserApplicationInformList = {
             columns: [
                 { field: "Id", hidden: true },
                 { field: "Name", title: " Adı", sortable: true },
-                { field: "Surname", title: "Soy Adı" },
+                { field: "Surname", title: "Soyadı" },
                 { field: "ApplicationDateTime", title: "Oluşturma Tarihi", type: "date", format: 'yyyy/mm/dd' },
                 { field: "Description", title: "Açıklama" },
                 { field: "RelativesName", title: "Yakın Adı" },
@@ -24,9 +24,9 @@ var UserApplicationInformList = {
                 { field: "RelativesPhone", title: "Yakın Telefon" },
                 { field: "UpdateDateTime", title: "Güncelleme Tarihi", type: "date", format: 'yyyy/mm/dd' },
                 { field: "TransferTypeString", title: "Nakil Tipi" },
-                { width: 70, tmpl: '<span class="material-icons md-18 gj-cursor-pointer orange600">edit</span>', align: 'center', events: { "click": UserApplicationInformList.Edit } },
-                { width: 70,field:"Durum", title:"" ,tmpl: '<span class="material-icons md-18 gj-cursor-pointer blue600">edit_note</span>', align: 'center', events: { "click": UserApplicationInformList.StateUpdate } },
-                { width: 70, tmpl: '<span class="material-icons md-18 gj-cursor-pointer red600">picture_as_pdf</span>', align: 'center', events: { "click": UserApplicationInformList.PdfViewer } }
+                { width: 70, tmpl: '<span class="material-icons md-18 gj-cursor-pointer orange600">edit</span>', align: 'center', events: { "click": UserApplicationInformList.Edit },tooltip:"Başvuru Düzenle" },
+                { width: 70, field: "Durum", title: "", tmpl: '<span class="material-icons md-18 gj-cursor-pointer blue600">edit_note</span>', align: 'center', events: { "click": UserApplicationInformList.StateUpdate }, tooltip: "Başvuru Durumunu Değiştir"},
+                { width: 70, tmpl: '<span class="material-icons md-18 gj-cursor-pointer red600">picture_as_pdf</span>', align: 'center', events: { "click": UserApplicationInformList.PdfViewer }, tooltip: "Pdf Görüntüle" }
             ],
             pager: { enable: true, limit: 20, sizes: [2, 5, 10, 20] }
         });
