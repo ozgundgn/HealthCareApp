@@ -147,28 +147,14 @@ namespace HealthCareApp.Controllers
 						_notify.Warning("Lütfen şifrenizi kontrol ediniz");
 						return View("MemberRegister", model);
 					}
-					User user = new User()
+          var user =new User();
+          usermodel.MapTo(user);
+          user.Address = new List<Address>
           {
-	          Address = new List<Address>
-		          { new Address {DistrictId = usermodel.DistrictId, CityId = usermodel.CityId,AddressDesc = usermodel.AddressDesc}},
-	          Birthday = usermodel.Birthday,
-	          BloodGroup = usermodel.BloodGroup,
-	          CivilStatus = usermodel.CivilStatus,
-	          EducationStatus = usermodel.EducationStatus,
-	          FatherName = usermodel.FatherName,
-	          FirstName = usermodel.FirstName,
-	          Gender = usermodel.Gender,
-	          Height = usermodel.Height,
-	          IdentityNumber = usermodel.IdentityNumber,
-	          LastName = usermodel.LastName,
-	          Mail = usermodel.Mail,
-	          MotherName = usermodel.MotherName,
-	          Password = usermodel.Password,
-	          Phone = usermodel.Phone,
-	          Rh = usermodel.Rh,
-	          UserType = usermodel.UserType,
-	          Weight = usermodel.Weight,
-            Id = usermodel.Id
+	          new Address
+	          {
+		          DistrictId = usermodel.DistrictId, CityId = usermodel.CityId, AddressDesc = usermodel.AddressDesc
+	          }
           };
 				  if (usermodel.Id != 0)
           {
