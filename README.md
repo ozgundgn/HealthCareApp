@@ -1,5 +1,6 @@
 # HealthCareApp
 https://ozgundgn.github.io/HealthCareApp
+http://healtcareapp.somee.com/ Proje demosu yayındadır.fakat redis hostinge yüklenemediğinden kullanıcı girişi canlıda gözükmeyecektir lochalinize veya sunucuya yüklendiğinde söyle bir sorun kalmayacaktır.
 
 Not:Projenin backup dosyası projesinin içerisindedir.Mssql versiyonu 2019 dur.Başka bir versiyonda denendiğinde backup yüklenmesi başarısız olacaktır.Repository katmanında
 HealtyCareContext.cs sayfasından configüre ayarını kendi Server adınıza göre değiştirerek projeyi çalıştırabilirsiniz.Ayrıca Lochalde çalıştırmak için redis yüklenmesi gerekmektedir.
