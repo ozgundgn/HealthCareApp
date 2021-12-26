@@ -56,7 +56,30 @@ namespace Service.Concrete
 
             return new DataResult<User>(result, true);
         }
+        public IDataResult<User> SifremiUnuttum(string email)
+        {
+            var result = _userRepository.Get(x => x.Mail == email).FirstOrDefault();
+            if (result == null)
+            {
+                return new DataResult<User>(null, false, "Sistemde Böyle Bir Kullanıcı Bulunamamıştır. ");
+            }
+            else
+            {
+                int length = 10;
+                const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                StringBuilder res = new StringBuilder();
+                Random rnd = new Random();
+                while (0 < length--)
+                {
+                    res.Append(valid[rnd.Next(valid.Length)]);
+                }
+                result.Password=res.ToString();
+                _userRepository.Update(result);
+            }
 
+            return new DataResult<User>(result, true);
+        }
+        
         public bool UserIdentityNumberControl(string identityNumber)
         {
             bool isIdentityNumber = _userRepository.Get(x => x.IdentityNumber == identityNumber).Count>0;

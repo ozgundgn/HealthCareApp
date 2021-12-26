@@ -14,6 +14,7 @@ namespace Service.Abstract
         IResult Add(User user);
         IResult Update(User user);
         IDataResult<User> Login(string email, string password);
+        IDataResult<User> SifremiUnuttum(string email);
         IResult SendMailToUser(string message, int id);
         IDataResult<Address> GetUserAddress(int id);
         bool UserIdentityNumberControl(string identityNumber);

@@ -67,7 +67,27 @@ namespace HealthCareApp.Controllers
             return RedirectToAction("Index");
 
         }
+        [HttpPost]
+        public IActionResult SifremiUnuttum(string email)
+        {
+            var result = _userService.SifremiUnuttum(email);
+            if (result?.Data == null)
+            {
+                return Json(new
+                {
+                    result = true,
+                    message = "Bu Mail Adresi Sistemde KAyıtlı Değildir",
 
+                });
+
+            }
+
+            //result.Data.Password;
+   
+
+            return Json("Index");
+
+        }
         public IActionResult LogOut()
         {
             _redisClient.Remove(string.Concat("user:", _contextAccessor.HttpContext?.Request.Cookies["user"]));
