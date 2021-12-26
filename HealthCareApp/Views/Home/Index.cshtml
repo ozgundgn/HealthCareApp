@@ -1,26 +1,96 @@
 ﻿@using Repository.Helpers
 @using Models.Enums
 @using Core.Extentions
+@model Models.Application.IndexChartReturnModel
 @{
     ViewData["Title"] = "Home Page";
 }
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+@if (SessionHelper.DefaultSession.Id != 0)
+{
+    <div class="row">
+        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
+            <div class="card mb-3 widget-content bg-night-fade">
+                <div class="widget-content-wrapper text-white">
+                    <div class="widget-content-left">
+                        <div class="widget-heading">@SessionHelper.DefaultSession.FirstName &nbsp; @SessionHelper.DefaultSession.LastName</div>
+                        <div class="widget-subheading">@SessionHelper.DefaultSession.IdentityNumber</div>
+                    </div>
+                    <div class="widget-content-right">
 
-
-<div class="row">
-    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
-        <div class="card mb-3 widget-content bg-night-fade">
-            <div class="widget-content-wrapper text-white">
-                <div class="widget-content-left">
-                    <div class="widget-heading">@SessionHelper.DefaultSession.FirstName &nbsp; @SessionHelper.DefaultSession.LastName</div>
-                    <div class="widget-subheading">@SessionHelper.DefaultSession.IdentityNumber</div>
-                </div>
-                <div class="widget-content-right">
-                    <div class="widget-numbers text-white"><span>@(((BloodGroupEnum) SessionHelper.DefaultSession.BloodGroup).GetDescription())</span><span>&nbsp;@(((RhEnum) SessionHelper.DefaultSession.Rh).GetDescription())</span></div>
+                        <div class="widget-numbers text-white"><span>@(((BloodGroupEnum) SessionHelper.DefaultSession.BloodGroup).GetDescription())</span><span>&nbsp;@(((RhEnum) SessionHelper.DefaultSession.Rh).GetDescription())</span></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    
- 
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"> <h5 class="card-title">Donör Durum Sayıları</h5></div>
+            <div class="card-body">
+                <canvas id="donorChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"> <h5 class="card-title">Donör Durum Sayıları</h5></div>
+            <div class="card-body">
+                <canvas id="sickChart" width="783" height="391" style="display: block; height: 522px; width: 1044px;" class="chartjs-render-monitor"></canvas>
+              
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<script>
+    var xValuesDonor = ["Bekliyor", "İptal", "Bu PlatFormdan Bulundu"];
+    var yValuesDonor = [@Model.DonorAppStatus.Bekliyor, @Model.DonorAppStatus.Iptal,@Model.DonorAppStatus.BuPlatformdanBulundu];
+    var barColorsDonor = [
+        "#4FC3F7",
+        "#D50000",
+        "#64DD17"
+    ];
+
+    new Chart("donorChart",
+        {
+            type: "doughnut",
+            data: {
+                labels: xValuesDonor,
+                datasets: [
+                    {
+                        backgroundColor: barColorsDonor,
+                        data: yValuesDonor
+                    }
+                ]
+            }
+        });
+
+    var xValuesSick = ["Bekliyor", "İptal", "Bu PlatFormdan Bulundu","Başka Platformdan Bulundu"];
+    var yValuesSick = [@Model.SickAppStatus.Bekliyor, @Model.SickAppStatus.Iptal,@Model.SickAppStatus.BuPlatformdanBulundu,@Model.SickAppStatus.BaskaPlatformdanBulundu];
+    var barColorsSick = [
+        "#4FC3F7",
+        "#D50000",
+        "#64DD17",
+        "#9C27B0"
+    ];
+
+    new Chart("sickChart",
+        {
+            type: "doughnut",
+            data: {
+                labels: xValuesSick,
+                datasets: [
+                    {
+                        backgroundColor: barColorsSick,
+                        data: yValuesSick
+                    }
+                ]
+            }
+        });
+
+</script>

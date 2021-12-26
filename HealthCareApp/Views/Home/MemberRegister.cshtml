@@ -1,241 +1,216 @@
 ﻿@using Core.Extentions
 @model Models.Home.RegisterModel
 
-		<div class="tab-pane tabs-animation fade show active " id="tab-content-0" role="tabpanel">
-			<div class="main-card mb-3 card">
-				<div class="card-body" style="width: 800px">
-					<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Register" class="card-body">
-					<input value="@Model.Id" name="Id" type="text" class="form-control" hidden>
-						<h5 class="card-title">@Model.TitleHead</h5>
-						<div class="position-relative form-group">
-							<label for="FirstName">Ad</label>
-							<input value="@Model.FirstName" required name="FirstName" type="text" class="form-control">
-						</div>
-						<div class="position-relative form-group">
-							<label for="LastName">Soyad</label>
-							<input value="@Model.LastName" required name="LastName" type="text" class="form-control">
-						</div>
-						<div class="position-relative form-group">
-							<label for="IdentityNumber">TC</label>
-							<input value="@Model.IdentityNumber" required name="IdentityNumber" maxlength="11" type="text" class="form-control">
-						</div>
-						<div class="position-relative form-group">
-							<label for="Birthday">Doğum Tarihi</label>
-							@Html.TextBox("Birthday", Model.Birthday, "{0:yyyy-MM-dd}", new {@class = "form-control", @style = "width:100%", type = "date", required = "required"})
-						</div>
+<div class="tab-pane tabs-animation fade show active " id="tab-content-0" role="tabpanel">
+    <div class="main-card mb-3 card">
+        <div class="card-body" style="width: 800px">
+            <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Register" class="card-body">
+                <input value="@Model.Id" name="Id" type="text" class="form-control" hidden>
+                <h5 class="card-title">@Model.TitleHead</h5>
+                <div class="position-relative form-group">
+                    <label for="FirstName">Ad</label>
+                    <input value="@Model.FirstName" required name="FirstName" type="text" class="form-control">
+                </div>
+                <div class="position-relative form-group">
+                    <label for="LastName">Soyad</label>
+                    <input value="@Model.LastName" required name="LastName" type="text" class="form-control">
+                </div>
+                <div class="position-relative form-group">
+                    <label for="IdentityNumber">TC</label>
+                    <input value="@Model.IdentityNumber" required name="IdentityNumber" maxlength="11" type="text" class="form-control">
+                </div>
+                <div class="position-relative form-group">
+                    <label for="Birthday">Doğum Tarihi</label>
+                    @Html.TextBox("Birthday", Model.Birthday, "{0:yyyy-MM-dd}", new { @class = "form-control", @style = "width:100%", type = "date", required = "required" })
+                </div>
 
-						<fieldset class="position-relative form-group">
-							Cinsiyet
-							@if (Model.Gender == 1)
-							{
-							<div class="position-relative form-check">
-								<label class="form-check-label">
-									<input name="Gender" type="radio" value="1" checked class="form-check-input">Kadın
-								</label>
-							</div>
-							}
-							else
-							{
-							<div class="position-relative form-check">
-								<label class="form-check-label">
-									<input name="Gender" type="radio" value="1" class="form-check-input">Kadın
-								</label>
-							</div>
-							}
-							@if (Model.Gender == 2)
-							{
-							<div class="position-relative form-check"><label class="form-check-label"><input name="Gender" checked type="radio" value="2" class="form-check-input">Erkek</label></div>
-							}
-							else
-							{
-							<div class="position-relative form-check"><label class="form-check-label"><input name="Gender" type="radio" value="2" class="form-check-input">Erkek</label></div>
-							}
-							@if (Model.Gender == 0)
-							{
-							<div class="position-relative form-check"><label class="form-check-label"><input checked name="Gender" type="radio" value="0" class="form-check-input">Belirtmek istemiyorum</label></div>
-							}
-							else
-							{
-							<div class="position-relative form-check"><label class="form-check-label"><input name="Gender" type="radio" value="0" class="form-check-input">Belirtmek istemiyorum</label></div>
-							}
-						</fieldset>
-						<fieldset class="position-relative form-group">
-							@if (Model.UserType == 1)
-							{
-							<div class="position-relative form-check">
-								<label class="form-check-label"><input checked name="UserType" type="radio" value="1" class="form-check-input">Hasta</label>
-							</div>
-							}
-							else
-							{
-							<div class="position-relative form-check">
-								<label class="form-check-label"><input name="UserType" type="radio" value="1" class="form-check-input">Hasta</label>
-							</div>
-							}
-							@if (Model.UserType == 2)
-							{
-							<div class="position-relative form-check"><label class="form-check-label"><input name="UserType" checked type="radio" value="2" class="form-check-input">Donör</label></div>
-							}
-							else
-							{
-							<div class="position-relative form-check"><label class="form-check-label"><input name="UserType" type="radio" value="2" class="form-check-input">Donör</label></div>
-							}
-						</fieldset>
+                <fieldset class="position-relative form-group">
+                    Cinsiyet
+                    @if (Model.Gender == 1)
+                    {
+                        <div class="position-relative form-check">
+                            <label class="form-check-label">
+                                <input name="Gender" type="radio" value="1" checked class="form-check-input">Kadın
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="position-relative form-check">
+                            <label class="form-check-label">
+                                <input name="Gender" type="radio" value="1" class="form-check-input">Kadın
+                            </label>
+                        </div>
+                    }
+                    @if (Model.Gender == 2)
+                    {
+                        <div class="position-relative form-check"><label class="form-check-label"><input name="Gender" checked type="radio" value="2" class="form-check-input">Erkek</label></div>
+                    }
+                    else
+                    {
+                        <div class="position-relative form-check"><label class="form-check-label"><input name="Gender" type="radio" value="2" class="form-check-input">Erkek</label></div>
+                    }
+                    @if (Model.Gender == 0)
+                    {
+                        <div class="position-relative form-check"><label class="form-check-label"><input checked name="Gender" type="radio" value="0" class="form-check-input">Belirtmek istemiyorum</label></div>
+                    }
+                    else
+                    {
+                        <div class="position-relative form-check"><label class="form-check-label"><input name="Gender" type="radio" value="0" class="form-check-input">Belirtmek istemiyorum</label></div>
+                    }
+                </fieldset>
+                <fieldset class="position-relative form-group">
+                    @if (Model.UserType == 1)
+                    {
+                        <div class="position-relative form-check">
+                            <label class="form-check-label"><input checked name="UserType" type="radio" value="1" class="form-check-input">Hasta</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="position-relative form-check">
+                            <label class="form-check-label"><input name="UserType" type="radio" value="1" class="form-check-input">Hasta</label>
+                        </div>
+                    }
+                    @if (Model.UserType == 2)
+                    {
+                        <div class="position-relative form-check"><label class="form-check-label"><input name="UserType" checked type="radio" value="2" class="form-check-input">Donör</label></div>
+                    }
+                    else
+                    {
+                        <div class="position-relative form-check"><label class="form-check-label"><input name="UserType" type="radio" value="2" class="form-check-input">Donör</label></div>
+                    }
+                </fieldset>
 
-						<div class="position-relative form-group"><label for="MotherName">Anne Adı</label><input value="@Model.MotherName" name="MotherName" type="text" class="form-control"></div>
-						<div class="position-relative form-group"><label for="FatherName" class="">Baba Adı</label><input value="@Model.FatherName" name="FatherName" type="text" class="form-control"></div>
-						<label>İl</label>
-						<select required name="CityId" id="CityId" class="mb-2 form-control">
-							@{
-							foreach (var item in Model.CityList)
-							{
-							if (item.Id == Model.CityId)
-							{
-							<option selected value="@item.Id">@item.CityName</option>
-							}
-							else
-							{
-							<option value="@item.Id">@item.CityName</option>
-							}
-							}
-							}
-						</select>
-						<label>İlçe</label>
-						<select required name="DistrictId" id="DistrictId" class="mb-2 form-control">
-							@{
-							if (Model.DistrictList != null)
-							{
-							foreach (var item in Model.DistrictList)
-							{
-							if (item.Id == Model.DistrictId)
-							{
-							<option selected value="@item.Id">@item.DistrictName</option>
-							}
-							else
-							{
-							<option value="@item.Id">@item.DistrictName</option>
-							}
-							}
-							}
-							}
-						</select>
-						<div class="position-relative form-group"><label for="AddressDesc" class="">Adres</label><input value="@Model.AddressDesc" required name="AddressDesc" type="text" class="form-control"></div>
-						<div class="position-relative form-group">
-							<label for="Phone" class="">Tel</label>
-							<input required name="Phone" value="@Model.Phone" type="text" class="form-control">
-						</div>
+                <div class="position-relative form-group"><label for="MotherName">Anne Adı</label><input value="@Model.MotherName" name="MotherName" type="text" class="form-control"></div>
+                <div class="position-relative form-group"><label for="FatherName" class="">Baba Adı</label><input value="@Model.FatherName" name="FatherName" type="text" class="form-control"></div>
+                <label>İl</label>
+                <select required name="CityId" id="CityId" class="mb-2 form-control">
+                    @{
+                        foreach (var item in Model.CityList)
+                        {
+                            if (item.Id == Model.CityId)
+                            {
+                                <option selected value="@item.Id">@item.CityName</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Id">@item.CityName</option>
+                            }
+                        }
+                    }
+                </select>
+                <label>İlçe</label>
+                <select required name="DistrictId" id="DistrictId" class="mb-2 form-control">
+                    @{
+                        if (Model.DistrictList != null)
+                        {
+                            foreach (var item in Model.DistrictList)
+                            {
+                                if (item.Id == Model.DistrictId)
+                                {
+                                    <option selected value="@item.Id">@item.DistrictName</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.DistrictName</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
+                <div class="position-relative form-group"><label for="AddressDesc" class="">Adres</label><input value="@Model.AddressDesc" required name="AddressDesc" type="text" class="form-control"></div>
+                <div class="position-relative form-group">
+                    <label for="Phone" class="">Tel</label>
+                    <input required name="Phone" value="@Model.Phone" type="text" class="form-control">
+                </div>
 
-						<div class="position-relative form-group"><label for="Mail">Email</label><input value="@Model.Mail" required name="Mail" type="email" class="form-control"></div>
-						<div class="position-relative form-group">
-							<label for="Password" class="">Şifre</label><input required name="Password" type="password" class="form-control">
-						</div>
-						<div class="position-relative form-group">
-							<label for="RPassword" class="">Şifre Tekrar</label><input required name="RPassword" type="password" class="form-control">
-						</div>
+                <div class="position-relative form-group"><label for="Mail">Email</label><input value="@Model.Mail" required name="Mail" type="email" class="form-control"></div>
+                <div class="position-relative form-group">
+                    <label for="Password" class="">Şifre</label><input required name="Password" type="password" class="form-control">
+                </div>
+                <div class="position-relative form-group">
+                    <label for="RPassword" class="">Şifre Tekrar</label><input required name="RPassword" type="password" class="form-control">
+                </div>
 
-						<div class="position-relative form-group"><label for="Weight">Kilo</label><input value="@Model.Weight" name="Weight" type="text" class="form-control"></div>
-						<div class="position-relative form-group"><label for="Height">Boy</label><input value="@Model.Height" name="Height" type="text" class="form-control"></div>
-						<div class="row">
-							<div class="col-md-6">
-								<label>Kan Grubu</label>
-								<select name="BloodGroup" class="mb-2 form-control" required>
-									@{
-									foreach (var item in Model.BloodGroupList)
-									{
-									if (Convert.ToInt32(item) == Model.BloodGroup)
-									{
-									<option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
-									}
-									else
-									{
-									<option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
-									}
-									}
-									}
-								</select>
-							</div>
-							<div class="col-md-6">
-								<select name="Rh" class="mb-2 form-control" style="margin-top: 29px" required>
-									@{
-									foreach (var item in Model.RhList)
-									{
-									if (Convert.ToInt32(item) == Model.Rh)
-									{
-									<option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
-									}
-									else
-									{
-									<option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
-									}
-									}
-									}
-								</select>
-							</div>
-						</div>
-						<label>Medeni Durumu</label>
-						<select name="CivilStatus" class="mb-2 form-control" required>
-							@{
-							foreach (var item in Model.CivilStatusList)
-							{
-							if (Convert.ToInt32(item) == Model.CivilStatus)
-							{
-							<option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
-							}
-							else
-							{
-							<option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
-							}
-							}
-							}
-						</select>
-						<label>Eğitim Durumu</label>
+                <div class="position-relative form-group"><label for="Weight">Kilo</label><input value="@Model.Weight" name="Weight" type="text" class="form-control"></div>
+                <div class="position-relative form-group"><label for="Height">Boy</label><input value="@Model.Height" name="Height" type="text" class="form-control"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Kan Grubu</label>
+                        <select name="BloodGroup" class="mb-2 form-control" required>
+                            @{
+                                foreach (var item in Model.BloodGroupList)
+                                {
+                                    if (Convert.ToInt32(item) == Model.BloodGroup)
+                                    {
+                                        <option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select name="Rh" class="mb-2 form-control" style="margin-top: 29px" required>
+                            @{
+                                foreach (var item in Model.RhList)
+                                {
+                                    if (Convert.ToInt32(item) == Model.Rh)
+                                    {
+                                        <option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <label>Medeni Durumu</label>
+                <select name="CivilStatus" class="mb-2 form-control" required>
+                    @{
+                        foreach (var item in Model.CivilStatusList)
+                        {
+                            if (Convert.ToInt32(item) == Model.CivilStatus)
+                            {
+                                <option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                            }
+                            else
+                            {
+                                <option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                            }
+                        }
+                    }
+                </select>
+                <label>Eğitim Durumu</label>
 
-						<select name="EducationStatus" class="mb-2 form-control" required>
-							@{
-							foreach (var item in Model.EducationStatusList)
-							{
-							if (Convert.ToInt32(item) == Model.EducationStatus)
-							{
-							<option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
-							}
-							else
-							{
-							<option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
-							}
-							}
-							}
-						</select>
+                <select name="EducationStatus" class="mb-2 form-control" required>
+                    @{
+                        foreach (var item in Model.EducationStatusList)
+                        {
+                            if (Convert.ToInt32(item) == Model.EducationStatus)
+                            {
+                                <option selected value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                            }
+                            else
+                            {
+                                <option value="@Convert.ToInt32(item)">@item.GetDescription()</option>
+                            }
+                        }
+                    }
+                </select>
 
-						<button class="btn btn-primary btn-shadow p-2" type="submit">@Model.TitleButton</button>
-						<button type="button" class="btn btn-danger btn-shadow p-2" onclick="@(" location.href='" + Url.Action("Index", "Home") + "' ")">Kapat</button>
-					</form>
-				</div>
-			</div>
-		</div>
+                <button class="btn btn-primary btn-shadow p-2" type="submit">@Model.TitleButton</button>
+                <button type="button" class="btn btn-danger btn-shadow p-2" onclick="@(" location.href='" + Url.Action("Index", "Home") + "' ")">Kapat</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
-
-<script>
-
-	$('#CityId').change(function () {
-
-		var id = $(this).val();
-		var ilceid = $("#DistrictId");
-		ilceid.empty();
-		$.ajax({
-			url: 'DistrictList',
-			type: 'POST',
-			dataType: 'json',
-			data: { 'id': id },
-			success: function (data) {
-				console.log(data);
-				$.each(data.object,
-					function (index, option) {
-						ilceid.append('<option value=' + option.id + '>' + option.districtName + '</option>');
-					});
-			}
-		});
-	});
-</script>
+<script src="~/PageJs/MemberRegister.js"></script>

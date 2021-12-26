@@ -7,6 +7,7 @@ namespace Models.Application
    public class SickApplicationListModel
     {
         public long Id { get; set; }
+        public long UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Mail { get; set; }
@@ -14,6 +15,7 @@ namespace Models.Application
         public int? TransferType { get; set; }
         public string Description { get; set; }
         public DateTime? SicknesskDate { get; set; }
+        public string TransferTypeString { get; set; }
 
     }
 }

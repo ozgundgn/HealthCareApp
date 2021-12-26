@@ -8,6 +8,7 @@ namespace Models.Application
     {
       public int  PlatformType { get; set; }
       public int AppId { get; set; }
+      public int UserId { get; set; }
       public string Description { get; set; }
             
         

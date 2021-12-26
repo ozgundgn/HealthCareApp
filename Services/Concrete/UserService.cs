@@ -21,24 +21,29 @@ namespace Service.Concrete
 
         public IResult Add(User user)
         {
-            var result = _userRepository.Add(user);
-            if (result)
+            if (user.Mail != null)
             {
-                return new SuccessResult();
+                var result = _userRepository.Add(user);
+                if (result)
+                {
+                    return new SuccessResult();
+                }
             }
-
             return new ErrorResult();
         }
 
         public IResult Update(User user)
         {
-		      var result = _userRepository.Update(user);
-		      if (result)
-		      {
-			      return new SuccessResult();
-		      }
+            if (user.Id > 0)
+            {
+                var result = _userRepository.Update(user);
+                if (result)
+                {
+                    return new SuccessResult();
+                }
+            }
 
-		      return new ErrorResult();
+            return new ErrorResult();
 		    }
 
         public IDataResult<User> Login(string email, string password)
@@ -74,10 +79,22 @@ namespace Service.Concrete
             }
             return new ErrorResult();
         }   
+
         public IDataResult<Address> GetUserAddress(int id)
         {
 		      var result = _userRepository.GetUserAddress(id);
 		      return new DataResult<Address>(result, true);
 				}
+        public IDataResult<List<City>> GetCityList()
+        {
+            var cityList = _userRepository.GetCityList();
+            return new SuccessDataResult<List<City>>(cityList);
+        }
+        public IDataResult<List<District>> GetDistrictList(int id)
+        {
+            var districtList = _userRepository.GetDistrictList(id);
+            return new SuccessDataResult<List<District>>(districtList);
+        }
+
     }
 }

@@ -1,19 +1,25 @@
 ﻿@using Repository.Helpers
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Language" content="tr">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Hasta Donör Uygulaması</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="Tables are the backbone of almost all web applications.">
     <meta name="msapplication-tap-highlight" content="no">
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css" />
     <link href="~/main.css" rel="stylesheet" />
+    <link href="~/Grid/Content/gijgo.min.css" rel="stylesheet" />
+    <script src="~/assets/scripts/jquery-3.3.1.js"></script>
+    <script src="~/Grid/Scripts/gijgo.min.js" type="text/javascript"></script>
     <link href="~/css/jquery-filestyle.min.css" rel="stylesheet" />
+    <script src="~/assets/scripts/chart.min.js"></script>
+
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -134,35 +140,35 @@
                                         {
                                             @SessionHelper.DefaultSession.FirstName
                                             <span>  &nbsp;</span>
-                                             @SessionHelper.DefaultSession.LastName
+                                            @SessionHelper.DefaultSession.LastName
                                         }
                                     </div>
 
                                 </div>  @if (SessionHelper.DefaultSession.Id != 0)
                                 {
-                    <div class="widget-content-left">
-                        <div class="btn-group">
-                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                            </a>
-                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                <button type="button" tabindex="0" onclick="@("location.href='"+Url.Action("RegisterUpdateScreen","Home")+ "'")" class="dropdown-item">Kullanıcı Ayarları</button>
-                                <div tabindex="-1" class="dropdown-divider"></div>
-                                <button onclick="@("location.href='"+Url.Action("LogOut","Home")+ "'")" type="button" tabindex="0" class="dropdown-item">
-                                    Çıkış Yap
-                                </button>
-                            </div>
-                        </div>
-                    </div>}
+                                    <div class="widget-content-left">
+                                        <div class="btn-group">
+                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                                <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                            </a>
+                                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                <button type="button" tabindex="0" onclick="@("location.href='"+Url.Action("RegisterUpdateScreen","Home")+ "'")" class="dropdown-item">Kullanıcı Ayarları</button>
+                                                <div tabindex="-1" class="dropdown-divider"></div>
+                                                <button onclick="@("location.href='"+Url.Action("LogOut","Home")+ "'")" type="button" tabindex="0" class="dropdown-item">
+                                                    Çıkış Yap
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>}
                                 <div class="widget-content-right header-user-info ml-3">
                                     @if (SessionHelper.DefaultSession.Id != 0)
                                     {@*<button id="enterbutton" type="button" class="btn-shadow p-1 btn btn-primary" onclick="@("location.href='"+Url.Action("LogOut","Home")+ "'")">Çıkış Yap</button>*@ }
-                                                else
-                                                {
+                                else
+                                {
                                     <button id="enterbutton" type="button" class="btn-shadow p-1 btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Giriş Yap</button>
-                                                    <button onclick="@("location.href='"+ Url.Action("RegisterScreen","Home")+ "'")" type="button" class="btn-shadow p-1 btn btn-primary  show-toastr-example">
-                                                        Kayıt Ol
-                                                    </button>}
+                                    <button onclick="@("location.href='"+ Url.Action("RegisterScreen","Home")+ "'")" type="button" class="btn-shadow p-1 btn btn-primary  show-toastr-example">
+                                        Kayıt Ol
+                                    </button>}
                                 </div>
                             </div>
                         </div>
@@ -207,6 +213,12 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Listeler</li>
                             <li>
+                                <a href="@Url.Action("Index","Home")">
+                                    <i class="metismenu-icon pe-7s-home"></i>
+                                    Anasayfa
+                                </a>
+                            <li>
+                            <li>
                                 <a href="@Url.Action("DonorApplicationList","Application")">
                                     <i class="metismenu-icon pe-7s-leaf"></i>
                                     Donör Başvuru Listesi
@@ -219,29 +231,30 @@
                             </li>
                             @if (SessionHelper.DefaultSession.Id != 0)
                             {
-                <li class="app-sidebar__heading">Başvurlarım</li>
+                                <li class="app-sidebar__heading">Başvurlarım</li>
                                 <li>
-                                    <a href="@Url.Action("AplicationCreate", "Application")">
+                                    <a href="@Url.Action("ApplicationCreate", "Application")">
                                         <i class="metismenu-icon pe-7s-mouse">
-                                        </i>Başvuru Yap
+                                        </i>Yeni Başvuru
                                     </a>
                                 </li>
-                                                <li>
-                                                    <a href="@Url.Action("UserApplicationInformList", "Application")">
-                                                        <i class="metismenu-icon pe-7s-note2">
-                                                        </i> Başvurularım
-                                                    </a>
-                                                </li>}
+                                <li>
+                                    <a href="@Url.Action("UserApplicationInformList", "Application")">
+                                        <i class="metismenu-icon pe-7s-note2">
+                                        </i> Başvurularım
+                                    </a>
+                                </li>
+                            }
 
                         </ul>
                     </div>
                 </div>
-            </div>  
+            </div>
             <div class="app-main__outer">
                 <div class="app-main__inner">
-                    
-                        @RenderBody()
-                   
+
+                    @RenderBody()
+
                 </div>
                 <div class="app-wrapper-footer">
                     <div class="app-footer">
@@ -308,6 +321,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
     <script src="~/js/jquery-filestyle.min.js"></script>
+    <link href="~/css/notifIt.css" rel="stylesheet" />
+    <script src="~/js/notifIt.min.js"></script>
 
     @await Component.InvokeAsync("Notyf")
 </body>
