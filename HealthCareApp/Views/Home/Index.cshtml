@@ -9,12 +9,12 @@
 @if (SessionHelper.DefaultSession.Id != 0)
 {
     <div class="row">
-        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
+        <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10 offset-md-1">
             <div class="card mb-3 widget-content bg-night-fade">
                 <div class="widget-content-wrapper text-white">
                     <div class="widget-content-left">
-                        <div class="widget-heading">@SessionHelper.DefaultSession.FirstName &nbsp; @SessionHelper.DefaultSession.LastName</div>
-                        <div class="widget-subheading">@SessionHelper.DefaultSession.IdentityNumber</div>
+                        <div class="widget-heading" style="font-size: 20px;">@SessionHelper.DefaultSession.FirstName &nbsp; @SessionHelper.DefaultSession.LastName</div>
+                        <div class="widget-subheading" style="font-size: 16px;">@SessionHelper.DefaultSession.IdentityNumber</div>
                     </div>
                     <div class="widget-content-right">
 
@@ -27,26 +27,56 @@
 }
 
 <div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header"> <h5 class="card-title">Donör Durum Sayıları</h5></div>
-            <div class="card-body">
-                <canvas id="donorChart"></canvas>
+    <div class="col-lg-5 col-xl-5 col-md-5 col-sm-5 offset-md-1">
+        <div class="card mb-3 widget-content bg-arielle-smile">
+            <div class="widget-content-wrapper text-white">
+                <div class="widget-content-left">
+                    <div class="widget-heading" style="font-size: 20px;"> Toplam Donör Sayısı</div>
+                  
+                </div>
+                <div class="widget-content-right">
+                    <div class="widget-numbers text-white"><span> @Model.DonorAppCount</span></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header"> <h5 class="card-title">Donör Durum Sayıları</h5></div>
-            <div class="card-body">
-                <canvas id="sickChart" width="783" height="391" style="display: block; height: 522px; width: 1044px;" class="chartjs-render-monitor"></canvas>
-              
+    <div class="col-lg-5 col-xl-5 col-md-5 col-sm-5">
+        <div class="card mb-3 widget-content bg-love-kiss">
+            <div class="widget-content-wrapper text-white">
+                <div class="widget-content-left">
+                    <div class="widget-heading" style="font-size: 20px;"> Toplam Hasta Sayısı</div>
+                  
+                </div>
+                <div class="widget-content-right">
+                    <div class="widget-numbers text-white"><span> @Model.SickAppCount</span></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div class="row">
 
+    <div class="col-md-5 offset-md-1">
+        <div class="card">
+            @*<div class="card-header"> <h5 class="card-title">Donör Durum Sayıları</h5></div>*@
+            <div class="card-body">
+                <h5 class="card-title">Donör Durum Dağılımları</h5>
+                <canvas id="donorChart" width="200" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 ">
+        <div class="main-card mb-3 card">
+            @*<div class="card-header"> <h5 class="card-title">Hasta Durum Sayıları</h5></div>*@
+            <div class="card-body">
+                <h5 class="card-title">Hasta Durum Dağılımları</h5>
+                <canvas id="sickChart" width="200" height="200"></canvas>
 
+            </div>
+        </div>
+    </div>
+
+</div>
 <script>
     var xValuesDonor = ["Bekliyor", "İptal", "Bu PlatFormdan Bulundu"];
     var yValuesDonor = [@Model.DonorAppStatus.Bekliyor, @Model.DonorAppStatus.Iptal,@Model.DonorAppStatus.BuPlatformdanBulundu];
@@ -67,7 +97,7 @@
                         data: yValuesDonor
                     }
                 ]
-            }
+            }, options: {}
         });
 
     var xValuesSick = ["Bekliyor", "İptal", "Bu PlatFormdan Bulundu","Başka Platformdan Bulundu"];
@@ -90,6 +120,8 @@
                         data: yValuesSick
                     }
                 ]
+            } , options: {
+             
             }
         });
 

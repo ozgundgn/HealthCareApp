@@ -178,6 +178,44 @@ namespace Repository.Concrete
                     }).FirstOrDefault();
             }
         }
+
+        public IndexChartReturnModel GetIndexChartData()
+        {
+            using (HealtyCareContext context = new HealtyCareContext())
+            {
+                var donorBekliyor = context.Applications.Include(app => app.User).Where(x => x.Statu == 1  &&  x.User.UserType==2).Count();
+                var donorIptal = context.Applications.Include(app => app.User).Where(x => x.Statu == 0  &&  x.User.UserType==2).Count();
+                var donorBulundu = context.Applications.Include(app => app.User).Where(x => x.Statu == 2  &&  x.User.UserType==2).Count();
+
+                var hastaBekliyor = context.Applications.Include(app => app.User).Where(x => x.Statu == 1  &&  x.User.UserType==1).Count();
+                var hastaIptal = context.Applications.Include(app => app.User).Where(x => x.Statu == 0  &&  x.User.UserType==1).Count();
+                var hastaBuPlatformdanbulundu = context.Applications.Include(app => app.User).Where(x => x.Statu == 2 &&  x.User.UserType==1).Count();
+                var hastaBaskaPlatFormdanBulundu = context.Applications.Include(app => app.User).Where(x => x.Statu == 3  &&  x.User.UserType==1).Count();
+                IndexChartReturnModel model = new IndexChartReturnModel()
+                {
+                    DonorAppCount = donorBekliyor + donorBulundu + donorIptal,
+                    SickAppCount = hastaBaskaPlatFormdanBulundu + hastaBekliyor + hastaBuPlatformdanbulundu + hastaIptal,
+                DonorAppStatus = new DonorAppStatusList()
+                {
+                    Bekliyor = donorBekliyor,
+                    Iptal = donorIptal,
+                    BuPlatformdanBulundu = donorBulundu
+                },
+                SickAppStatus = new SickAppStatusList()
+                {
+                    Bekliyor = hastaBekliyor,
+                    Iptal = hastaIptal,
+                    BuPlatformdanBulundu = hastaBuPlatformdanbulundu,
+                    BaskaPlatformdanBulundu = hastaBaskaPlatFormdanBulundu,
+                }
+
+                };
+                return model;
+            }
+
+     
+        }
+
         public Application SetApplication(ApplicationSaveRequestModel model)
         {
             var list = new List<QuestionResult>();

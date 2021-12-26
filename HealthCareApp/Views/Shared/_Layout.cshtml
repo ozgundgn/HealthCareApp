@@ -10,8 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="Tables are the backbone of almost all web applications.">
     <meta name="msapplication-tap-highlight" content="no">
-
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css" />
     <link href="~/main.css" rel="stylesheet" />
     <link href="~/Grid/Content/gijgo.min.css" rel="stylesheet" />
@@ -19,7 +17,6 @@
     <script src="~/Grid/Scripts/gijgo.min.js" type="text/javascript"></script>
     <link href="~/css/jquery-filestyle.min.css" rel="stylesheet" />
     <script src="~/assets/scripts/chart.min.js"></script>
-
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -98,7 +95,7 @@
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
-        <div class="app-header header-shadow">
+        <div class="app-header header-shadow bg-asteroid header-text-light">
             <div class="app-header__logo">
                 <div class="logo-src"></div>
                 <div class="header__pane ml-auto">
@@ -135,7 +132,7 @@
                         <div class="widget-content p-0">
                             <div class="widget-content-wrapper">
                                 <div class="widget-content-left  ml-3 header-user-info">
-                                    <div class="widget-heading">
+                                    <div class="widget-heading" style="color: #dddddd">
                                         @if (SessionHelper.DefaultSession.Id != 0)
                                         {
                                             @SessionHelper.DefaultSession.FirstName
@@ -177,7 +174,7 @@
             </div>
         </div>
         <div class="app-main">
-            <div class="app-sidebar sidebar-shadow">
+            <div class="app-sidebar sidebar-shadow bg-asteroid sidebar-text-light">
                 <div class="app-header__logo">
                     <div class="logo-src"></div>
                     <div class="header__pane ml-auto">

@@ -13,7 +13,7 @@ namespace Service.Abstract
     {
         IDataResult<PagedList<SickApplicationListModel>> GetSickApplicationList(SickAplicationRequestModel model);
         IDataResult<PagedList<DonorApplicationListModel>> GetDonorApplicationList(DonorAplicationRequestModel model);
-
+        IDataResult<IndexChartReturnModel> GetIndexChartData();
         IDataResult<List<Question>> GetQuestionList();
         IDataResult<Application> SetApplication(ApplicationSaveRequestModel model);
         IResult SetApplicationState(StateSaveRequestModel model);
