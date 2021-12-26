@@ -1,0 +1,8 @@
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Core\bin\Release\netcoreapp3.1\Core.deps.json
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Core\bin\Release\netcoreapp3.1\Core.dll
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Core\bin\Release\netcoreapp3.1\Core.pdb
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Core\obj\Release\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Core\obj\Release\netcoreapp3.1\Core.AssemblyInfo.cs
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Core\obj\Release\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Core\obj\Release\netcoreapp3.1\Core.dll
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Core\obj\Release\netcoreapp3.1\Core.pdb

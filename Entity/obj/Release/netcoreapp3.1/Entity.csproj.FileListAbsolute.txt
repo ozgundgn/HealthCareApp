@@ -1,0 +1,12 @@
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\bin\Release\netcoreapp3.1\Entity.deps.json
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\bin\Release\netcoreapp3.1\Entity.dll
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\bin\Release\netcoreapp3.1\Entity.pdb
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\bin\Release\netcoreapp3.1\Core.dll
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\bin\Release\netcoreapp3.1\Core.pdb
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\obj\Release\netcoreapp3.1\Entity.csproj.AssemblyReference.cache
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\obj\Release\netcoreapp3.1\Entity.AssemblyInfoInputs.cache
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\obj\Release\netcoreapp3.1\Entity.AssemblyInfo.cs
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\obj\Release\netcoreapp3.1\Entity.csproj.CoreCompileInputs.cache
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\obj\Release\netcoreapp3.1\Entity.csproj.CopyComplete
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\obj\Release\netcoreapp3.1\Entity.dll
+C:\Users\HalilOZTURK\source\repos\HealthCareApp\Entity\obj\Release\netcoreapp3.1\Entity.pdb
