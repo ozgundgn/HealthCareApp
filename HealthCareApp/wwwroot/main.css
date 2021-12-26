@@ -9,6 +9,30 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 /* Rules for sizing the icon. */
+@-webkit-keyframes chartjs-render-animation {
+    from {
+        opacity: 0.99
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes chartjs-render-animation {
+    from {
+        opacity: 0.99
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.chartjs-render-monitor {
+    -webkit-animation: chartjs-render-animation 0.001s;
+    animation: chartjs-render-animation 0.001s;
+}
 .material-icons.md-18 {
     font-size: 18px;
 }
