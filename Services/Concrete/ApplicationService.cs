@@ -126,5 +126,12 @@ namespace Service.Concrete
             };
             return new SuccessDataResult<ApplicationCreateViewModel>(returnModel);
         }
+
+      public IDataResult<IndexChartReturnModel> GetIndexChartData()
+        {
+            var chartData = _applicationRepository.GetIndexChartData();
+
+            return new DataResult<IndexChartReturnModel>(chartData,true);
+        }
     }
 }

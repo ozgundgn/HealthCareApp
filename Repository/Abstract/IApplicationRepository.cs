@@ -20,6 +20,7 @@ namespace Repository.Abstract
         PagedList<UserApplicationModel> GetUserApplicationInformList(UserAplicationRequestModel model);
         
         UserApplicationModel GetUserApplicationInform(int applicationId);
+        IndexChartReturnModel GetIndexChartData();
 
     }
 }

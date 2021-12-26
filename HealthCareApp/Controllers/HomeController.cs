@@ -42,19 +42,8 @@ namespace HealthCareApp.Controllers
 
         public IActionResult Index()
         {
-            IndexChartReturnModel model=new IndexChartReturnModel();
-            DonorAppStatusList donorStatus=new DonorAppStatusList();
-            donorStatus.Bekliyor = 15;
-            donorStatus.Iptal = 15;
-            donorStatus.BuPlatformdanBulundu = 15;
-            SickAppStatusList sickStatus = new SickAppStatusList();
-            sickStatus.Bekliyor = 15;
-            sickStatus.Iptal = 15;
-            sickStatus.BuPlatformdanBulundu = 15;
-            sickStatus.BaskaPlatformdanBulundu = 15;
-            model.DonorAppStatus = donorStatus;
-            model.SickAppStatus = sickStatus;
-            return View(model);
+           var indexChartModel= _applicationService.GetIndexChartData();
+           return View(indexChartModel.Data);
         }
         [HttpPost]
         public IActionResult Login(string email, string password)
