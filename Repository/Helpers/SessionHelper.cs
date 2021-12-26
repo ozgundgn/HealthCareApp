@@ -10,14 +10,17 @@ namespace Repository.Helpers
     public static class SessionHelper
     {
         private static IHttpContextAccessor current;
-        private static IRedisClient _redisClient;
-      
-        public static void Configure(IHttpContextAccessor accessor,IRedisClient client)
+        public static IRedisClient _redisClient;
+        static SessionHelper()
+        {
+            _redisClient = new RedisClient("37.247.104.251?db=10");
+        }
+        public static void Configure(IHttpContextAccessor accessor)
         {
             current = accessor;
-            _redisClient = client;
+
         }
-       
+
         public static User DefaultSession
         {
             get

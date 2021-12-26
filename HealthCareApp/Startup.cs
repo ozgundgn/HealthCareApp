@@ -64,7 +64,7 @@ namespace HealthCareApp
             
             services.AddControllersWithViews()
                 .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
-            SessionHelper.Configure(services.BuildServiceProvider().GetService<IHttpContextAccessor>(), services.BuildServiceProvider().GetService<IRedisClient>());
+            SessionHelper.Configure(services.BuildServiceProvider().GetService<IHttpContextAccessor>());
 
 
         }

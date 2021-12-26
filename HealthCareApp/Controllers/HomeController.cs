@@ -35,7 +35,7 @@ namespace HealthCareApp.Controllers
             _userService = userService;
             _logger = logger;
             _notify = notifyService;
-            _redisClient = redisClient;
+            _redisClient = SessionHelper._redisClient;
             _contextAccessor = contextAccessor;
             _applicationService = applicationService;
         }
